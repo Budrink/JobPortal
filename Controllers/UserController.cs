@@ -36,12 +36,12 @@ namespace JobPortal.Controllers
 
 	    }
 
-		[HttpPost]
-		[Route("login")]
-		public async IActionResult Login(string email, string password)
-		{
-			var 
-		}
+		//[HttpPost]
+		//[Route("login")]
+		//public async IActionResult Login(string email, string password)
+		//{
+		//	var 
+		//}
 
 	    [HttpPost]
 		[Route("Register")]
