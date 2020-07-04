@@ -5,11 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Job
+	public class Job : BaseEntity
 	{
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Key]
-		public Guid Id { get; set; }
 		public JobStatus JobStatus { get; set; }
 		public string JobDescription { get; set; }
 		public JobType JobType { get; set; }

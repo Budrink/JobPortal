@@ -2,9 +2,8 @@
 
 namespace JobPortal.Models
 {
-	public class Tag
+	public class Tag : BaseEntity
 	{
-		public Guid Id { get; set; }
 		public string Value { get; set; }
 	}
 }

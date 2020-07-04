@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Country : BaseEntity
+	public class BaseEntity
 	{
-
-		public string Name { get; set; }
-		public string BannerLink { get; set; }
-		public string Code { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Key]
+		public Guid Id { get; set; }
 	}
 }

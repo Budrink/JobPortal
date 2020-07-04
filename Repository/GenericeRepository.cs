@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using JobPortal.Models.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +14,12 @@ namespace JobPortal.Repository
 	/// <typeparam name="TEntity"></typeparam>
 	public interface IGenericRepository<TEntity> where TEntity : class
 	{
-		IEnumerable<TEntity> Get();
-		IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
-		TEntity FindById(int id);
-		void Create(TEntity item);
-		void Update(TEntity item);
-		void Remove(TEntity item);
+		Task<IEnumerable<TEntity>> Get();
+		IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
+		Task<TEntity> FindById(Guid id);
+		Task Create(TEntity item);
+		Task Update(TEntity item);
+		Task Remove(TEntity item);
 	}
 
 	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
@@ -31,34 +33,34 @@ namespace JobPortal.Repository
 			_dbSet = context.Set<TEntity>();
 		}
 
-		public IEnumerable<TEntity> Get()
+		public async Task<IEnumerable<TEntity>> Get()
 		{
-			return _dbSet.AsNoTracking().ToList();
+			return await _dbSet.AsNoTracking().ToListAsync();
 		}
 
-		public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+		public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
 		{
-			return _dbSet.AsNoTracking().Where(predicate).ToList();
+			return _dbSet.AsNoTracking().Where(predicate);
 		}
-		public TEntity FindById(int id)
+		public async Task<TEntity> FindById(Guid id)
 		{
-			return _dbSet.Find(id);
+			return await _dbSet.FindAsync(id);
 		}
 
-		public void Create(TEntity item)
+		public async Task Create(TEntity item)
 		{
-			_dbSet.Add(item);
-			_context.SaveChanges();
+			await _dbSet.AddAsync(item);
+			await _context.SaveChangesAsync();
 		}
-		public void Update(TEntity item)
+		public async Task Update(TEntity item)
 		{
 			_context.Entry(item).State = EntityState.Modified;
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
-		public void Remove(TEntity item)
+		public async Task Remove(TEntity item)
 		{
 			_dbSet.Remove(item);
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 		
     }
