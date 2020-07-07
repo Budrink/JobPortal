@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace JobPortal.Controllers
 {
@@ -19,12 +22,75 @@ namespace JobPortal.Controllers
     public class UserController : ControllerBase
 	{
 		private readonly UserManager<BaseUser> _userManager;
+		private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 		private readonly IGenericRepository<Country> _countryRepository;
 
-		public UserController(UserManager<BaseUser> userManager, IGenericRepository<Country> countryRepository)
+		public UserController(UserManager<BaseUser> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager)
 		{
 			_userManager = userManager;
 			_countryRepository = countryRepository;
+			_roleManager = roleManager;
+		}
+
+		[HttpGet]
+		[Route("test")]
+		public async Task<IActionResult> InitRoles()
+		{
+			var roleFreelancer = new IdentityRole<Guid>("freelancer");
+			var roleCompany = new IdentityRole<Guid>("company");
+			await _roleManager.CreateAsync(roleFreelancer);
+			await _roleManager.CreateAsync(roleCompany);
+			return Ok();
+		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("getroles")]
+		public async Task<IActionResult> GetRoles()
+		{
+			var claims = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value;
+			return Ok(claims);
+		}
+
+		[HttpPost]
+		[Route("token")]
+		public async Task<IActionResult> Token(string username, string password)
+		{
+			var user = await _userManager.FindByEmailAsync(username);
+			if (!(await _userManager.CheckPasswordAsync(user, password)))
+				return BadRequest("Invalid password or username");
+
+			var roles = string.Join(';',await _userManager.GetRolesAsync(user));
+
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+				new Claim(ClaimsIdentity.DefaultRoleClaimType,roles)
+			};
+			ClaimsIdentity claimsIdentity =
+				new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+					ClaimsIdentity.DefaultRoleClaimType);
+
+			var now = DateTime.UtcNow;
+			// создаем JWT-токен
+			var jwt = new JwtSecurityToken(
+				issuer: AuthOptions.Issuer,
+				audience: AuthOptions.Audience,
+				notBefore: now,
+				claims: claims,
+				expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LifeTime)),
+				signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+			var response = new
+			{
+				access_token = encodedJwt,
+				username = user.Email
+			};
+
+			return Ok(response);
+
 		}
 
 		[HttpPost]
@@ -77,6 +143,7 @@ namespace JobPortal.Controllers
 		    var result = await _userManager.CreateAsync(user,model.Password);
 		    if (result.Succeeded)
 		    {
+
 			    await _userManager.AddToRoleAsync(user, "freelancer");
 		    }
 		    return Ok(result);
