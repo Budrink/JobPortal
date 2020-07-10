@@ -34,7 +34,11 @@ namespace JobPortal
 			services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 
-			services.AddDefaultIdentity<BaseUser>(options => options.SignIn.RequireConfirmedAccount = true)
+			services.AddDefaultIdentity<BaseUser>(options =>
+				{
+					options.SignIn.RequireConfirmedAccount = true;
+					options.User.RequireUniqueEmail = true;
+				})
 				.AddRoles<IdentityRole<Guid>>()
 				.AddEntityFrameworkStores<DataContext>();
 
@@ -101,6 +105,7 @@ namespace JobPortal
 			app.UseAuthentication();
 			app.UseRouting();
 			app.UseAuthorization();
+			app.UseCors(builder => builder.AllowAnyHeader().WithOrigins("https://localhost:3000").AllowCredentials());
 
 			app.UseEndpoints(endpoints =>
 			{

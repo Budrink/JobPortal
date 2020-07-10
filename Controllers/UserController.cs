@@ -98,7 +98,7 @@ namespace JobPortal.Controllers
 		public async Task<IActionResult> IsUserWithEmailExist(string email)
 	    {
 		    var existUserWithEmail = await _userManager.FindByEmailAsync(email);
-		    return Ok(existUserWithEmail == null);
+		    return Ok(existUserWithEmail != null);
 
 	    }
 
