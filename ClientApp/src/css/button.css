@@ -1,0 +1,46 @@
+.wt-addinfo button {
+  background: #3fabf3;
+  color: #fff;
+}
+.wt-deleteinfo button {
+  background: #ff5851;
+  color: #fff;
+}
+.wt-myskills li.wt-skillsaddinfo .wt-rightarea button.wt-addinfo {
+  background: #00cc8d;
+}
+.wt-myskills li.wt-skillsaddinfo a.wt-deleteinfo {
+  background: #ddd;
+}
+.wt-myskills li .wt-rightarea button:hover,
+.wt-myskills li .wt-rightarea button:focus {
+  color: #fff;
+}
+.wt-myskills li.wt-skillsaddinfo .wt-rightarea button i {
+  font-family: 'FontAwesome';
+}
+.wt-myskills li.wt-skillsaddinfo .wt-rightarea button.wt-addinfo :before {
+  content: '\f00c';
+}
+.wt-myskills li.wt-skillsaddinfo .wt-rightarea button.wt-deleteinfo :before {
+  content: '\f00d';
+}
+
+.btn-group a {
+  background-color: #3498db; /* blue background */
+  border: 1px solid #3498db; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group a:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group a:hover {
+  background-color: #3e8e41;
+}

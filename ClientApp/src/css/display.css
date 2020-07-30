@@ -1,0 +1,5 @@
+.display-linebreak {
+  white-space: pre;
+  width: auto;
+  text-align: justify;
+}
