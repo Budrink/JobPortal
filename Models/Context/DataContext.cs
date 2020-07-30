@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobPortal.Models.Context
 {
-	public class DataContext : IdentityDbContext<BaseUser, IdentityRole<Guid>, Guid>
+	public class DataContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{
@@ -15,6 +15,7 @@ namespace JobPortal.Models.Context
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
+			builder.Entity<Contract>();
 
 		}
 	}

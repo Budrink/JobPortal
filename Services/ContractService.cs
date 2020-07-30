@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JobPortal.Dto;
 using JobPortal.Models;
+using JobPortal.Models.Context;
 using JobPortal.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,46 +13,56 @@ namespace JobPortal.Services
 {
 	public interface IContractService
 	{
-		Task<List<ContractViewModel>> ContractList(Guid userId, bool onlyActive = true);
-		Task<ContractViewModel> ContractDetails(Guid contractId);
-		Task<ContractViewModel> SubmitContract(ContractViewModel model);
+		Task<List<ContractHireFreelancerViewModel>> ContractList(Guid userId, bool onlyActive = true);
+		Task<ContractHireFreelancerViewModel> ContractDetails(Guid contractId);
+		Task<ContractHireFreelancerViewModel> SubmitContract(ContractHireFreelancerViewModel model);
 		Task RemoveContract(Guid contractId);
 	}
 
 	public class ContractService : IContractService
 	{
 		private readonly IGenericRepository<Contract> _contractRepository;
-		private readonly Mapper _mapper;
+		private readonly DataContext _context;
+		private readonly IMapper _mapper;
 
-		public ContractService(IGenericRepository<Contract> contractRepository, Mapper mapper)
+		public ContractService(IGenericRepository<Contract> contractRepository, IMapper mapper, DataContext context)
 		{
 			_contractRepository = contractRepository;
 			_mapper = mapper;
+			_context = context;
 		}
 
 
-		public async Task<List<ContractViewModel>> ContractList(Guid userId, bool onlyActive = true)
+		public async Task<List<ContractHireFreelancerViewModel>> ContractList(Guid userId, bool onlyActive = true)
 		{
-			var raw = _contractRepository.Get(x => x.Freelancer.Id == userId);
+			var raw = _contractRepository.Get(x => x.Freelancer.FreelancerId == userId);
 			if (onlyActive)
-				raw = raw.Where(x => x.Job.JobStatus == JobStatus.Open);
+				raw = raw.Where(x => x.JobProposal.Job.JobStatus == JobStatus.Open);
 
-			var result = _mapper.Map<ContractViewModel[]>(await raw.ToListAsync());
+			var result = _mapper.Map<ContractHireFreelancerViewModel[]>(await raw.ToListAsync());
 
 			return result.ToList();
 		}
 
-		public async Task<ContractViewModel> ContractDetails(Guid contractId)
+		public async Task<ContractHireFreelancerViewModel> ContractDetails(Guid contractId)
 		{
 			var contract = await _contractRepository.FindById(contractId);
-			return _mapper.Map<ContractViewModel>(contract);
+			return _mapper.Map<ContractHireFreelancerViewModel>(contract);
 		}
 
-		public async Task<ContractViewModel> SubmitContract(ContractViewModel model)
+		public async Task<ContractHireFreelancerViewModel> SubmitContract(ContractHireFreelancerViewModel model)
 		{
 			var contract = _mapper.Map<Contract>(model);
-			await _contractRepository.Create(contract);
-			return _mapper.Map<ContractViewModel>(contract);
+			contract.ContractId = Guid.Empty;
+			_context.Set<Contract>().Add(contract);
+			var entity = _context.ChangeTracker.Entries().First();
+			
+
+			var tracked = (Contract) entity.Entity;
+			_context.SaveChanges();
+			var check = _context.Set<Contract>().Find(tracked.ContractId);
+			//await _contractRepository.Create(contract);
+			return _mapper.Map<ContractHireFreelancerViewModel>(contract);
 		}
 
 		public async Task RemoveContract(Guid contractId)

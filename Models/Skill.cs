@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Department
+	public class Skill
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid DepartmentId { get; set; }
+		public Guid SkillId { get; set; }
 		public string Name { get; set; }
 	}
 }

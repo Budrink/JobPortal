@@ -7,8 +7,8 @@ namespace JobPortal.Models
 	public class Country : BaseEntity
 	{
 
-		public string Name { get; set; }
-		public string BannerLink { get; set; }
+		public string CountryName { get; set; }
+		public string CountryFlag { get; set; }
 		public string Code { get; set; }
 	}
 }

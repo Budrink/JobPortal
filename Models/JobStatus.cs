@@ -3,6 +3,7 @@
 	public enum JobStatus
 	{
 		Open,
-		Closed
+		Closed,
+		Cancelled
 	}
 }

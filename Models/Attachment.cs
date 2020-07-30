@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Department
+	public class Attachment
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid DepartmentId { get; set; }
-		public string Name { get; set; }
+		public Guid AttachmentId { get; set; }
+		public string FileName { get; set; }
+		public long FileSize { get; set; }
+		public string FileLink { get; set; }
 	}
 }

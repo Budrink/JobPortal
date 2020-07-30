@@ -1,7 +1,10 @@
 using System;
+using System.Text.Json.Serialization;
+using AutoMapper;
 using JobPortal.Models;
 using JobPortal.Models.Context;
 using JobPortal.Repository;
+using JobPortal.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,17 +33,23 @@ namespace JobPortal
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<DataContext>(o => { o.UseInMemoryDatabase(new Guid().ToString()); });
-			services.AddControllersWithViews();
+			services.AddControllersWithViews().AddJsonOptions(options =>
+			{
+				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+			});
 			services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 
-			services.AddDefaultIdentity<BaseUser>(options =>
+			services.AddDefaultIdentity<User>(options =>
 				{
 					options.SignIn.RequireConfirmedAccount = true;
 					options.User.RequireUniqueEmail = true;
 				})
 				.AddRoles<IdentityRole<Guid>>()
 				.AddEntityFrameworkStores<DataContext>();
+			services.AddAutoMapper(x => x.AddProfile(new MapperProfile.MapperProfile()));
+
+			services.AddScoped<ContractService, ContractService>();
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options =>

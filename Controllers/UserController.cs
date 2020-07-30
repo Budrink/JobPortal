@@ -21,11 +21,11 @@ namespace JobPortal.Controllers
     [ApiController]
     public class UserController : ControllerBase
 	{
-		private readonly UserManager<BaseUser> _userManager;
+		private readonly UserManager<User> _userManager;
 		private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 		private readonly IGenericRepository<Country> _countryRepository;
 
-		public UserController(UserManager<BaseUser> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager)
+		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager)
 		{
 			_userManager = userManager;
 			_countryRepository = countryRepository;
@@ -128,7 +128,7 @@ namespace JobPortal.Controllers
 	    private async Task<IActionResult> RegisterFreelancer(RegisterDataModel model)
 	    {
 		    Country country = null;//await _countryRepository.FindById(Guid.Parse(model.CountryId));
-		    var user = new BaseUser
+		    var user = new User
 		    {
 			    Email = model.Email,
 			    UserName = model.Email,
@@ -137,7 +137,7 @@ namespace JobPortal.Controllers
 			    Freelancer = new Freelancer
 			    {
 
-				    UserRates = "150ph"
+				    Rates = "150ph"
 			    }
 		    };
 		    var result = await _userManager.CreateAsync(user,model.Password);
@@ -152,7 +152,7 @@ namespace JobPortal.Controllers
 	    private async Task<IActionResult> RegisterCompany(RegisterDataModel model)
 	    {
 			var country = await _countryRepository.FindById(Guid.Parse(model.CountryId));
-			var user = new BaseUser
+			var user = new User
 			{
 				Email = model.Email,
 				UserName = model.Email,
