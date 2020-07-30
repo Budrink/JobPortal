@@ -1,0 +1,74 @@
+import { webAPIUrl } from './AppSettings';
+import { findAllByDisplayValue } from '@testing-library/react';
+export interface HttpRequest<REQB> {
+  path: string;
+  method?: string;
+  body?: REQB;
+  accessToken?: string;
+}
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+
+export const http = <REQB, RESB>(
+  config: HttpRequest<REQB>,
+): Promise<HttpResponse<RESB>> => {
+  console.log(JSON.stringify(config.body));
+  return new Promise((resolve, reject) => {
+    const request = new Request(`${webAPIUrl}${config.path}`, {
+      method: config.method || 'get',
+      headers: { 'Content-Type': 'application/json' },
+      body: config.body ? JSON.stringify(config.body) : undefined,
+    });
+
+    let response: HttpResponse<RESB>;
+
+    fetch(request)
+      .then((res) => {
+        console.log(res);
+        response = res;
+        try {
+          return res.json();
+        } catch (e) {
+          console.log(e);
+        }
+      })
+      .then((body) => {
+        if (response.ok) {
+          response.parsedBody = body;
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+        return response.status;
+      });
+  });
+};
+export const FetchData = <REQB, RESB>(
+  config: HttpRequest<REQB>,
+): Promise<any> => {
+  console.log(JSON.stringify(config.body));
+  return new Promise(async (resolve, reject) => {
+    const request = new Request(`${webAPIUrl}${config.path}`, {
+      method: config.method || 'get',
+      headers: { 'Content-Type': 'application/json' },
+      body: config.body ? JSON.stringify(config.body) : undefined,
+    });
+
+    let response: any;
+
+    await fetch(request).then((res) => {
+      console.log(res);
+      response = res;
+      return res;
+    });
+    console.log(11);
+    console.log(response);
+    return 1;
+    console.log(12);
+  });
+};
