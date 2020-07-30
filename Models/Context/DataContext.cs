@@ -16,6 +16,16 @@ namespace JobPortal.Models.Context
 		{
 			base.OnModelCreating(builder);
 			builder.Entity<Contract>();
+			builder.Entity<Company>();
+			builder.Entity<Language>();
+			builder.Entity<Country>();
+			builder.Entity<Freelancer>();
+			builder.Entity<Company>();
+			builder.Entity<Job>();
+			builder.Entity<JobProposal>();
+			builder.Entity<Message>();
+			builder.Entity<Skill>();
+			builder.Entity<Tag>();
 
 		}
 	}
