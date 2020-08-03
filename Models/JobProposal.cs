@@ -13,8 +13,8 @@ namespace JobPortal.Models
 		public string Terms { get; set; }
 		public DateTime ProposalDate { get; set; }
 		public ProposalStatus ProposalStatus { get; set; }
-		public Job Job { get; set; }
-		public Freelancer Freelancer { get; set; }
+		public virtual Job Job { get; set; }
+		public virtual Freelancer Freelancer { get; set; }
 	}
 
 	public enum ProposalStatus

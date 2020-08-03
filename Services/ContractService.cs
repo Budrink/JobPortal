@@ -68,7 +68,8 @@ namespace JobPortal.Services
 		public async Task RemoveContract(Guid contractId)
 		{
 			var contract = await _contractRepository.FindById(contractId);
-			await _contractRepository.Remove(contract);
+			_contractRepository.Remove(contract);
+			await _contractRepository.SaveChanges();
 		}
 
 	}

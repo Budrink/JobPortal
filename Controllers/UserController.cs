@@ -24,12 +24,16 @@ namespace JobPortal.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 		private readonly IGenericRepository<Country> _countryRepository;
+		private readonly IGenericRepository<Freelancer> _freelancerRepository;
+		private readonly IGenericRepository<Company> _companyRepository;
 
-		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager)
+		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager, IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<Company> companyRepository)
 		{
 			_userManager = userManager;
 			_countryRepository = countryRepository;
 			_roleManager = roleManager;
+			_freelancerRepository = freelancerRepository;
+			_companyRepository = companyRepository;
 		}
 
 		[HttpGet]
@@ -134,18 +138,15 @@ namespace JobPortal.Controllers
 			    UserName = model.Email,
 			    Country = country,
 			    EmailConfirmed = false,
-			    Freelancer = new Freelancer
-			    {
+			    Freelancer = new Freelancer { Rates = "150ph" }
 
-				    Rates = "150ph"
-			    }
-		    };
+			};
 		    var result = await _userManager.CreateAsync(user,model.Password);
 		    if (result.Succeeded)
 		    {
-
 			    await _userManager.AddToRoleAsync(user, "freelancer");
 		    }
+
 		    return Ok(result);
 	    }
 
@@ -168,6 +169,7 @@ namespace JobPortal.Controllers
 			if (result.Succeeded)
 			{
 				await _userManager.AddToRoleAsync(user, "company");
+				await _companyRepository.Create(user.Company);
 			}
 			return Ok(user);
 

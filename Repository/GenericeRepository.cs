@@ -18,8 +18,9 @@ namespace JobPortal.Repository
 		IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
 		Task<TEntity> FindById(Guid id);
 		Task Create(TEntity item);
-		Task Update(TEntity item);
-		Task Remove(TEntity item);
+		void Update(TEntity item);
+		void Remove(TEntity item);
+		Task SaveChanges();
 	}
 
 	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
@@ -35,32 +36,35 @@ namespace JobPortal.Repository
 
 		public async Task<IEnumerable<TEntity>> Get()
 		{
-			return await _dbSet.AsNoTracking().ToListAsync();
+			return await _dbSet.ToListAsync();
 		}
 
 		public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
 		{
-			return _dbSet.AsNoTracking().Where(predicate);
+			return _dbSet.Where(predicate);
 		}
 		public async Task<TEntity> FindById(Guid id)
 		{
 			return await _dbSet.FindAsync(id);
 		}
 
+
+		public async Task SaveChanges()
+		{
+			await _context.SaveChangesAsync();
+		}
 		public async Task Create(TEntity item)
 		{
 			await _dbSet.AddAsync(item);
-			await _context.SaveChangesAsync();
 		}
-		public async Task Update(TEntity item)
+		public void Update(TEntity item)
 		{
 			_context.Entry(item).State = EntityState.Modified;
-			await _context.SaveChangesAsync();
 		}
-		public async Task Remove(TEntity item)
+
+		public void Remove(TEntity item)
 		{
 			_dbSet.Remove(item);
-			await _context.SaveChangesAsync();
 		}
 		
     }

@@ -14,9 +14,9 @@ namespace JobPortal.Models
 		public string CompanyName;
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
-		public CompanySize CompanySize { get; set; }
-		public Department Department { get; set; }
-		public User User { get; set; }
-		public IEnumerable<Job> Jobs { get; set; }
+		public virtual CompanySize CompanySize { get; set; }
+		public virtual Department Department { get; set; }
+		public virtual User User { get; set; }
+		public virtual IEnumerable<Job> Jobs { get; set; }
 	}
 }

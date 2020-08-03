@@ -16,8 +16,8 @@ namespace JobPortal.Models
 		public string Rates { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
-		public IEnumerable<JobProposal> JobProposals { get; set; }
-		public IEnumerable<Contract> Contracts { get; set; }
-		public User User { get; set; }
+		public virtual IEnumerable<JobProposal> JobProposals { get; set; }
+		public virtual IEnumerable<Contract> Contracts { get; set; }
+		public virtual User User { get; set; }
 	}
 }

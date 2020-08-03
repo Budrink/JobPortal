@@ -47,8 +47,9 @@ namespace JobPortal.Controllers
 					Freelancer = freelancer,
 					Start = DateTime.Now
 				};
-				await _proposalRepository.Update(proposal);
+				_proposalRepository.Update(proposal);
 				await _contraRepository.Create(contract);
+				await _contraRepository.SaveChanges();
 				
 				return Ok(true);
 			}

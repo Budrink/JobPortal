@@ -8,8 +8,8 @@ namespace JobPortal.Models
 		public string FirstName { get; set; }
 		public string SecondName { get; set; }
 		public string Photo { get; set; }
-		public Company Company { get; set; }
-		public Freelancer Freelancer { get; set; }
-		public Country Country { get; set; }
+		public virtual Company Company { get; set; }
+		public virtual Freelancer Freelancer { get; set; }
+		public virtual Country Country { get; set; }
 	}
 }

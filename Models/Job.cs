@@ -10,7 +10,7 @@ namespace JobPortal.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Guid JobId { get; set; }
-		public Company Company { get; set; }
+		public virtual Company Company { get; set; }
 		public string Title { get; set; }
 		public JobStatus JobStatus { get; set; }
 		public string Duration { get; set; }
@@ -18,11 +18,11 @@ namespace JobPortal.Models
 		public JobType JobType { get; set; }
 		public decimal Tax { get; set; }
 		public CompetenceLevel CompetenceLevel { get; set; }
-		public Country Country { get; set; }
-		public IEnumerable<Skill> SkillsRequired { get; set; }
-		public IEnumerable<Attachment> Attachments { get; set; }
-		public IEnumerable<Tag> Tags { get; set; }
+		public virtual Country Country { get; set; }
+		public virtual IEnumerable<Skill> SkillsRequired { get; set; }
+		public virtual IEnumerable<Attachment> Attachments { get; set; }
+		public virtual IEnumerable<Tag> Tags { get; set; }
 		public int ProposalsCount { get; set; }
-		public IEnumerable<User> HiredFreelancers { get; set; }
+		public virtual IEnumerable<User> HiredFreelancers { get; set; }
 	}
 }
