@@ -29,7 +29,9 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<Freelancer> _freelancerRepository;
 		private readonly IGenericRepository<Company> _companyRepository;
 
-		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository, RoleManager<IdentityRole<Guid>> roleManager, IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<Company> companyRepository)
+		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository,
+			RoleManager<IdentityRole<Guid>> roleManager, IGenericRepository<Freelancer> freelancerRepository,
+			IGenericRepository<Company> companyRepository)
 		{
 			_userManager = userManager;
 			_countryRepository = countryRepository;
@@ -55,7 +57,8 @@ namespace JobPortal.Controllers
 		[Route("getroles")]
 		public async Task<IActionResult> GetRoles()
 		{
-			var claims = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value;
+			var claims = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)
+				?.Value;
 			return Ok(claims);
 		}
 
@@ -69,7 +72,7 @@ namespace JobPortal.Controllers
 
 		[HttpPost]
 		[Route("token")]
-		public async Task<IActionResult> Token([FromBody]  LoginDto loginData)
+		public async Task<IActionResult> Token([FromBody] LoginDto loginData)
 		{
 			var user = await _userManager.FindByEmailAsync(loginData.UserName);
 			if (!(await _userManager.CheckPasswordAsync(user, loginData.Password)))
@@ -80,7 +83,7 @@ namespace JobPortal.Controllers
 			var claims = new List<Claim>
 			{
 				new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-				new Claim(ClaimsIdentity.DefaultRoleClaimType,roles)
+				new Claim(ClaimsIdentity.DefaultRoleClaimType, roles)
 			};
 			ClaimsIdentity claimsIdentity =
 				new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
@@ -94,7 +97,8 @@ namespace JobPortal.Controllers
 				notBefore: now,
 				claims: claims,
 				expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LifeTime)),
-				signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+				signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+					SecurityAlgorithms.HmacSha256));
 			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
 			var response = new
@@ -171,6 +175,7 @@ namespace JobPortal.Controllers
 			var country = await _countryRepository.FindById(Guid.Parse(model.CountryId));
 			var user = new User
 			{
+				
 				Email = model.Email,
 				UserName = model.Email,
 				Country = country,
@@ -189,6 +194,7 @@ namespace JobPortal.Controllers
 			{
 				await _userManager.AddToRoleAsync(user, "company");
 			}
+
 			return Ok(user);
 
 		}
