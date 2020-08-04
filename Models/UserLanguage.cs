@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Language
+	public class UserLanguage
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid LanguageId { get; set; }
-	  public string Name { get; set; }
+		public Guid Id { get; set; }
+		[ForeignKey("User")]
+		public Guid UserId { get; set; }
+		public virtual Language Language { get; set; }
 	}
 }

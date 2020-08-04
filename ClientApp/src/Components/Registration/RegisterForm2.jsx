@@ -1,7 +1,7 @@
 /** @jsx jsx */ import { jsx } from '@emotion/core';
 import React from 'react';
 //import { reduxForm } from 'redux-form';
-import { SecondRegister } from '../PostData/Register';
+import { SecondRegister } from '../PostData/Register_old';
 import { FormErrors } from './FormErrors';
 import { Link } from 'react-router-dom';
 import { GetCountryList } from '../GetData/GetCountryList';

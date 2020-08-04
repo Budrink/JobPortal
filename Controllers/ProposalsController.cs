@@ -46,7 +46,7 @@ namespace JobPortal.Controllers
 					.Select(x => new ProposalDto
 					{
 						Id = x.ProposalId, JobId = x.Job.JobId, UserId = x.Freelancer.User.Id,
-						UserPhoto = x.Freelancer.User.Photo,
+						UserPhoto = x.Freelancer.User.UserPhoto,
 						Terms = x.Terms,
 						CoverLetter = x.CoverLetter,
 						ProposalDate = x.ProposalDate,

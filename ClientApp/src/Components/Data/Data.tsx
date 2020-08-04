@@ -102,6 +102,7 @@ export interface Experience {
 // }
 
 export interface UserSkill {
+  iD: string;
   skill: Skill;
   percent: number;
 }
@@ -197,21 +198,7 @@ export interface User {
   title?: string;
   awards?: Award[];
   projects?: Project[];
-  //accountSettings?: AccountSettings;
-  publicProfile?: boolean;
-  sharePhoto?: boolean;
-  showFeedback?: boolean;
-  profileSearchible?: boolean;
-  disableAccount?: boolean;
-  disableTemporarily?: boolean;
-  language?: Language;
-  currency?: Currency;
-  sendWeeklyAlerts?: boolean;
-  sendBonusAlerts?: boolean;
-  forwardMessages?: boolean;
-  shareSecurityAlerts?: boolean;
-  detailPageDesign?: string;
-  newPassowrd?: string;
+  accountSettings?: AccountSettings;
   amountOngoingProjects?: number;
   amountCompletedProjects?: number;
   amountCancelledProjects?: number;
@@ -240,7 +227,7 @@ export interface FreelancerData extends User {
   Languages: Language[];
   plusMember: boolean;
   remark?: string;
-  projects?: Project[];
+  // projects?: Project[];
   craftedProjects?: CraftedProject[];
   experience?: UserExperience[];
   education?: Education[];

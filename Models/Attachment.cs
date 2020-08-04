@@ -8,7 +8,7 @@ namespace JobPortal.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid AttachmentId { get; set; }
+		public Guid Id { get; set; }
 		public string FileName { get; set; }
 		public long FileSize { get; set; }
 		public string FileLink { get; set; }

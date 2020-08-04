@@ -20,7 +20,7 @@ import '../../css/transitions.css';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header1';
 import loadScripts1 from '../Functions/LoadScripts';
-import { ValidateCode } from '../PostData/Register';
+import { ValidateCode } from '../PostData/Register_old';
 
 //* <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script> */
 

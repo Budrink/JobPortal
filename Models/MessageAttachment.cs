@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobPortal.Models
 {
-	public class Language
+	public class MessageAttachment
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid LanguageId { get; set; }
-	  public string Name { get; set; }
+		public Guid Id { get; set; }
+		[ForeignKey("Attachment")]
+		public Guid AttachmentId { get; set; }
+		[ForeignKey("Message")]
+		public Guid MessageId { get; set; }
 	}
 }

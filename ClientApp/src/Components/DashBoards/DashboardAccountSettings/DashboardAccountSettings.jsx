@@ -22,7 +22,7 @@ import { GetFreelancerAccountSettings } from '../../GetData/GetFreelancerAccount
 import DeleteAccountForm from './DeleteAccountForm';
 import LanguageList from '../LanguageList';
 import CurrencyList from '../CurrencyList';
-import { PostAccountSettingsData } from '../../PostData/PostData';
+import { PostAccountSettings } from '../../PostData/PostAccountSettings';
 
 class DashboardAccountSettigns extends React.Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class DashboardAccountSettigns extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     // console.log(this.state.freelancer);
-    PostAccountSettingsData(this.state.freelancer);
+    PostAccountSettings(this.state.accountSettings);
     // let result = await SendPassword();
     // this.setState({ errors: [''] });
     // this.setState({ message: result.messages });

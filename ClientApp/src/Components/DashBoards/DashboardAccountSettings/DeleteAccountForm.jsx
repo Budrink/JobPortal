@@ -48,7 +48,7 @@ class DeleteAccountForm extends Component {
       this.state.unsubscribeMessage.password !==
       this.state.unsubscribeMessage.password2
     ) {
-      this.setState({ errorMessage: "Passwords don 't match" }, () =>
+      this.setState({ errorMessage: "Passwords don't match" }, () =>
         this.setState({ showError: true }),
       );
       console.log(this.state.errorMessage);
@@ -57,7 +57,7 @@ class DeleteAccountForm extends Component {
     }
 
     PostDeleteAccount(this.state.unsubscribeMessage);
-    let iD = this.props.iD;
+    // let iD = this.props.iD;
   };
   createErrorWindow() {
     if (this.state.showError === true) {

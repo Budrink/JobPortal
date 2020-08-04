@@ -20,6 +20,7 @@ namespace JobPortal.Repository
 		Task Create(TEntity item);
 		void Update(TEntity item);
 		void Remove(TEntity item);
+		void RemoveRange(IEnumerable<TEntity> collection);
 		Task SaveChanges();
 	}
 
@@ -65,6 +66,11 @@ namespace JobPortal.Repository
 		public void Remove(TEntity item)
 		{
 			_dbSet.Remove(item);
+		}
+
+		public void RemoveRange(IEnumerable<TEntity> collection)
+		{
+			_dbSet.RemoveRange(collection);
 		}
 		
     }

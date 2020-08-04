@@ -1,26 +1,31 @@
-import { wait } from '../GetData/wait';
+import { http } from '../Data/Http';
 import { File, Message } from '../Data/Data';
 export const SendMail = async (
-  senderId: string,
+ // senderId: string,
   receiverId: string,
   text: string,
   attachments?: File[],
-) => {
-  // return the new list of m,essages with the new one
-
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-  //  let messages: Message[];
-
-  // messages = [];
-  // return messages;
-  return true;
+):   Promise<any> => {
+    let requestBody;
+    requestBody = {
+      senderId: localStorage.getItem('userId'),
+      receiverId: receiverId,
+      // userBunnerFile?: File;
+      text: text,
+      attachments:attachments,
+     };
+    // console.log(requestBody);
+    let response;
+    try {
+      response = await http({
+        path: `sendmail`,
+        method: 'POST',
+        body: requestBody,
+      });
+      return response.parsedBody;
+    } catch (error) {
+      window.alert(error);
+      return error;
+    }
+  };
 };

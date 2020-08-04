@@ -20,7 +20,7 @@ namespace JobPortal.Models
 		public CompetenceLevel CompetenceLevel { get; set; }
 		public virtual Country Country { get; set; }
 		public virtual IEnumerable<Skill> SkillsRequired { get; set; }
-		public virtual IEnumerable<Attachment> Attachments { get; set; }
+		public virtual IEnumerable<file> Attachments { get; set; }
 		public virtual IEnumerable<Tag> Tags { get; set; }
 		public int ProposalsCount { get; set; }
 		public virtual IEnumerable<User> HiredFreelancers { get; set; }

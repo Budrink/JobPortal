@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,8 @@ namespace JobPortal.Models
 		public MessageStatus Status { get; set; }
 		public DateTime Date { get; set; }
 		public string Text { get; set; }
+		public IEnumerable<MessageAttachment> Attachments { get; set; }
+  
 	}
 
 	public enum MessageStatus

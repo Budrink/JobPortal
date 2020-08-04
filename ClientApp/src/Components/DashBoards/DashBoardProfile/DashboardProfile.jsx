@@ -31,7 +31,7 @@ import ProjectList from './ProjectList';
 import SidePanel from '../SidePanel';
 import { PhotoUpload } from './PhotoUpload';
 import { ProjectDefaultImgPath } from '../../Data/GlobalValues';
-import { PostFreelancerData } from '../../PostData/PostData';
+import { PostFreelancerData } from '../../PostData/PostFreelancerData';
 
 class DashboardProfile extends React.Component {
   constructor(props) {
@@ -42,11 +42,11 @@ class DashboardProfile extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleExperienceChange = this.handleExperienceChange.bind(this);
-    this.handleSkillsChange = this.handleSkillsChange.bind(this);
-    this.handleEducationChange = this.handleEducationChange.bind(this);
-    this.handleAwardChange = this.handleAwardChange.bind(this);
-    this.handleProjectChange = this.handleProjectChange.bind(this);
+    // this.handleExperienceChange = this.handleExperienceChange.bind(this);
+    // this.handleSkillsChange = this.handleSkillsChange.bind(this);
+    // this.handleEducationChange = this.handleEducationChange.bind(this);
+    // this.handleAwardChange = this.handleAwardChange.bind(this);
+    // this.handleProjectChange = this.handleProjectChange.bind(this);
   }
 
   iD = this.props.match.params.userId;
@@ -67,37 +67,37 @@ class DashboardProfile extends React.Component {
     console.log(this.state.freelancer);
   };
 
-  handleSkillsChange(userSkills) {
-    let freelancer = this.state.freelancer;
-    freelancer.userSkills = userSkills;
-    this.setState({ freelancer: freelancer });
-  }
-  handleExperienceChange(userExperience) {
-    let freelancer = this.state.freelancer;
-    freelancer.experience = userExperience;
-    this.setState({ freelancer: freelancer });
-  }
-  handleEducationChange(userEducation) {
-    let freelancer = this.state.freelancer;
-    freelancer.education = userEducation;
-    this.setState({ freelancer: freelancer });
-  }
-  handleProjectChange(projects) {
-    let freelancer = this.state.freelancer;
-    freelancer.projects = projects;
-    this.setState({ freelancer: freelancer });
-  }
+  // handleSkillsChange(userSkills) {
+  //   let freelancer = this.state.freelancer;
+  //   freelancer.userSkills = userSkills;
+  //   this.setState({ freelancer: freelancer });
+  // }
+  // handleExperienceChange(userExperience) {
+  //   let freelancer = this.state.freelancer;
+  //   freelancer.experience = userExperience;
+  //   this.setState({ freelancer: freelancer });
+  // }
+  // handleEducationChange(userEducation) {
+  //   let freelancer = this.state.freelancer;
+  //   freelancer.education = userEducation;
+  //   this.setState({ freelancer: freelancer });
+  // }
+  // handleProjectChange(projects) {
+  //   let freelancer = this.state.freelancer;
+  //   freelancer.projects = projects;
+  //   this.setState({ freelancer: freelancer });
+  // }
 
-  handleAwardChange(awards) {
-    let freelancer = this.state.freelancer;
-    freelancer.education = awards;
-    this.setState({ freelancer: freelancer });
-  }
+  // handleAwardChange(awards) {
+  //   let freelancer = this.state.freelancer;
+  //   freelancer.education = awards;
+  //   this.setState({ freelancer: freelancer });
+  // }
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    ///
-    PostFreelancerData();
+
+    PostFreelancerData(this.state.freelancer);
     // let result = await SendPassword();
     // this.setState({ errors: [''] });
     // this.setState({ message: result.messages });

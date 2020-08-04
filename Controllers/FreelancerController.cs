@@ -21,15 +21,28 @@ namespace JobPortal.Controllers
 	    private readonly IGenericRepository<Contract> _contractRepository;
 	    private readonly UserManager<User> _userManager;
 	    private readonly IGenericRepository<User> _userRepository;
-
-		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository)
+		private readonly IGenericRepository<Award> _awardRepository;
+		private readonly IGenericRepository<Project> _projectRepository;
+		private readonly IGenericRepository<UserSkill> _userSkillRepository;
+		private readonly IGenericRepository<UserLanguage> _userLanguageRepository;
+		private readonly IGenericRepository<UserExperience> _userExperienceRepository;
+		private readonly IGenericRepository<Education> _educationRepository;
+		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository, IGenericRepository<Award> awardRepository,
+			IGenericRepository<Project> projectRepository, IGenericRepository<UserSkill> userSkillRepository, IGenericRepository<UserLanguage> userLanguageRepository,
+			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository)
 	    {
 		    _freelancerRepository = freelancerRepository;
 		    _proposalRepository = proposalRepository;
 		    _contractRepository = contractRepository;
 		    _userManager = userManager;
 		    _userRepository = userRepository;
-	    }
+			_awardRepository = awardRepository;
+			_projectRepository = projectRepository;
+			_userSkillRepository = userSkillRepository;
+			_userLanguageRepository = userLanguageRepository;
+			_userExperienceRepository = userExperienceRepository;
+			_educationRepository = educationRepository;
+		}
 
 	    [HttpGet]
 	    [Route("proposalList")]
@@ -47,5 +60,158 @@ namespace JobPortal.Controllers
 		    return Ok(proposals);
 	    }
 
-    }
+
+		
+		public class UserCompany
+
+		{
+	     public string Name { get; set; }
+			public string Image { get; set; }
+
+		}
+
+
+		public class AccountSettingsDto
+		{
+			public string UserId { get; set; }
+			public bool publicProfile { get; set; }
+			public bool SharePhoto { get; set; }
+			public bool ShowFeedback { get; set; }
+			public bool ProfileSearchible { get; set; }
+			public bool DisableAccount { get; set; }
+			public bool DisableTemporarily { get; set; }
+
+			public string LanguageId { get; set; }
+			public string CurrencyId { get; set; }
+			public bool SendWeeklyAlerts { get; set; }
+			public bool SendBonusAlerts { get; set; }
+			public bool ForwardMessages { get; set; }
+			public bool ShareSecurityAlerts { get; set; }
+
+			public string DetailPageDesign { get; set; }
+			public string NewPassowrd { get; set; }
+
+		}
+		public class FreelancerDTO
+		{
+			public string UserId { get; set; }
+			public string UserPhoto { get; set; }
+
+			//userBunnerFile?: File;
+
+			public string FirstName { get; set; }
+			public string LastName { get; set; }
+			//public string Email { get; set; }
+			public string Gender { get; set; }
+			public string CountryId { get; set; }
+			public string Address { get; set; }
+			public double Longitude { get; set; }
+			public double Latitude { get; set; }
+			public int NumberOfEmployees { get; set; }
+			public string Department { get; set; }
+			public string Description { get; set; }
+			public string Title { get; set; }
+			public Award[] Awards { get; set; }
+			public Project[] Projects { get; set; }
+
+
+			public double HourRates { get; set; }
+			public int ServedHours { get; set; }
+
+			public UserSkill[] UserSkills { get; set; }
+			public int EnglishLevel { get; set; }
+
+			public UserLanguage[] Languages { get; set; }
+
+			public string Remark { get; set; }
+
+			public UserExperience[] Experience { get; set; }
+			public Education[] Education { get; set; }
+			// tagList?: string[];
+			//  globalCategory?: GlobalCategoryData;
+			public UserCompany UserCompany { get; set; }
+		}
+		[HttpPost]
+		[Route("accountsettings")]
+		public async Task<IActionResult> AccountSettings([FromBody] AccountSettingsDto request)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(request.UserId);
+				var freelancer = user.Freelancer;
+	
+				freelancer.publicProfile = request.publicProfile;
+				freelancer.SharePhoto = request.SharePhoto;
+				freelancer.ShowFeedback = request.ShowFeedback;
+				freelancer.ProfileSearchible = request.ProfileSearchible;
+				freelancer.DisableAccount = request.DisableAccount;
+				freelancer.DisableTemporarily = request.DisableTemporarily;
+				freelancer.LanguageId = request.LanguageId;
+				freelancer.CurrencyId = request.CurrencyId;
+				freelancer.SendWeeklyAlerts = request.SendWeeklyAlerts;
+				freelancer.SendBonusAlerts = request.SendBonusAlerts;
+				freelancer.ForwardMessages = request.ForwardMessages;
+				freelancer.ShareSecurityAlerts = request.ShareSecurityAlerts;
+
+				freelancer.DetailPageDesign = request.DetailPageDesign;
+				freelancer.NewPassowrd = request.NewPassowrd;
+			
+				await _freelancerRepository.SaveChanges();
+				return Ok(freelancer);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+	
+	[HttpPost]
+		[Route("changefreelancer")]
+		public async Task<IActionResult> ChangeUser([FromBody] FreelancerDTO request)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(request.UserId);
+				var freelancer = user.Freelancer;
+			
+				user.UserPhoto = request.UserPhoto;
+				user.FirstName = request.FirstName;
+				user.LastName = request.LastName;
+				freelancer.Address = request.Address;
+				freelancer.Longitude = request.Longitude;
+				freelancer.Latitude = request.Latitude;
+				freelancer.NumberOfEmployees = request.NumberOfEmployees;
+				freelancer.Department = request.Department;
+				freelancer.Description = request.Description;
+				freelancer.Title = request.Title;
+				_awardRepository.RemoveRange(freelancer.Awards);
+				freelancer.Awards = request.Awards;
+				_projectRepository.RemoveRange(freelancer.Projects);
+				freelancer.Projects = request.Projects;
+		    	freelancer.HourRates = request.HourRates;
+				freelancer.ServedHours = request.ServedHours;
+
+				_userSkillRepository.RemoveRange(freelancer.UserSkills);
+				freelancer.UserSkills = request.UserSkills;
+				freelancer.EnglishLevel = request.EnglishLevel;
+
+				_userLanguageRepository.RemoveRange(freelancer.Languages);
+				freelancer.Languages = request.Languages;
+				freelancer.Remark = request.Remark;
+				_userExperienceRepository.RemoveRange(freelancer.Experience);
+				freelancer.Experience = request.Experience;
+				_educationRepository.RemoveRange(freelancer.Education);
+				freelancer.Education = request.Education;
+				freelancer.CompanyName = request.UserCompany.Name;
+				freelancer.CompanyImage = request.UserCompany.Image;
+					
+				await _freelancerRepository.SaveChanges();
+				return Ok(freelancer);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+	}
 }
