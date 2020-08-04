@@ -14,12 +14,13 @@ interface Response {
 export const FirstRegister = async (data: RegisterData): Promise<boolean> => {
   let response = await http({
     path: `checkUserEmail?email=${data.email}`,
-    method: 'POST',
+    method: 'GET',
   });
-  // if (response.ok !== true) {
-  //   // window.alert(response);
-  // }
-  const result = response.parsedBody === 'true';
+
+  const result = response.parsedBody === true;
+
+  // console.log(response.parsedBody);
+  // console.log(result);
   return result; //response.parsedBody;
 };
 

@@ -24,41 +24,47 @@ namespace JobPortal.Controllers
 	}
 
 	[Route("api/[controller]")]
-    [ApiController]
-    public class ProposalsController : ControllerBase
-    {
-	    private readonly IGenericRepository<JobProposal> _proposalRepository;
+	[ApiController]
+	public class ProposalsController : ControllerBase
+	{
+		private readonly IGenericRepository<JobProposal> _proposalRepository;
 
-	    public ProposalsController(IGenericRepository<JobProposal> proposalRepository)
-	    {
-		    _proposalRepository = proposalRepository;
-	    }
-
-
-	    [HttpGet]
-	    [Route("job/{jobId}")]
-		[ProducesResponseType(typeof(List<ProposalDto>), (int)HttpStatusCode.OK)]
-	    public async Task<IActionResult> GetProposalList([FromRoute] string jobId)
-	    {
-		    try
-		    {
-			    var proposalList = await _proposalRepository.Get(x => x.Job.JobId == Guid.Parse(jobId))
-				    .Select(x=> new ProposalDto
-				    {
-					    Id = x.ProposalId, JobId = x.Job.JobId, UserId = x.Freelancer.User.Id,
-					    UserPhoto = x.Freelancer.User.Photo,
-					    Terms = x.Terms,
-					    CoverLetter = x.CoverLetter,
-					    ProposalDate = x.ProposalDate,
-					    ProposalStatus = x.ProposalStatus
-				    }).ToListAsync();
-			    return Ok(proposalList);
-		    }
-		    catch (Exception e)
-		    {
-			    return NotFound(e.Message);
-		    }
+		public ProposalsController(IGenericRepository<JobProposal> proposalRepository)
+		{
+			_proposalRepository = proposalRepository;
 		}
 
-    }
+
+		[HttpGet]
+		[Route("job/{jobId}")]
+		[ProducesResponseType(typeof(List<ProposalDto>), (int)HttpStatusCode.OK)]
+		public async Task<IActionResult> GetProposalList([FromRoute] string jobId)
+		{
+			try
+			{
+				var proposalList = await _proposalRepository.Get(x => x.Job.JobId == Guid.Parse(jobId))
+					.Select(x => new ProposalDto
+					{
+						Id = x.ProposalId, JobId = x.Job.JobId, UserId = x.Freelancer.User.Id,
+						UserPhoto = x.Freelancer.User.Photo,
+						Terms = x.Terms,
+						CoverLetter = x.CoverLetter,
+						ProposalDate = x.ProposalDate,
+						ProposalStatus = x.ProposalStatus
+					}).ToListAsync();
+				return Ok(proposalList);
+			}
+			catch (Exception e)
+			{
+				return NotFound(e.Message);
+			}
+		}
+
+		//[HttpPost]
+	//	[Route()]
+
+
+
+
+	}
 }

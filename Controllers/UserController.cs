@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ using JobPortal.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.IdentityModel.Tokens;
 
 namespace JobPortal.Controllers
@@ -57,12 +59,20 @@ namespace JobPortal.Controllers
 			return Ok(claims);
 		}
 
+		public class LoginDto
+		{
+			public string UserName { get; set; }
+			public string Password { get; set; }
+	
+		}
+
+
 		[HttpPost]
 		[Route("token")]
-		public async Task<IActionResult> Token(string username, string password)
+		public async Task<IActionResult> Token([FromBody]  LoginDto loginData)
 		{
-			var user = await _userManager.FindByEmailAsync(username);
-			if (!(await _userManager.CheckPasswordAsync(user, password)))
+			var user = await _userManager.FindByEmailAsync(loginData.UserName);
+			if (!(await _userManager.CheckPasswordAsync(user, loginData.Password)))
 				return BadRequest("Invalid password or username");
 
 			var roles = string.Join(';',await _userManager.GetRolesAsync(user));
@@ -97,7 +107,7 @@ namespace JobPortal.Controllers
 
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Route("checkUserEmail")]
 		public async Task<IActionResult> IsUserWithEmailExist(string email)
 	    {
@@ -115,7 +125,7 @@ namespace JobPortal.Controllers
 
 	    [HttpPost]
 		[Route("Register")]
-	    public async Task<IActionResult> Register(RegisterDataModel model)
+	    public async Task<IActionResult> Register([FromBody] RegisterDataModel model)
 	    {
 		    switch (model.TypeOfUser.ToLower())
 		    {
@@ -169,10 +179,95 @@ namespace JobPortal.Controllers
 			if (result.Succeeded)
 			{
 				await _userManager.AddToRoleAsync(user, "company");
-				await _companyRepository.Create(user.Company);
 			}
 			return Ok(user);
 
 	    }
-	}
+
+		public class  AwardDTO
+		{
+			public string id { get; set; }
+			public string title { get; set; }
+			public DateTime date { get; set; }
+			public string img { get; set; } 
+			public string[] files { get; set; } 
+ 	}
+		public class ProjectDTO
+		{
+			public string id { get; set; }
+			public string title { get; set; }
+			public  string url { get; set; }
+			public string img { get; set; }
+			public string[] files { get; set; }
+		}
+
+
+		public class UserDto
+		{
+			public string userId { get; set; }
+			public string userPhoto { get; set; }
+			public string userPhotoFile { get; set; }
+			//userBunnerFile?: File;
+
+			public string firstName { get; set; }
+			public string lastName { get; set; }
+			public string email { get; set; }
+			public string gender { get; set; }
+			public DateTime joinDate { get; set; }
+			public string countryId { get; set; }
+			public string address { get; set; }
+			public string longitude { get; set; }
+			public string latitude { get; set; }
+			public int numberOfEmployees { get; set; }
+			public string department { get; set; }
+			public string description { get; set; }
+			public string title { get; set; }
+			public AwardDTO[] awards { get; set; }
+			public ProjectDTO[] projects { get; set; }
+
+			public bool publicProfile { get; set; }
+			public bool sharePhoto { get; set; }
+			public bool showFeedback { get; set; }
+			public bool profileSearchible { get; set; }
+			public bool disableAccount {get;set;}
+             public bool disableTemporarily { get; set; }
+			
+			public string languageId { get; set; }
+			public string currencyId { get; set; }
+			public bool  sendWeeklyAlerts { get; set; }
+			public bool sendBonusAlerts { get; set; }
+			public bool forwardMessages { get; set; }
+			public bool shareSecurityAlerts { get; set; }
+  
+			public string detailPageDesign { get; set; }
+			public string newPassowrd { get; set; }
+			public int amountOngoingProjects { get; set; }
+			public int amountCompletedProjects { get; set; }
+			public int  amountCancelledProjects { get; set; }
+			savedFreelancers?: string[];
+  savedJobs?: string[];
+  savedCompanies?: string[];
+		userRates: string;
+  feedbacksCount: number;
+  userFeedbacks: userFeedback[];
+  hourRates: string;
+  //   @valentine20658;
+
+  servedHours: string;
+  userSkills?: UserSkill[];
+  userType: UserType;
+  englishLevel: EnglishLevel;
+  Languages: Language[];
+  plusMember: boolean;
+  remark?: string;
+  projects?: Project[];
+  craftedProjects?: CraftedProject[];
+  experience?: UserExperience[];
+  education?: Education[];
+  tagList?: string[];
+  globalCategory?: GlobalCategoryData;
+  userCompany?: { companyName: string; companyImg: string
+	};
+
+}
 }

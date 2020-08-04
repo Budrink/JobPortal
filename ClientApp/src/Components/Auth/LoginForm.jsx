@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LoginFetch, SendPassword } from '../GetData/Login';
+import { LoginFetch, SendPassword } from '../PostData/Login';
 import Modal from '../Functions/Modal';
 export default class LoginForm extends PureComponent {
   constructor(props) {
@@ -30,7 +30,7 @@ export default class LoginForm extends PureComponent {
   }
   handleChange = (event) => {
     const input = event.target;
-    console.log(event.target);
+    //  console.log(event.target);
     const value = input.type === 'checkbox' ? input.checked : input.value;
     this.setState({
       [input.name]: value,

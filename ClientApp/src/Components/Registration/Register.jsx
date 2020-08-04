@@ -31,7 +31,8 @@ export default class Register extends Component {
     this.Logout = this.Logout.bind(this);
   }
   componentDidMount() {
-    loadScripts1(this.instance, false);
+    console.log('register1');
+    loadScripts1(document.body);
   }
   Logout() {
     // console.log('Logout 2');
@@ -49,7 +50,7 @@ export default class Register extends Component {
       <div
         className="wt-wrapper wt-haslayout"
         id="wt-wrapper"
-        ref={(el) => (this.instance = el)}
+        //      ref={(el) => (this.instance = el)}
       >
         {/* Content Wrapper Start */}
         <div className="wt-contentwrapper">

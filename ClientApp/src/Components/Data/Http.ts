@@ -13,7 +13,9 @@ export interface HttpResponse<RESB> extends Response {
 export const http = <REQB, RESB>(
   config: HttpRequest<REQB>,
 ): Promise<HttpResponse<RESB>> => {
-  console.log(JSON.stringify(config.body));
+  if (config.body !== undefined) {
+    console.log(JSON.stringify(config.body));
+  }
   return new Promise((resolve, reject) => {
     const request = new Request(`${webAPIUrl}${config.path}`, {
       method: config.method || 'get',

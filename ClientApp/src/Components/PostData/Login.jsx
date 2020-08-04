@@ -1,4 +1,4 @@
-import { wait } from './wait';
+import { wait } from '../GetData/wait';
 import { http, FetchData } from '../Data/Http';
 import { userPhotoPath } from '../Data/GlobalValues';
 // interface LoginResultProps {
@@ -9,13 +9,19 @@ import { userPhotoPath } from '../Data/GlobalValues';
 // }
 
 export const LoginFetch = async (userName, password, rememeberMe) => {
-  console.log(1);
+  //console.log(1);
   let response = undefined;
   let loginResult;
+  const requestBody = {
+    userName: userName,
+    password: password,
+  };
+
   try {
     response = await http({
-      path: `token?username=${userName}&password=${password}`,
+      path: `token`,
       method: 'POST',
+      body: requestBody,
     });
     console.log(2);
     console.log(response);

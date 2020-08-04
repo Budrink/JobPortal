@@ -159,6 +159,7 @@ export interface CompanyData extends User {
 }
 
 export interface AccountSettings {
+  iD: string;
   publicProfile?: boolean;
   sharePhoto?: boolean;
   showFeedback?: boolean;
@@ -196,7 +197,21 @@ export interface User {
   title?: string;
   awards?: Award[];
   projects?: Project[];
-  accountSettings?: AccountSettings;
+  //accountSettings?: AccountSettings;
+  publicProfile?: boolean;
+  sharePhoto?: boolean;
+  showFeedback?: boolean;
+  profileSearchible?: boolean;
+  disableAccount?: boolean;
+  disableTemporarily?: boolean;
+  language?: Language;
+  currency?: Currency;
+  sendWeeklyAlerts?: boolean;
+  sendBonusAlerts?: boolean;
+  forwardMessages?: boolean;
+  shareSecurityAlerts?: boolean;
+  detailPageDesign?: string;
+  newPassowrd?: string;
   amountOngoingProjects?: number;
   amountCompletedProjects?: number;
   amountCancelledProjects?: number;

@@ -1,6 +1,8 @@
 // import { useEffect } from 'react';
 // import react, { FC } from 'react';
 
+import { element } from 'prop-types';
+
 var loadScript = function (src, Element) {
   var tag = document.createElement('script');
   tag.async = false;
@@ -15,6 +17,7 @@ export const loadTinyMCE = function (Element) {
 };
 
 var loadScripts1 = function (Element) {
+  console.log(Element);
   loadScript('/js/vendor/jquery-3.3.1.js', Element);
   loadScript('/js/vendor/jquery-library.js', Element);
   loadScript('/js/vendor/bootstrap.min.js', Element);

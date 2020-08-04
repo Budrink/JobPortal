@@ -21,6 +21,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<Country>();
 			builder.Entity<Freelancer>().HasOne(x=> x.User).WithOne(x => x.Freelancer);
 			builder.Entity<Company>().HasOne(x => x.User).WithOne(x => x.Company);
+			builder.Entity<Offer>();
 			builder.Entity<Job>();
 			builder.Entity<JobProposal>();
 			builder.Entity<Message>();

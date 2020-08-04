@@ -13,7 +13,7 @@ export default class Homev2 extends Component {
     this.Logout = this.Logout.bind(this);
   }
   componentDidMount() {
-    loadScripts1(this.instance, false);
+    loadScripts1(document.body);
   }
   LoginSuccessfull() {}
   Logout() {
@@ -22,7 +22,7 @@ export default class Homev2 extends Component {
 
   render() {
     return (
-      <div className="wt-login">
+      <div className="wt-login" ref={(el) => (this.instance = el)}>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>Home</title>

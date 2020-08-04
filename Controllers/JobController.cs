@@ -5,25 +5,65 @@ using System.Threading.Tasks;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobPortal.Controllers
 {
+	public class OfferDto
+	{
+		public string SenderId { get; set; }
+		public string FreelancerId { get; set; }
+		public string JobId { get; set; }
+		public string Description { get; set; }
+		public string Deadline { get; set; }
+	}
+
     [Route("api/[controller]")]
     [ApiController]
     public class JobController : ControllerBase
     {
 	    private readonly IGenericRepository<Job> _jobRepository;
 	    private readonly IGenericRepository<Freelancer> _freelancerRepository;
+		private readonly UserManager<User> _userManager;
 	    private readonly IGenericRepository<Company> _companyRepository;
+		private readonly IGenericRepository<Offer> _offerRepository;
 
-	    public JobController(IGenericRepository<Job> jobRepository, IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<Company> companyRepository)
+	    public JobController(IGenericRepository<Job> jobRepository, IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<Company> companyRepository, IGenericRepository<Offer> offerRepository, UserManager<User> userManager)
 	    {
 		    _jobRepository = jobRepository;
+			_userManager = userManager;
 		    _freelancerRepository = freelancerRepository;
 		    _companyRepository = companyRepository;
+			_offerRepository = offerRepository;
 	    }
+
+		[HttpPost]
+		[Route("sendoffer")]
+		public async Task<IActionResult> SendOffer([FromBody] OfferDto request)
+		{
+			try
+			{
+				var freelancer = await _userManager.FindByIdAsync(request.FreelancerId);
+				var company = await _companyRepository.FindById(Guid.Parse(request.SenderId));
+				var job = await _jobRepository.FindById(Guid.Parse(request.JobId));
+				var offer = new Offer
+				{
+					Freelancer = freelancer,
+					Job = job,
+					Description = request.Description,
+					Deadline = DateTime.Parse(request.Deadline)
+				};
+				await _offerRepository.Create(offer);
+				await _offerRepository.SaveChanges();
+				return Ok(offer);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
 	    [HttpGet]
 	    [Route("{jobId}")]

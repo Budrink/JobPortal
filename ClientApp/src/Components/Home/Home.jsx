@@ -31,23 +31,21 @@ class Home extends Component {
   LoginSuccessfull() {
     //  this.props.history.push('/Home');
   }
+
   componentDidMount() {
-    loadScripts1(this.instance, false);
+    //  loadScripts1(this.instance, false);
+    loadScripts1(document.body);
   }
   handleSubmit = (values) => {};
 
   render() {
     return (
-      <div className="wt-login">
+      <div className="wt-login" ref={(el) => (this.instance = el)}>
         <title>Home</title>
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
 
-        <div
-          id="wt-wrapper"
-          ref={(el) => (this.instance = el)}
-          className="wt-wrapper wt-haslayout"
-        >
+        <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
           {/*  Content Wrapper Start  */}
           <div className="wt-contentwrapper">
             <Header login={this.LoginSuccessfull} Logout={this.Logout} />

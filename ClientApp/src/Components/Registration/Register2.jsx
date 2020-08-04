@@ -31,7 +31,8 @@ export default class Register2 extends Component {
     this.Logout = this.Logout.bind(this);
   }
   componentDidMount() {
-    loadScripts1(this.instance, false);
+    // loadScripts1(this.instance, false);
+    loadScripts1(document.body);
   }
 
   Logout() {

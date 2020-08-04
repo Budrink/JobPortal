@@ -19,7 +19,8 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import LoginForm from '../Auth/LoginForm';
 import SideBar from './SideBar';
-import { RefreshLoginFetch } from '../GetData/Login';
+import { RefreshLoginFetch } from '../PostData/Login';
+import loadScripts1 from '../Functions/LoadScripts';
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -33,15 +34,13 @@ class Header extends Component {
   Login() {
     this.setState({ loginVisible: false });
     this.setState({ loginVisible: false });
-
-    // loadScripts1(this.instance, false);
-    //}
   }
   Logout() {
     this.setState({ loginVisible: true });
     this.props.Logout();
   }
   componentDidMount() {
+    // loadScripts1(this.instance, false);
     ///check refreshToken!!!!
     if (localStorage.getItem('login') === 'true') {
       this.setState({ loginVisible: false });
@@ -93,7 +92,11 @@ class Header extends Component {
   }
   render(sideCondext = this.createSideContext()) {
     return (
-      <div className="wt-header wt-haslayout" id="wt-header">
+      <div
+        className="wt-header wt-haslayout"
+        id="wt-header"
+        ref={(el) => (this.instance = el)}
+      >
         <div className="wt-navigationarea">
           <div className="container-fluid">
             <div className="row">

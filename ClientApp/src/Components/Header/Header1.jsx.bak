@@ -19,7 +19,7 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import LoginForm from '../Auth/LoginForm';
 import SideBar from './SideBar';
-import { RefreshLoginFetch } from '../PostData/Login';
+import { RefreshLoginFetch } from '../GetData/Login';
 import SeekForm from '../Forms/SeekForm';
 import loadScripts1 from '../Functions/LoadScripts';
 
@@ -46,6 +46,7 @@ class Header1 extends Component {
     window.alert(JSON.stringify(values));
   };
   componentDidMount() {
+    loadScripts1(this.instance, false);
     ///check refreshToken!!!!
     if (localStorage.getItem('login') === 'true') {
       this.setState({ loginVisible: false });
@@ -55,7 +56,6 @@ class Header1 extends Component {
         this.setState({ loginVisible: 'false' });
       } else this.setState({ loginVisible: true });
     }
-    //   loadScripts1(this.instance, false);
   }
   createSideContext() {
     if (this.state.loginVisible) {
@@ -111,7 +111,7 @@ class Header1 extends Component {
                     <img alt="company logo here" src="/images/logo.png" />
                   </Link>
                 </strong>
-                <SeekForm onSubmit={this.submit} />
+                {/* <SeekForm onSubmit={this.submit} /> */}
                 <div className="wt-rightarea">
                   <nav className="wt-nav navbar-expand-lg" id="wt-nav">
                     <button
