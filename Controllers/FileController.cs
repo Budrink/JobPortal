@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using JobPortal.Models;
+using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +15,15 @@ namespace JobPortal.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-		[HttpPost]
+	    private readonly IGenericRepository<Attachment> _attachmentRepository;
+
+	    public FileController(IGenericRepository<Attachment> attachmentRepository)
+	    {
+		    _attachmentRepository = attachmentRepository;
+	    }
+
+
+	    [HttpPost]
 		[DisableRequestSizeLimit]
 		[Route("upload")]
 		public IActionResult UploadUserPhoto(IFormFile uploadedFile)
@@ -35,7 +45,14 @@ namespace JobPortal.Controllers
 						uploadedFile.CopyTo(stream);
 					}
 
-					return Ok(new { dbPath });
+					var attachment = new Attachment
+					{
+						FileName = uploadedFile.FileName,
+						FileLink = dbPath,
+						FileSize = uploadedFile.Length
+					};
+
+					return Ok(attachment);
 				}
 
 				return BadRequest();
