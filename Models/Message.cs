@@ -15,7 +15,7 @@ namespace JobPortal.Models
 		public MessageStatus Status { get; set; }
 		public DateTime Date { get; set; }
 		public string Text { get; set; }
-		public IEnumerable<MessageAttachment> Attachments { get; set; }
+		public virtual IEnumerable<MessageAttachment> Attachments { get; set; }
   
 	}
 
