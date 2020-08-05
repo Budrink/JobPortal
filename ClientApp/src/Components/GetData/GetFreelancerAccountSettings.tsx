@@ -45,6 +45,7 @@ export const GetFreelancerAccountSettings = async (
     userName: 'Valentine Mehring',
     password: 'sss',
     accountSettings: {
+      iD: '1',
       publicProfile: true,
       sharePhoto: true,
       showFeedback: true,

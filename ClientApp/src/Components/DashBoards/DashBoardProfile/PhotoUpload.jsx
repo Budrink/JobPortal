@@ -34,7 +34,7 @@ export class PhotoUpload extends React.Component {
     this.setState({ uploadText: 'Uploading' });
     let uploadedFiles = await PostFiles([
       {
-        iD: this.state.file.iD,
+        //  iD: this.state.file.iD,
         name: this.state.file.name,
         size: this.state.file.size,
         content: this.state.file.content,
