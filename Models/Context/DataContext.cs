@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobPortal.Models.Context
@@ -26,7 +27,18 @@ namespace JobPortal.Models.Context
 			builder.Entity<JobProposal>();
 			builder.Entity<Message>();
 			builder.Entity<Skill>();
+			builder.Entity<Attachment>();
+			builder.Entity<MessageAttachment>();
+			builder.Entity<Award>();
+			builder.Entity<Department>();
 			builder.Entity<Tag>();
+			builder.Entity<Education>();
+			builder.Entity<Language>();
+			builder.Entity<MessageAttachment>();
+			builder.Entity<Project>();
+			builder.Entity<UserExperience>();
+			builder.Entity<UserLanguage>();
+			builder.Entity<UserSkill>();
 
 		}
 	}

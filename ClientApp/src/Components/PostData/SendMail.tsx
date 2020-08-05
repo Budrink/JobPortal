@@ -10,7 +10,6 @@ export const SendMail = async (
     requestBody = {
       senderId: localStorage.getItem('userId'),
       receiverId: receiverId,
-      // userBunnerFile?: File;
       text: text,
       attachments:attachments,
      };

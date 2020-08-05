@@ -130,7 +130,7 @@ class DashboardMessages extends React.Component {
 
   renderCorrespondentsList() {
     if (this.state.className === '') {
-          return (
+      return (
         <div>
           {this.state.correspondentlist.map((corr) =>
             this.renderCorrespondent(corr),
@@ -234,8 +234,10 @@ class DashboardMessages extends React.Component {
                           </li>
                           <li>
                             <Messages
-                              userId={this.state.selectedCorrespondent.userId}
-                              userPhoto={
+                              correspondentId={
+                                this.state.selectedCorrespondent.userId
+                              }
+                              correspondentPhoto={
                                 this.state.selectedCorrespondent.userPhoto
                               }
                             />

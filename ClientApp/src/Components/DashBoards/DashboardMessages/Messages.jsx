@@ -22,8 +22,8 @@ class Messages extends React.Component {
     e.preventDefault();
 
     let result = await SendMail(
-      this.userId,
-      this.props.userId,
+      // this.userId,
+      this.props.correspondentId,
       this.state.text,
     );
     if (result === true) {
@@ -35,7 +35,7 @@ class Messages extends React.Component {
   }
 
   populateData = async () => {
-    const data = await GetMessages(this.props.userId);
+    const data = await GetMessages(this.props.correspondentId);
 
     this.setState({ messagelist: data }, () => {
       this.setState({ loading: false });
@@ -69,7 +69,7 @@ class Messages extends React.Component {
       img = this.userPhoto;
     } else {
       className = 'wt-offerermessage';
-      img = this.props.userPhoto;
+      img = this.props.correspondentPhoto;
     }
     let checkContent = null;
     if (message.status === 'opened') {

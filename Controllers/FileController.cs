@@ -26,7 +26,7 @@ namespace JobPortal.Controllers
 	    [HttpPost]
 		[DisableRequestSizeLimit]
 		[Route("upload")]
-		public IActionResult UploadUserPhoto(IFormFile uploadedFile)
+		public async Task<IActionResult> UploadUserPhoto(IFormFile uploadedFile)
 		{
 			try
 			{
@@ -51,6 +51,9 @@ namespace JobPortal.Controllers
 						FileLink = dbPath,
 						FileSize = uploadedFile.Length
 					};
+
+					await _attachmentRepository.Create(attachment);
+					await _attachmentRepository.SaveChanges();
 
 					return Ok(attachment);
 				}

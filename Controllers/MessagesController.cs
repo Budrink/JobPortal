@@ -41,17 +41,23 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
+	public class MessageDTO
+		{
+	    	public Guid SenderId { get; set; }
+			public Guid ReceiverId { get; set; }
+			public string Text { get; set; }
+			public IEnumerable<Attachment> Attachments { get; set; }
+		}
+
 		[HttpPost]
 		[Route("sendmail")]
-		public async Task<IActionResult> SendMail([FromBody] Message request)
+		public async Task<IActionResult> SendMail([FromBody] MessageDTO request)
 		{
 			try
 			{
-
 				var message = new Message
 			{
-		//public IEnumerable<MessageAttachments> Attachments { get; set; }
-
+	
 		SenderId = request.SenderId,
 		ReceiverId=request.ReceiverId,
 		Status= MessageStatus.New,
@@ -61,14 +67,14 @@ namespace JobPortal.Controllers
      	 await _messageRepository.Create(message);
         	var messageId = message.MessageId;
 				await _messageRepository.SaveChanges();
-				foreach (MessageAttachment messageAttachment in request.Attachments)
+				foreach (Attachment att in request.Attachments)
 			{
-				var att = new MessageAttachment
+				var messagAttachment = new MessageAttachment
 				{
 					MessageId = messageId,
-					AttachmentId = messageAttachment.AttachmentId
+					AttachmentId = att.Id,
 				};
- 				await _messageAttachmentRepository.Create(att);
+ 				await _messageAttachmentRepository.Create(messagAttachment);
 
 			}
 				await _messageRepository.SaveChanges();
