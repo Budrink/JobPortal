@@ -15,6 +15,6 @@ namespace JobPortal.Models
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public string Img { get; set; }
-        public string[] Files { get; set; }
+        public virtual IEnumerable<Attachment> Files { get; set; }
     }
 }

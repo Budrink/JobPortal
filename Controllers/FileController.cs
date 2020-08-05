@@ -29,15 +29,16 @@ namespace JobPortal.Controllers
 	    }
 
 
-	    [HttpPost]
+
+		[HttpPost]
 	    [DisableRequestSizeLimit]
 	    [Route("upload/form")]
-	    public IActionResult UploadUserPhoto(IFormFile uploadedFile)
+	    public async  Task<IActionResult> UploadUserPhoto(IFormFile uploadedFile, [FromForm] string path)
 	    {
 		    try
 		    {
 			    var folderName = Path.Combine("Content", "Images");
-			    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+			    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), path);
 
 			    if (uploadedFile.Length > 0)
 			    {
@@ -76,12 +77,12 @@ namespace JobPortal.Controllers
 		[HttpPost]
 		[DisableRequestSizeLimit]
 		[Route("upload/bytes")]
-		public IActionResult UploadUserPhoto([FromForm] FileUploadModel file)
+		public async Task<IActionResult> UploadUserPhoto([FromForm] FileUploadModel file, [FromForm] string path)
 		{
 			try
 			{
 				var folderName = Path.Combine("Content", "Images");
-				var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+				var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), path);
 
 				if (file.Content.Length > 0)
 				{
@@ -101,6 +102,9 @@ namespace JobPortal.Controllers
 						FileLink = dbPath,
 						FileSize = file.Content.Length
 					};
+
+					await _attachmentRepository.Create(attachment);
+					await _attachmentRepository.SaveChanges();
 
 					return Ok(attachment);
 				}
