@@ -43,6 +43,7 @@ namespace JobPortal
 				o.UseInMemoryDatabase(new Guid().ToString());
 				o.UseLazyLoadingProxies();
 			});
+
 			services.AddControllersWithViews().AddJsonOptions(options =>
 			{
 				options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -129,6 +130,15 @@ namespace JobPortal
 		{
 			// Enable middleware to serve generated Swagger as a JSON endpoint.
 			app.UseSwagger();
+
+			using (var scope = app.ApplicationServices.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetService<DataContext>();
+				var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
+				var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole<Guid>>>();
+				DatabaseInitializer.DBInit(context, userManager, roleManager);
+			}
+			
 
 			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
 			// specifying the Swagger JSON endpoint.
