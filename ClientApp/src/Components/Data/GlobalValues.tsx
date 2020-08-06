@@ -4,7 +4,7 @@ export const userPhotoPath = '/images/user/userlisting/';
 export const companyPath = '/images/company/';
 export const categoryPath = '/images/categories/';
 export const globalCategoryPath = '/images/categories/';
-export const globalCategoryDefalutIconPath = '/images/categories/img-01.png';
+export const globalCategoryDefalutIconPath = '/images/categories/img-07.jpg';
 
 export const categorySliderPath = '/images/categories/slider/';
 export const categorySliderDefalutIconPath =

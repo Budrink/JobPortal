@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { GetFreelancer } from '../GetData/GetFreelancer';
 import GetCompany from '../GetData/GetCompany';
+import { userDefaultIconPath } from '../Data/GlobalValues';
 
 class SideBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: undefined,
+      // user: undefined,
       userId: '',
       typeOfUser: 'company',
       companyName: '',
       loading: true,
+      userPhoto: userDefaultIconPath,
+      userName: '',
     };
     this.HandleLogout = this.HandleLogout.bind(this);
   }
@@ -31,28 +34,34 @@ class SideBar extends Component {
   }
 
   async populateData() {
-    let typeOfUser = this.props.typeOfUser; //localStorage.getItem('typeOfUser');
+    let typeOfUser = localStorage.getItem('typeOfUser');
     this.setState({ typeOfUser: typeOfUser });
     let userId = localStorage.getItem('userId');
     this.setState({ userId: userId });
-    switch (typeOfUser) {
-      case 'company':
-        /// можно взять короткий запрос
-        let company = await GetCompany(userId);
-        this.setState({ user: company });
-        this.setState({ companyName: company.companyName });
-        break;
-      case 'freelancer':
-        let freelancer = await GetFreelancer(userId);
-        this.setState({ user: freelancer });
-        const companyName = freelancer.userCompany
-          ? freelancer.userCompany.companyName
-          : '';
-        this.setState({ companyName: companyName });
-        break;
-      default:
-        break;
-    }
+    this.setState({ companyName: localStorage.getItem('company') });
+    this.setState({ userPhoto: localStorage.getItem('userPhoto') });
+    this.setState({ userName: localStorage.getItem('userName') });
+
+    console.log(localStorage.getItem('company'));
+
+    //   switch (typeOfUser) {
+    //     case 'company':
+    //       /// можно взять короткий запрос
+    //       let company = await GetCompany(userId);
+    //       this.setState({ user: company });
+    //       this.setState({ companyName: company.companyName });
+    //       break;
+    //     case 'freelancer':
+    //       let freelancer = await GetFreelancer(userId);
+    //       this.setState({ user: freelancer });
+    //       const companyName = freelancer.userCompany
+    //         ? freelancer.userCompany.companyName
+    //         : '';
+    //       this.setState({ companyName: companyName });
+    //       break;
+    //     default:
+    //       break;
+    //   }
   }
 
   componentDidMount() {
@@ -60,18 +69,15 @@ class SideBar extends Component {
     this.setState({ loading: false });
   }
   createContext() {
-    if (this.state.user === undefined) return <div />;
+    if (this.state.typeOfUser === undefined) return <div />;
     else {
       return (
         <div>
           <figure className="wt-userimg">
-            <img
-              alt={this.state.user.userName}
-              src={this.state.user.userPhoto}
-            />
+            <img alt={this.state.userName} src={this.state.userPhoto} />
           </figure>
           <div className="wt-username">
-            <h3>{this.state.user.userName}</h3>
+            <h3>{this.state.userName}</h3>
             <span>{this.state.companyName}</span>
           </div>
         </div>

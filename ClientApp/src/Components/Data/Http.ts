@@ -29,6 +29,9 @@ export const http = <REQB, RESB>(
     fetch(request)
       .then((res) => {
         console.log(res);
+        if (res.status !== 200) {
+          alert(res.status);
+        }
         response = res;
         try {
           return res.json();

@@ -31,7 +31,7 @@ class Messages extends React.Component {
     }
   }
   handleEditorChange(e) {
-    console.log(e.target.value);
+    //   console.log(e.target.value);
     this.setState({ content: e.target.value });
   }
 

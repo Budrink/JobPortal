@@ -1,6 +1,6 @@
 import { wait } from '../GetData/wait';
 import { http, FetchData } from '../Data/Http';
-import { userPhotoPath } from '../Data/GlobalValues';
+import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 // interface LoginResultProps {
 //   isLogin: boolean;
 //   userId?: string;
@@ -19,32 +19,44 @@ export const LoginFetch = async (userName, password, rememeberMe) => {
 
   try {
     response = await http({
-      path: `token`,
+      path: `User/token`,
       method: 'POST',
       body: requestBody,
     });
-    console.log(2);
-    console.log(response);
-    console.log(3);
-    // if (response.status === 200)
-    const accessToken = response.parsedBody.access_token;
-    console.log(accessToken);
-    localStorage.setItem('accessToken', accessToken);
+
+    console.log(response.parsedBody);
+    localStorage.setItem('accessToken', response.parsedBody.access_token);
     //Depends on rememberMe
     // localStorage.setItem('refreshToken', '2');
     //localStorage.setItem('loginTime', '2');
     localStorage.setItem('login', 'true');
-    localStorage.setItem('userType', 'freelancer');
-    localStorage.setItem('userName', 'Luanne ');
-    localStorage.setItem('userId', '1');
-    localStorage.setItem('company', 'amendoTech');
-    localStorage.setItem('userPhoto', userPhotoPath + 'img-10.png');
-    loginResult = { isLogin: true, userId: '1', userType: 'freelancer' };
+    localStorage.setItem('userType', response.parsedBody.roles);
+    localStorage.setItem(
+      'userName',
+      response.parsedBody.firstName + ' ' + response.parsedBody.lastName,
+    );
+    localStorage.setItem('userId', response.parsedBody.id);
+    localStorage.setItem('company', response.parsedBody.companyName);
+    console.log(response.parsedBody.photo);
+    if (response.parsedBody.photo !== null)
+      localStorage.setItem(
+        'userPhoto',
+        userPhotoPath + response.parsedBody.photo,
+      );
+    else {
+      localStorage.setItem('userPhoto', userDefaultIconPath);
+    }
+
+    loginResult = {
+      isLogin: true,
+      userId: response.parsedBody.access_token,
+      userType: response.parsedBody.roles,
+    };
   } catch (e) {
     console.log(e);
     loginResult = {
       isLogin: false,
-      errors: ['Wrong  User name  or password'],
+      errors: ['Invalid password or username'],
     };
   }
 
@@ -89,7 +101,6 @@ export const SendPassword = async (email) => {
 // usign refresh token
 export const RefreshLoginFetch = async (userName, password, rememeberMe) => {
   // export const getuserTypeList = (): userTypeData[] => {
-
   //Функция для получения списка с севрера
   //   await fetch('http://localhost:17525/api/countries')
   //     .then((res) => res.json())
@@ -99,8 +110,7 @@ export const RefreshLoginFetch = async (userName, password, rememeberMe) => {
   //     .catch((err) => {
   //       console.error(err);
   //     });
-  await wait(500);
-
+  ///await wait(500);
   // localStorage.setItem('accessToken', '1');
   // //Depends on rememberMe
   // localStorage.setItem('refreshToken', '2');
@@ -109,15 +119,14 @@ export const RefreshLoginFetch = async (userName, password, rememeberMe) => {
   // localStorage.setItem('userType', 'freelancer');
   // localStorage.setItem('userId', '1');
   // localStorage.setItem('company', 'amendoTech');
-
-  let isLogin = {
-    isLogin: true,
-    userId: '1',
-    userType: 'freelancer',
-  };
-  let isLogin1 = {
-    isLogin: false,
-    errors: ['The user is not found'],
-  };
-  return isLogin1;
+  // let isLogin = {
+  //   isLogin: true,
+  //   userId: '1',
+  //   userType: 'freelancer',
+  // };
+  // let isLogin1 = {
+  //   isLogin: false,
+  //   errors: ['The user is not found'],
+  // };
+  // return isLogin1;
 };
