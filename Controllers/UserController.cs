@@ -104,7 +104,7 @@ namespace JobPortal.Controllers
 			var response = new
 			{
 				access_token = encodedJwt,
-				username = user.Email
+				User = user
 			};
 
 			return Ok(response);
