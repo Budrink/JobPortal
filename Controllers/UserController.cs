@@ -102,13 +102,19 @@ namespace JobPortal.Controllers
 					SecurityAlgorithms.HmacSha256));
 			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
+
+
 			var response = new
 			{
 				access_token = encodedJwt,
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				Login = user.Email,
-				Photo = user.UserPhoto
+				Photo = user.UserPhoto,
+				Roles = roles,
+				CompanyName = user.Company?.CompanyName,
+				FreelancerCompanyName = user.Freelancer?.CompanyName,
+				Id = user.Id
 			};
 
 			return Ok(response);
