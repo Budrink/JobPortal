@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobPortal.Models;
 using JobPortal.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,38 @@ namespace JobPortal.Controllers
 				return BadRequest(e.Message);
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("List")]
+		public async Task<IActionResult> GetJobList()
+		{
+			try
+			{
+				var user = await _userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
+
+				var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
+				var jobs = _jobRepository.DbSet().Select(x => new
+				{
+					Description = x.JobDetails,
+					CompanyId = x.Company.CompanyId,
+					Title = x.Title,
+					JobStatus = x.JobStatus,
+					JobType = x.JobType,
+					Duration = x.Duration,
+					Tax = x.Tax,
+					CountryId = x.Country.CountryId,
+					ProposalsCount = x.ProposalsCount,
+					IsSaved = savedJobsIds.Contains(x.JobId)
+				});
+				return Ok(jobs);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 
 	    [HttpGet]
 	    [Route("{jobId}")]

@@ -11,7 +11,7 @@ namespace JobPortal.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Guid CompanyId { get; set; }
-		public string CompanyName;
+		public string CompanyName { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual CompanySize CompanySize { get; set; }

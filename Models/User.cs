@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace JobPortal.Models
@@ -12,5 +13,6 @@ namespace JobPortal.Models
 		public virtual Company Company { get; set; }
 		public virtual Freelancer Freelancer { get; set; }
 		public virtual Country Country { get; set; }
+		public virtual IEnumerable<SavedItem> SavedItems { get; set; }
 	}
 }
