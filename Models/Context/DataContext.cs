@@ -39,6 +39,8 @@ namespace JobPortal.Models.Context
 			builder.Entity<UserExperience>();
 			builder.Entity<UserLanguage>();
 			builder.Entity<UserSkill>();
+			builder.Entity<Currency>();
+			builder.Entity<SavedItem>();
 			builder.Entity<UserType>();
 
 		}

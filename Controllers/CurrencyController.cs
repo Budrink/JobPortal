@@ -11,28 +11,26 @@ namespace JobPortal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SkillsController : ControllerBase
+    public class CurrencyController : ControllerBase
     {
-	    private readonly IGenericRepository<Skill> _skillsRepository;
+	    private readonly IGenericRepository<Currency> _currencyRepository;
 
-	    public SkillsController(IGenericRepository<Skill> skillsRepository)
+	    public CurrencyController(IGenericRepository<Currency> currencyRepository)
 	    {
-		    _skillsRepository = skillsRepository;
+		    _currencyRepository = currencyRepository;
 	    }
 
-		[HttpGet]
-		[Route("")]
+	    [HttpGet, Route("")]
 	    public async Task<IActionResult> GetList()
 	    {
 		    try
 		    {
-			    var list = await _skillsRepository.Get();
+			    var list = await _currencyRepository.Get();
 			    return Ok(list);
 		    }
 		    catch (Exception e)
 		    {
-			    Console.WriteLine(e);
-			    throw;
+			    return BadRequest(e.Message);
 		    }
 	    }
     }
