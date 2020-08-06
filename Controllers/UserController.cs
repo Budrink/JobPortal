@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace JobPortal.Controllers
 {
+}
+
 	/// <summary>
 	/// TODO: Finish this methods (signature will be change)
 	/// </summary>
@@ -104,7 +106,10 @@ namespace JobPortal.Controllers
 			var response = new
 			{
 				access_token = encodedJwt,
-				User = user
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Login = user.Email,
+				Photo = user.UserPhoto
 			};
 
 			return Ok(response);
