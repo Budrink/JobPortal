@@ -16,7 +16,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace JobPortal.Controllers
 {
-}
 
 	/// <summary>
 	/// TODO: Finish this methods (signature will be change)
