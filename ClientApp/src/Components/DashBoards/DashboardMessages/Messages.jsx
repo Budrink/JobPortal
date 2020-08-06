@@ -24,13 +24,14 @@ class Messages extends React.Component {
     let result = await SendMail(
       // this.userId,
       this.props.correspondentId,
-      this.state.text,
+      this.state.content,
     );
     if (result === true) {
       this.populateData();
     }
   }
   handleEditorChange(e) {
+    console.log(e.target.value);
     this.setState({ content: e.target.value });
   }
 
