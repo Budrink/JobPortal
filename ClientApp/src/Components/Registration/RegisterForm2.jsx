@@ -4,7 +4,7 @@ import React from 'react';
 import { SecondRegister } from '../PostData/Register_old';
 import { FormErrors } from './FormErrors';
 import { Link } from 'react-router-dom';
-import { GetCountryList } from '../GetData/GetCountryList';
+import { GetCountryList } from '../GetDataNew/GetCountryList';
 
 // import { timingSafeEqual } from 'crypto';
 

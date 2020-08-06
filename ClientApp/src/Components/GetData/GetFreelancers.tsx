@@ -65,47 +65,47 @@ export const GetFreelancers = async (): Promise<FreelancersProps> => {
         servedHours: '25K',
         userSkills: [
           {
-            iD: '1',
-            skill: { iD: '1', name: 'PHP' },
+            id: '1',
+            skill: { id: '1', name: 'PHP' },
             percent: 90,
           },
           {
-            iD: '156',
-            skill: { iD: '2', name: 'Website Design' },
+            id: '156',
+            skill: { id: '2', name: 'Website Design' },
             percent: 55,
           },
           {
-            iD: '2',
-            skill: { iD: '3', name: 'HTML 5 ' },
+            id: '2',
+            skill: { id: '3', name: 'HTML 5 ' },
             percent: 99,
           },
 
           {
-            iD: '13',
-            skill: { iD: '4', name: 'Graphic Design' },
+            id: '13',
+            skill: { id: '4', name: 'Graphic Design' },
             percent: 80,
           },
 
           {
-            iD: '14',
-            skill: { iD: '5', name: '   WordPress ' },
+            id: '14',
+            skill: { id: '5', name: '   WordPress ' },
             percent: 75,
           },
           {
-            iD: '15',
-            skill: { iD: '6', name: 'SEO' },
+            id: '15',
+            skill: { id: '6', name: 'SEO' },
             percent: 35,
           },
 
           {
-            iD: '18',
-            skill: { iD: '7', name: 'My SQL' },
+            id: '18',
+            skill: { id: '7', name: 'My SQL' },
             percent: 40,
           },
 
           {
-            iD: '19',
-            skill: { iD: '8', name: 'Content Writing' },
+            id: '19',
+            skill: { id: '8', name: 'Content Writing' },
             percent: 80,
           },
         ],
@@ -145,31 +145,31 @@ export const GetFreelancers = async (): Promise<FreelancersProps> => {
         servedHours: '25K',
         userSkills: [
           {
-            iD: '13',
-            skill: { iD: '3', name: 'HTML 5 ' },
+            id: '13',
+            skill: { id: '3', name: 'HTML 5 ' },
             percent: 99,
           },
 
           {
-            iD: '15',
-            skill: { iD: '5', name: '   WordPress ' },
+            id: '15',
+            skill: { id: '5', name: '   WordPress ' },
             percent: 75,
           },
           {
-            iD: '1555',
-            skill: { iD: '6', name: 'JavaScript' },
+            id: '1555',
+            skill: { id: '6', name: 'JavaScript' },
             percent: 35,
           },
 
           {
-            iD: '155555',
-            skill: { iD: '7', name: 'Team Managemant' },
+            id: '155555',
+            skill: { id: '7', name: 'Team Managemant' },
             percent: 40,
           },
 
           {
-            iD: '190999',
-            skill: { iD: '8', name: 'jQuery' },
+            id: '190999',
+            skill: { id: '8', name: 'jQuery' },
             percent: 80,
           },
         ],

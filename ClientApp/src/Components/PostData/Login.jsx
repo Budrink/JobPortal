@@ -1,4 +1,3 @@
-import { wait } from '../GetData/wait';
 import { http, FetchData } from '../Data/Http';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 // interface LoginResultProps {
@@ -37,7 +36,7 @@ export const LoginFetch = async (userName, password, rememeberMe) => {
     );
     localStorage.setItem('userId', response.parsedBody.id);
     localStorage.setItem('company', response.parsedBody.companyName);
-    console.log(response.parsedBody.photo);
+    //  console.log(response.parsedBody.photo);
     if (response.parsedBody.photo !== null)
       localStorage.setItem(
         'userPhoto',

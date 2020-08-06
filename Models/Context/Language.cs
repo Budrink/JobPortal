@@ -1,18 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Policy;
 
 namespace JobPortal.Models
 {
-	public class Skill
+	public class Language
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string Img { get; set; }
-		public string SliderImg { get; set; }
-
+		public Guid LanguageId { get; set; }
+	  public string Name { get; set; }
 	}
 }

@@ -39,6 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Context\Language.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Content\Images\" />
     <Folder Include="Content\Data\" />
   </ItemGroup>

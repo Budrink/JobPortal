@@ -42,8 +42,6 @@ class SideBar extends Component {
     this.setState({ userPhoto: localStorage.getItem('userPhoto') });
     this.setState({ userName: localStorage.getItem('userName') });
 
-    console.log(localStorage.getItem('company'));
-
     //   switch (typeOfUser) {
     //     case 'company':
     //       /// можно взять короткий запрос

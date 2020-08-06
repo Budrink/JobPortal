@@ -48,9 +48,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit inati voluptate velit esse cillum doloreeutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit animid est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
         ],
       },
 
@@ -80,10 +80,10 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
-          { iD: '4', name: 'Team Management' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
+          { id: '4', name: 'Team Management' },
         ],
       },
       {
@@ -111,9 +111,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
         ],
       },
       {
@@ -141,9 +141,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
         ],
       },
 
@@ -172,9 +172,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
         ],
       },
 
@@ -203,9 +203,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '3', name: 'JQuery' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
         ],
       },
 
@@ -235,9 +235,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '4', name: 'Team Management' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '4', name: 'Team Management' },
         ],
       },
 
@@ -266,9 +266,9 @@ export const GetOngoingJobsList = async (
         jobDetails:
           'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit  inati voluptate velit esse cillum dolore  eutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit anim  id est laborum ut perspiciatis...',
         skillsRequired: [
-          { iD: '1', name: 'PHP' },
-          { iD: '2', name: 'HTML' },
-          { iD: '4', name: 'Team Management' },
+          { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '4', name: 'Team Management' },
         ],
       },
     ],

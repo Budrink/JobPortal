@@ -5,7 +5,7 @@ export interface CountryData {
 }
 /// just skills of users
 export interface Skill {
-  iD: string;
+  id: string;
   name: string;
   img?: string;
   sliderImg?: string;
@@ -102,7 +102,7 @@ export interface Experience {
 // }
 
 export interface UserSkill {
-  iD: string;
+  id: string;
   skill: Skill;
   percent: number;
 }
@@ -243,7 +243,7 @@ export interface FollowerData {
   userName: string;
 }
 export interface Attachment {
-  iD: string;
+  id: string;
   fileName: string;
   fileSize: number;
   linkString: string;
