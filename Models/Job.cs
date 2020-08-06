@@ -18,6 +18,7 @@ namespace JobPortal.Models
 		public JobType JobType { get; set; }
 		public decimal Tax { get; set; }
 		public CompetenceLevel CompetenceLevel { get; set; }
+		public virtual Language Language { get; set; }
 		public virtual Country Country { get; set; }
 		public virtual IEnumerable<Skill> SkillsRequired { get; set; }
 		public virtual IEnumerable<Attachment> Attachments { get; set; }
