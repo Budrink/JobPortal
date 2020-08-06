@@ -22,6 +22,7 @@ namespace JobPortal.Repository
 		void Remove(TEntity item);
 		void RemoveRange(IEnumerable<TEntity> collection);
 		Task SaveChanges();
+		DbSet<TEntity> DbSet();
 	}
 
 	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
@@ -33,6 +34,11 @@ namespace JobPortal.Repository
 		{
 			_context = context;
 			_dbSet = context.Set<TEntity>();
+		}
+
+		public DbSet<TEntity> DbSet()
+		{
+			return _dbSet;
 		}
 
 		public async Task<IEnumerable<TEntity>> Get()
