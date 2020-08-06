@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace JobPortal.Controllers
 {
+
 	/// <summary>
 	/// TODO: Finish this methods (signature will be change)
 	/// </summary>
@@ -101,10 +102,19 @@ namespace JobPortal.Controllers
 					SecurityAlgorithms.HmacSha256));
 			var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
+
+
 			var response = new
 			{
 				access_token = encodedJwt,
-				username = user.Email
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Login = user.Email,
+				Photo = user.UserPhoto,
+				Roles = roles,
+				CompanyName = user.Company?.CompanyName,
+				FreelancerCompanyName = user.Freelancer?.CompanyName,
+				Id = user.Id
 			};
 
 			return Ok(response);
