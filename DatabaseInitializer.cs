@@ -244,8 +244,26 @@ namespace JobPortal
 
 			var durations = new[]
 			{
-				new Duration()
+				new Duration
+				{
+					DurationText = "Less Than 01 Month"
+				},
+				new Duration
+				{
+					DurationText = "01 to 03 Months"
+				},
+				new Duration
+				{
+					DurationText = "03 to 06 Months"
+				},
+				new Duration
+				{
+					DurationText = "More Than 06 Months"
+				},
 			};
+
+			context.Set<Duration>().AddRange(durations);
+			context.SaveChanges();
 
 		}
 	}
