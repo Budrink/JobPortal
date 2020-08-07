@@ -13,10 +13,11 @@ namespace JobPortal.Models
 		[Key]
 		public Guid FreelancerId { get; set; }
 		public string SkillsDescription { get; set; }
-			public string Rates { get; set; }
+		public string Rates { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual IEnumerable<JobProposal> JobProposals { get; set; }
+		public virtual IEnumerable<Feedback> Feedbacks { get; set; }
 		public virtual IEnumerable<Contract> Contracts { get; set; }
 		public virtual User User { get; set; }
 		public string Address { get; set; }
@@ -28,7 +29,7 @@ namespace JobPortal.Models
 		public string Title { get; set; }
 		public virtual IEnumerable<Award> Awards { get; set; }
 		public virtual IEnumerable<Project> Projects { get; set; }
-		public bool publicProfile { get; set; }
+		public bool PublicProfile { get; set; }
 		public bool SharePhoto { get; set; }
 		public bool ShowFeedback { get; set; }
 		public bool ProfileSearchible { get; set; }

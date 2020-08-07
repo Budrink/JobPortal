@@ -43,7 +43,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<SavedItem>();
 			builder.Entity<UserType>();
 			builder.Entity<HourRate>();
-			
+			builder.Entity<Feedback>();
 			builder.Entity<Duration>();
 
 		}

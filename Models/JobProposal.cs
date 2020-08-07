@@ -22,6 +22,7 @@ namespace JobPortal.Models
 		Wait,
 		Accepted,
 		Declined,
+		Finished,
 		Cancelled
 	}
 }

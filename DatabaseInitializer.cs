@@ -311,7 +311,7 @@ namespace JobPortal
 				{
 					Company = user1.Company,
 					CompetenceLevel = CompetenceLevel.Expert,
-					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "L01 to 03 Months"),
+					Duration = context.Set<Duration>().Skip(1).First(),
 					Country = context.Set<Country>().Skip(2).First(),
 					JobDetails = "Lorem Ipsumdfs dfdfsdfs someblablahere",
 					JobStatus = JobStatus.Open,
@@ -347,7 +347,7 @@ namespace JobPortal
 				{
 					Company = user2.Company,
 					CompetenceLevel = CompetenceLevel.Intermidiate,
-					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "Less Than 01 Month"),
+					Duration = context.Set<Duration>().First(),
 					HiredFreelancers = new[] {freelancer1},
 					Country = context.Set<Country>().First(),
 					JobDetails = "Lorem Ipsum someblablahere",

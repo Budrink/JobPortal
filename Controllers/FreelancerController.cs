@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobPortal.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class FreelancerController : ControllerBase
     {
@@ -60,77 +61,55 @@ namespace JobPortal.Controllers
 		    return Ok(proposals);
 	    }
 
-
-		
-		public class UserCompany
-
-		{
-	     public string Name { get; set; }
-			public string Image { get; set; }
-
-		}
-
-
-		public class AccountSettingsDto
-		{
-			public string UserId { get; set; }
-			public bool publicProfile { get; set; }
-			public bool SharePhoto { get; set; }
-			public bool ShowFeedback { get; set; }
-			public bool ProfileSearchible { get; set; }
-			public bool DisableAccount { get; set; }
-			public bool DisableTemporarily { get; set; }
-
-			public string LanguageId { get; set; }
-			public string CurrencyId { get; set; }
-			public bool SendWeeklyAlerts { get; set; }
-			public bool SendBonusAlerts { get; set; }
-			public bool ForwardMessages { get; set; }
-			public bool ShareSecurityAlerts { get; set; }
-
-			public string DetailPageDesign { get; set; }
-			public string NewPassowrd { get; set; }
-
-		}
-		public class FreelancerDTO
-		{
-			public string UserId { get; set; }
-			public string UserPhoto { get; set; }
-
-			//userBunnerFile?: File;
-
-			public string FirstName { get; set; }
-			public string LastName { get; set; }
-			//public string Email { get; set; }
-			public string Gender { get; set; }
-			public string CountryId { get; set; }
-			public string Address { get; set; }
-			public double Longitude { get; set; }
-			public double Latitude { get; set; }
-			public int NumberOfEmployees { get; set; }
-			public string Department { get; set; }
-			public string Description { get; set; }
-			public string Title { get; set; }
-			public Award[] Awards { get; set; }
-			public Project[] Projects { get; set; }
+	    [HttpGet, Route("{freelancerId}")]
+	    public async Task<IActionResult> GetFreelancer([FromRoute] string freelancerId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(freelancerId);
+			    var result = new
+			    {
+				    UserId = user.Id,
+				    UserPhotoFile = new
+				    {
+					    Id = user.UserPhoto.Id,
+					    Name = user.UserPhoto.FileName,
+					    Link = user.UserPhoto.FileLink,
+					    Size = user.UserPhoto.FileSize
+				    },
+				    FirstName = user.FirstName,
+				    LastName = user.LastName,
+				    Email = user.Email,
+				    Gender = user.Gender,
+				    UserName = user.UserName,
+				    UserRates = user.Freelancer.Rates,
+				    FeedbackCount = user.Freelancer.Feedbacks.Count(),
+				    UserFeedbacks = user.Freelancer.Feedbacks.ToList(),
+				    JoinDate = user.JoinDate,
+				    Title = user.Freelancer.Title,
+				    HourRates = user.Freelancer.Rates,
+				    Country = user.Country,
+				    Description = user.Freelancer.Description,
+				    AmountOngoingProjects =
+					    user.Freelancer.JobProposals.Count(x => x.ProposalStatus == ProposalStatus.Accepted),
+				    AmountOfCancelledProjects =
+					    user.Freelancer.JobProposals.Count(x => x.ProposalStatus == ProposalStatus.Cancelled),
+				    AmountOfCompletedProject =
+					    user.Freelancer.JobProposals.Count(x => x.ProposalStatus == ProposalStatus.Finished),
+				    UserSkills = user.Freelancer.UserSkills.ToList(),
+				    Experience = user.Freelancer.Experience.ToList(),
+				    Education = user.Freelancer.Education.ToList()
+			    };
+			    return Ok(result);
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
 
 
-			public double HourRates { get; set; }
-			public int ServedHours { get; set; }
 
-			public UserSkill[] UserSkills { get; set; }
-			public int EnglishLevel { get; set; }
-
-			public UserLanguage[] Languages { get; set; }
-
-			public string Remark { get; set; }
-
-			public UserExperience[] Experience { get; set; }
-			public Education[] Education { get; set; }
-			// tagList?: string[];
-			//  globalCategory?: GlobalCategoryData;
-			public UserCompany UserCompany { get; set; }
-		}
 		[HttpPost]
 		[Route("accountsettings")]
 		public async Task<IActionResult> AccountSettings([FromBody] AccountSettingsDto request)
@@ -140,7 +119,7 @@ namespace JobPortal.Controllers
 				var user = await _userManager.FindByIdAsync(request.UserId);
 				var freelancer = user.Freelancer;
 	
-				freelancer.publicProfile = request.publicProfile;
+				freelancer.PublicProfile = request.publicProfile;
 				freelancer.SharePhoto = request.SharePhoto;
 				freelancer.ShowFeedback = request.ShowFeedback;
 				freelancer.ProfileSearchible = request.ProfileSearchible;
@@ -165,7 +144,7 @@ namespace JobPortal.Controllers
 			}
 		}
 	
-	[HttpPost]
+		[HttpPost]
 		[Route("changefreelancer")]
 		public async Task<IActionResult> ChangeUser([FromBody] FreelancerDTO request)
 		{
@@ -174,7 +153,7 @@ namespace JobPortal.Controllers
 				var user = await _userManager.FindByIdAsync(request.UserId);
 				var freelancer = user.Freelancer;
 			
-				user.UserPhoto = request.UserPhoto;
+				//user.UserPhoto.FileLink = request.UserPhoto;
 				user.FirstName = request.FirstName;
 				user.LastName = request.LastName;
 				freelancer.Address = request.Address;

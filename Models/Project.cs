@@ -13,7 +13,7 @@ namespace JobPortal.Models
         public Guid Id { get; set; }
         [ForeignKey("User")]
         public Guid UserId { get; set; }
-      
+        public virtual User User { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
         public string Img { get; set; }

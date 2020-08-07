@@ -120,6 +120,7 @@ namespace JobPortal.Controllers
 						CountryFlag = x.Country.CountryFlag
 					},
 					ProposalsCount = x.ProposalsCount,
+					SkillsRequired = x.SkillsRequired.ToList(),
 					IsSaved = savedJobsIds.Contains(x.JobId),
 				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
