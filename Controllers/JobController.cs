@@ -70,6 +70,7 @@ namespace JobPortal.Controllers
 
 		[HttpPost]
  		[Route("List")]
+		[Authorize]
 		public async Task<IActionResult> GetJobList(JobListRequestDto dto)
 		{
 			try
@@ -85,6 +86,18 @@ namespace JobPortal.Controllers
 					 dto.LocationFilter.Select(i => Guid.Parse(i)).Contains(x.Country.CountryId)) &&
 					(dto.LangFilter.IsNullOrEmpty() ||
 					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId)));
+				if (!dto.StatusFilter.IsNullOrEmpty())
+				{
+					var statusFilter = Enum.Parse<JobStatus>(dto.StatusFilter);
+					jobsFiltered = jobsFiltered.Where(x => x.JobStatus == statusFilter);
+				}
+
+				if (!dto.TypeFilter.IsNullOrEmpty())
+				{
+					jobsFiltered = jobsFiltered.Where(x =>
+						dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType));
+				}
+
 				var count = jobsFiltered.Count();
 
 				var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
@@ -100,7 +113,7 @@ namespace JobPortal.Controllers
 					CountryId = x.Country.CountryId,
 					ProposalsCount = x.ProposalsCount,
 					IsSaved = savedJobsIds.Contains(x.JobId),
-				}).Skip(dto.PageNumber*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage != 0 ? dto.AmountOfItemsOnPage : count).ToList();
+				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
 				{
 					TotalCount = count,
