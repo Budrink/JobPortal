@@ -346,7 +346,7 @@ namespace JobPortal
 				new Job
 				{
 					Company = user2.Company,
-					CompetenceLevel = CompetenceLevel.Intermidiate,
+					CompetenceLevel = CompetenceLevel.Intermediate,
 					Duration = context.Set<Duration>().First(),
 					HiredFreelancers = new[] {freelancer1},
 					Country = context.Set<Country>().First(),
