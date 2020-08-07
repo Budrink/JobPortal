@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { Field, reduxForm } from 'redux-form';
-import { getHourRateList } from '../GetData/GetHourRateList';
+import { getHourRateList } from '../GetDataNew/GetHourRateList';
 
 // To include the default styles
 import 'react-rangeslider/lib/index.css';

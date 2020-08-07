@@ -41,6 +41,7 @@ namespace JobPortal
 				}
 			};
 			context.Set<Country>().AddRange(countries);
+			context.SaveChanges();
 
 
 			var langs = new Language[]
@@ -67,6 +68,8 @@ namespace JobPortal
 				}
 			};
 			context.Set<Language>().AddRange(langs);
+			context.SaveChanges();
+
 			var rates = new HourRate[]
 		{
 				new HourRate
@@ -89,8 +92,9 @@ namespace JobPortal
 				{
 					HourRateName = "$90 &amp;above"
 				}
-		};
+			};
 			context.Set<HourRate>().AddRange(rates);
+			context.SaveChanges();
 
 			var skills = new Skill[]
 			{
@@ -133,6 +137,7 @@ namespace JobPortal
 				}
 			};
 			context.Set<Skill>().AddRange(skills);
+			context.SaveChanges();
 
 			var userTypes = new UserType[]
 			{
@@ -161,6 +166,8 @@ namespace JobPortal
 
 			var joinDate = DateTime.Now;
 			context.Set<UserType>().AddRange(userTypes);
+			context.SaveChanges();
+
 			var user1 = new User
 			{
 				Country = countries.First(x => x.CountryName == "United States"),
@@ -272,6 +279,7 @@ namespace JobPortal
 			};
 
 			context.Set<Duration>().AddRange(durations);
+			context.SaveChanges();
 
 
 			var currents = new[]
@@ -303,6 +311,7 @@ namespace JobPortal
 			};
 
 			context.Set<Currency>().AddRange(currents);
+			context.SaveChanges();
 
 
 			var jobs = new[]
@@ -346,7 +355,7 @@ namespace JobPortal
 				new Job
 				{
 					Company = user2.Company,
-					CompetenceLevel = CompetenceLevel.Intermidiate,
+					CompetenceLevel = CompetenceLevel.Intermediate,
 					Duration = context.Set<Duration>().First(),
 					HiredFreelancers = new[] {freelancer1},
 					Country = context.Set<Country>().First(),

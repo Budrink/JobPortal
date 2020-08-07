@@ -26,6 +26,7 @@ class Header extends Component {
     super(props);
     this.state = {
       loginVisible: true,
+      typeOfUser: '',
     };
 
     this.Login = this.Login.bind(this);
@@ -44,12 +45,15 @@ class Header extends Component {
     ///check refreshToken!!!!
     if (localStorage.getItem('login') === 'true') {
       this.setState({ loginVisible: false });
+      this.setState({ typeOfUser: localStorage.getItem('userType') });
     } else {
       RefreshLoginFetch();
       if (localStorage.getItem('login') === 'true') {
         this.setState({ loginVisible: false });
+        this.setState({ typeOfUser: localStorage.getItem('userType') });
       } else {
         this.setState({ loginVisible: true });
+        this.setState({ typeOfUser: '' });
       }
     }
   }

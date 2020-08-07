@@ -72,6 +72,11 @@ class ProjectList extends Component {
       </span>
     ) : null;
 
+    console.log(data);
+    console.log(data.project);
+    console.log(data.project.company);
+    console.log(data.project.company.country);
+    console.log(data.project.company.country.countryFlag);
     return (
       <div
         className="wt-userlistinghold wt-featured wt-userlistingholdvtwo"
@@ -153,7 +158,7 @@ class ProjectList extends Component {
   renderTable(cats) {
     console.log(cats);
     if (cats !== []) {
-      return cats.projectList.projects.map((project) => (
+      return cats.projects.map((project) => (
         <div className="form-group" key={project.jobId}>
           {this.renderProject({ project })}
         </div>
@@ -162,17 +167,18 @@ class ProjectList extends Component {
   }
 
   render() {
-    let projectList = this.props.projectList;
+    let projectList = this.props.projectList.projectList;
 
-    // // console.log(
     // JSON.stringify(projectList.projectList.projects);
     // );
     let contents = this.props.loading ? (
       <p>
         <em>Loading...</em>
       </p>
-    ) : (
+    ) : projectList.projects.length > 0 ? (
       this.renderTable(projectList)
+    ) : (
+      <div></div>
     );
 
     // );
