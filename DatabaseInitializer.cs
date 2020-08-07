@@ -299,6 +299,84 @@ namespace JobPortal
 				},
 			};
 
+
+			var jobs = new[]
+			{
+				new Job
+				{
+					Company = user1.Company,
+					CompetenceLevel = CompetenceLevel.Expert,
+					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "L01 to 03 Months"),
+					Country = context.Set<Country>().Skip(2).First(),
+					JobDetails = "Lorem Ipsumdfs dfdfsdfs someblablahere",
+					JobStatus = JobStatus.Open,
+					JobType = JobType.PerHour,
+					Language = context.Set<Language>().Skip(3).First(),
+					Title = "SomeAnotherJobToDo",
+					Tax = decimal.FromOACurrency(15),
+					SkillsRequired = new []
+					{
+						new Skill
+						{
+							Name = ".NET"
+						},
+						new Skill
+						{
+							Name = "Photoshop"
+						},
+						new Skill
+						{
+							Name = "Design"
+						},
+						new Skill
+						{
+							Name = "Analysis"
+						}, new Skill
+						{
+							Name = "Another skill"
+						}
+					},
+					ProposalsCount = 3
+				},
+				new Job
+				{
+					Company = user2.Company,
+					CompetenceLevel = CompetenceLevel.Intermidiate,
+					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "Less Than 01 Month"),
+					HiredFreelancers = new[] {freelancer1},
+					Country = context.Set<Country>().First(),
+					JobDetails = "Lorem Ipsum someblablahere",
+					JobStatus = JobStatus.Open,
+					JobType = JobType.PerHour,
+					Language = context.Set<Language>().First(),
+					Title = "SomeJobToDo",
+					Tax = decimal.FromOACurrency(15),
+					SkillsRequired = new []
+					{
+						new Skill
+						{
+							Name = "PHP"
+						},
+						new Skill
+						{
+							Name = "PHP Developer"
+						},
+						new Skill
+						{
+							Name = "MySQL"
+						},
+						new Skill
+						{
+							Name = "Business"
+						}, new Skill
+						{
+							Name = "Collaboration"
+						}
+					},
+					ProposalsCount = 3
+				}
+			};
+
 			context.Set<Currency>().AddRange(currents);
 
 			context.SaveChanges();
