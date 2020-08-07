@@ -174,6 +174,7 @@ namespace JobPortal
 				{
 					CompanyName = "Ember Planner & Organizer",
 					CompanySize = CompanySize.Large,
+					VerifiedCompany = true,
 					Department = new Department
 					{
 						Name = "Management"
@@ -195,6 +196,7 @@ namespace JobPortal
 				EmailConfirmed = true,
 				Company = new Company
 				{
+					VerifiedCompany = true,
 					CompanyName = "Firy Birds & Company",
 					CompanySize = CompanySize.Large,
 					Department = new Department
@@ -221,6 +223,7 @@ namespace JobPortal
 				{
 					CompanyName = "VAV Creative Studio",
 					CompanySize = CompanySize.Medium,
+					VerifiedCompany = true,
 					Department = new Department
 					{
 						Name = "Design"
@@ -299,6 +302,8 @@ namespace JobPortal
 				},
 			};
 
+			context.Set<Currency>().AddRange(currents);
+
 
 			var jobs = new[]
 			{
@@ -341,7 +346,7 @@ namespace JobPortal
 				new Job
 				{
 					Company = user2.Company,
-					CompetenceLevel = CompetenceLevel.Intermediate,
+					CompetenceLevel = CompetenceLevel.Intermidiate,
 					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "Less Than 01 Month"),
 					HiredFreelancers = new[] {freelancer1},
 					Country = context.Set<Country>().First(),
@@ -376,9 +381,8 @@ namespace JobPortal
 					ProposalsCount = 3
 				}
 			};
-
-			context.Set<Currency>().AddRange(currents);
 			context.Set<Job>().AddRange(jobs);
+
 			context.SaveChanges();
 
 		}
