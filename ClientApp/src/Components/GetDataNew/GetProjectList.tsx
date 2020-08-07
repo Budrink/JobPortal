@@ -1,6 +1,10 @@
 import { JobData } from '../Data/Data';
-import { wait } from './wait';
+import { http } from '../Data/Http';
 import { countryFlagsPath } from '../Data/GlobalValues';
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+
 ///Переписать для БД
 interface extendedJob extends JobData {
   saved?: boolean; // from savedJob of current user
@@ -24,8 +28,43 @@ export const GetProjectList = async (
   stringForSearching: string,
   statusfilter: string, // ongoing, cancel, completed
 ) => {
-  await wait(500);
-  const projectList: ProjectsProps = {
+  // await wait(500);
+  console.log('ыефегыэ' + statusfilter);
+  let projectList: ProjectsProps;
+  let response: HttpResponse<any>;
+  let requestBody;
+  requestBody = {
+    pageNumber: pageNumber,
+    amounOfItemsOnPage: amounOfItemsOnPage,
+    categoryFilter: categoryFilter,
+    projectTypeFilter: projectTypeFilter,
+    locationFilter: locationFilter,
+    typeFilter: typeFilter,
+    projectLengthFilter: projectLengthFilter,
+    langFilter: langFilter,
+    companyFilter: companyFilter,
+    stringForSearching:
+      stringForSearching === undefined ? '' : stringForSearching,
+    // statusfilter: statusfilter === undefined ? '' : statusfilter,
+    statusfilter: '',
+  };
+  console.log(requestBody);
+  try {
+    response = await http({
+      path: `Job/List`,
+      method: 'Post',
+      body: requestBody,
+    });
+
+    console.log(response);
+    if (response.parsedBody !== null) {
+      projectList = response.parsedBody;
+      console.log(projectList);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  projectList = {
     totalAmountOfProjects: 100,
     projects: [
       {

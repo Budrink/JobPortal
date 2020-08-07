@@ -25,7 +25,7 @@ import UserTypeForm from '../Forms/User/UserTypeForm';
 import { loadScripts } from '../Functions/LoadScripts';
 import ProjectList from './ProjectList';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { GetProjectList } from '../GetData/GetProjectList';
+import { GetProjectList } from '../GetDataNew/GetProjectList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
@@ -254,28 +254,32 @@ class JobListing extends Component {
     stringFilter,
     statusFilter,
   ) => {
-    // if (this.state.freelancerList.length === 0) {
-    const data = await GetProjectList(
-      pageNumber,
-      amountOfItemsOnPage,
-      categoryFilter,
-      projectTypeFilter,
-      locationFilter,
-      typeFilter,
-      projectLengthFilter,
-      langFilter,
-      companyFilter,
-      stringFilter,
-      statusFilter,
-    );
+    let data = [];
+    if (localStorage.getItem('login') === 'true') {
+      data = await GetProjectList(
+        pageNumber,
+        amountOfItemsOnPage,
+        categoryFilter,
+        projectTypeFilter,
+        locationFilter,
+        typeFilter,
+        projectLengthFilter,
+        langFilter,
+        companyFilter,
+        stringFilter,
+        statusFilter,
+      );
+    }
 
     // console.log(JSON.stringify(data));
     this.setState({ projectList: data }, () => {
       this.setState({ loading: false }, () => {});
+
       loadScripts(this.instance, false);
 
       // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
     });
+
     // }
   };
 
@@ -366,6 +370,21 @@ class JobListing extends Component {
 
   render() {
     let paging = this.pagingCreate();
+    let projectContent =
+      localStorage.getItem('login') === 'true' ? (
+        <ProjectList
+          projectList={this.state.projectList}
+          loading={this.state.loading}
+        />
+      ) : (
+        <div> Authorization required </div>
+      );
+    let pagingContent =
+      localStorage.getItem('login') === 'true' ? (
+        <nav className="wt-pagination">{paging}</nav>
+      ) : (
+        <div></div>
+      );
 
     return (
       <div ref={(el) => (this.instance = el)}>
@@ -538,11 +557,13 @@ class JobListing extends Component {
                                 }
                               />
                             </div>
-                            <ProjectList
+                            {/* <ProjectList
                               projectList={this.state.projectList}
                               loading={this.state.loading}
                             />
-                            <nav className="wt-pagination">{paging}</nav>
+                            <nav className="wt-pagination">{paging}</nav> */}
+                            {projectContent}
+                            {pagingContent}
                           </div>
                         </div>
                       </div>

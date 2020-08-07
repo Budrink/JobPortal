@@ -68,7 +68,7 @@ namespace JobPortal.Controllers
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("List")]
 		public async Task<IActionResult> GetJobList(JobListRequestDto dto)

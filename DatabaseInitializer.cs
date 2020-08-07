@@ -263,6 +263,41 @@ namespace JobPortal
 			};
 
 			context.Set<Duration>().AddRange(durations);
+
+
+			var jobs = new[]
+			{
+				new Job
+				{
+						Title= "I want some customization and installation",
+						CompetenceLevel= CompetenceLevel.Expert,
+						JobType=JobType.PerHour,
+
+						Company=			{
+					
+
+		  country:
+				{
+				countryId: 'C4',
+            countryFlag: countryFlagsPath + 'img-04.png',
+            countryName: 'England',
+          },
+        },
+       
+        duration: '03 Months',
+        jobDetails:
+			'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit inati voluptate velit esse cillum doloreeutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit animid est laborum ut perspiciatis...',
+        skillsRequired: [
+
+		  { id: '1', name: 'PHP' },
+          { id: '2', name: 'HTML' },
+          { id: '3', name: 'JQuery' },
+        ],
+				},
+			
+			};
+
+			context.Set<Duration>().AddRange(durations);
 			context.SaveChanges();
 
 		}
