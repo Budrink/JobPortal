@@ -114,7 +114,11 @@ namespace JobPortal.Controllers
 					JobType = x.JobType,
 					Duration = x.Duration,
 					Tax = x.Tax,
-					CountryId = x.Country.CountryId,
+					Country = new {
+						CountryId = x.Country.CountryId,
+						CountryName = x.Country.CountryName,
+						CountryFlag = x.Country.CountryFlag
+					},
 					ProposalsCount = x.ProposalsCount,
 					IsSaved = savedJobsIds.Contains(x.JobId),
 				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
