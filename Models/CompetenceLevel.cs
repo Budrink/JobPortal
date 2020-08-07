@@ -3,7 +3,7 @@
 	public enum CompetenceLevel
 	{
 		Etry,
-		Intermidiate,
+		Intermediate,
 		Expert
 	}
 }

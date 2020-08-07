@@ -1,5 +1,5 @@
 import { webAPIUrl } from './AppSettings';
-import { findAllByDisplayValue } from '@testing-library/react';
+
 export interface HttpRequest<REQB> {
   path: string;
   method?: string;
@@ -17,17 +17,27 @@ export const http = <REQB, RESB>(
   if (config.body !== undefined) {
     // console.log(JSON.stringify(config.body));
   }
+  let defaultHeader: Headers = new Headers();
+
+  defaultHeader.append('Content-Type', 'application/json');
+  if (localStorage.getItem('login') === 'true') {
+    defaultHeader.append(
+      'Authorization',
+      `Bearer ${localStorage.getItem('accessToken')}`,
+    );
+  }
   return new Promise((resolve, reject) => {
     const request = new Request(`${webAPIUrl}${config.path}`, {
       method: config.method || 'get',
-      headers: config.headers || { 'Content-Type': 'application/json' },
+      headers: config.headers || defaultHeader,
       body: config.body ? JSON.stringify(config.body) : undefined,
     });
-
+    //  console.log(config.path);
+    //  console.log(request.headers.get('Authorization'));
     let response: HttpResponse<RESB>;
     fetch(request)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           alert(res.status);
         }

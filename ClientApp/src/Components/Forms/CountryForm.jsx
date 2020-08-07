@@ -43,7 +43,6 @@ class CountryForm extends Component {
   }
 
   renderCountry(data) {
-    console.log(data.country.countryFlag);
     return (
       <span className="wt-checkbox">
         <Field
