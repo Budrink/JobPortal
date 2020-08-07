@@ -263,6 +263,38 @@ namespace JobPortal
 			};
 
 			context.Set<Duration>().AddRange(durations);
+
+
+			var currents = new[]
+			{
+				new Currency
+				{
+					CurrencyName = "Brazilian Real"
+				},
+				new Currency
+				{
+					CurrencyName = "US Dollar"
+				},
+				new Currency
+				{
+					CurrencyName = "Yuan Renminbi"
+				},
+				new Currency
+				{
+					CurrencyName = "Colombian Peso"
+				},
+				new Currency
+				{
+					CurrencyName = "Euro"
+				},
+				new Currency
+				{
+					CurrencyName = "Hong Kong Dollar"
+				},
+			};
+
+			context.Set<Currency>().Add(currents);
+
 			context.SaveChanges();
 
 		}
