@@ -104,7 +104,11 @@ namespace JobPortal.Controllers
 				var jobs = jobsFiltered.Select(x => new
 				{
 					Description = x.JobDetails,
-					CompanyId = x.Company.CompanyId,
+					Company = new { 
+						CompanyId = x.Company.CompanyId,
+						CompanyName = x.Company.CompanyName,
+						VerifiedCompany = x.Company.VerifiedCompany
+					},
 					Title = x.Title,
 					JobStatus = x.JobStatus,
 					JobType = x.JobType,
