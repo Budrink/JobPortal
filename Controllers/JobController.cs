@@ -103,22 +103,25 @@ namespace JobPortal.Controllers
 				var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
 				var jobs = jobsFiltered.Select(x => new
 				{
-					Description = x.JobDetails,
+					JobDetails = x.JobDetails,
 					Company = new { 
 						CompanyId = x.Company.CompanyId,
 						CompanyName = x.Company.CompanyName,
-						VerifiedCompany = x.Company.VerifiedCompany
+						VerifiedCompany = x.Company.VerifiedCompany,
+						Country = new
+						{
+							CountryId = x.Country.CountryId,
+							CountryName = x.Country.CountryName,
+							CountryFlag = x.Country.CountryFlag
+						},
 					},
 					Title = x.Title,
 					JobStatus = x.JobStatus,
-					JobType = x.JobType,
+					Type = x.JobType,
+					JobId=x.JobId,
 					Duration = x.Duration,
 					Tax = x.Tax,
-					Country = new {
-						CountryId = x.Country.CountryId,
-						CountryName = x.Country.CountryName,
-						CountryFlag = x.Country.CountryFlag
-					},
+				
 					ProposalsCount = x.ProposalsCount,
 					IsSaved = savedJobsIds.Contains(x.JobId),
 				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();

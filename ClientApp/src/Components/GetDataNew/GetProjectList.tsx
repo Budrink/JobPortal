@@ -49,7 +49,7 @@ export const GetProjectList = async (
     // statusfilter: statusfilter === undefined ? '' : statusfilter,
     statusfilter: '',
   };
-  console.log(requestBody);
+
   try {
     response = await http({
       path: `Job/List`,
@@ -57,7 +57,6 @@ export const GetProjectList = async (
       body: requestBody,
     });
 
-    console.log(response);
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
       console.log(projectList);
