@@ -54,7 +54,7 @@ export default class LoginForm extends PureComponent {
       this.state.password,
       this.state.rememberMe,
     );
-    console.log(result);
+    // console.log(result);
     if (result.isLogin === true) {
       this.props.LoginSuccessfull();
     } else {

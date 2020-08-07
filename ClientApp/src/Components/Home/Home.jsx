@@ -18,45 +18,57 @@ class Home extends Component {
     this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
     this.Logout = this.Logout.bind(this);
     this.state = {
-      reset: false,
+      reset: true,
     };
   }
 
   Logout() {
-    this.forceUpdate();
-    this.setState({ reset: !this.state.reset });
-    //this.props.history.push('/Home');
+    this.props.history.push('/');
   }
 
   LoginSuccessfull() {
-    //  this.props.history.push('/Home');
+    // this.forceUpdate();
+    this.props.history.push('/');
+
+    //   loadScripts1(this.instance, false);
   }
 
   componentDidMount() {
-    //  loadScripts1(this.instance, false);
-    loadScripts1(document.body);
+    // console.log('home');
+    // if (localStorage.getItem('login') !== 'true') {
+    //   console.log(true);
+    //   this.props.history.push('/');
+    // }
+    loadScripts1(this.instance, false);
+    // loadScripts1(document.body);
   }
   handleSubmit = (values) => {};
 
   render() {
-    return (
-      <div className="wt-login" ref={(el) => (this.instance = el)}>
-        <title>Home</title>
-        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+    let content;
+    if (this.state.reset === true) {
+      content = (
+        <div className="wt-login" ref={(el) => (this.instance = el)}>
+          <title>Home</title>
+          <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+          <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
 
-        <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
-          {/*  Content Wrapper Start  */}
-          <div className="wt-contentwrapper">
-            <Header login={this.LoginSuccessfull} Logout={this.Logout} />
-            {/* <SeekForm /> */}
-            <HomeBanner />
-            <WtWrapper />
-            <Footer />
+          <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
+            {/*  Content Wrapper Start  */}
+            <div className="wt-contentwrapper">
+              <Header Login={this.LoginSuccessfull} Logout={this.Logout} />
+              {/* <SeekForm /> */}
+              <HomeBanner />
+              <WtWrapper />
+              <Footer />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      content = null;
+    }
+    return <div>{content}</div>;
   }
 }
 

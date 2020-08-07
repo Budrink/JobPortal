@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { GetLanguageList } from '../GetData/GetLanguageList';
+import { GetLanguageList } from '../GetDataNew/GetLanguageList';
 
 class LanguageList extends Component {
   constructor(props) {

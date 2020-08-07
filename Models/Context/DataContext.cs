@@ -41,6 +41,9 @@ namespace JobPortal.Models.Context
 			builder.Entity<UserSkill>();
 			builder.Entity<Currency>();
 			builder.Entity<SavedItem>();
+			builder.Entity<UserType>();
+			builder.Entity<HourRate>();
+			
 			builder.Entity<Duration>();
 
 		}

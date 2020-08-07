@@ -11,13 +11,20 @@ export default class Homev2 extends Component {
   constructor(props) {
     super(props);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
   componentDidMount() {
-    loadScripts1(document.body);
+    if (localStorage.getItem('login') === 'true') {
+      this.props.history.push('/home');
+    }
+    loadScripts1(this.instance, false);
   }
-  LoginSuccessfull() {}
+  LoginSuccessfull() {
+    this.props.history.push('/home');
+    //    loadScripts1(this.instance, false);
+  }
   Logout() {
-    this.props.history.push('/Home');
+    //    this.props.history.push('/');
   }
 
   render() {
@@ -31,14 +38,10 @@ export default class Homev2 extends Component {
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
 
-        <div
-          id="wt-wrapper"
-          ref={(el) => (this.instance = el)}
-          className="wt-wrapper wt-haslayout"
-        >
+        <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
           {/*  Content Wrapper Start  */}
           <div className="wt-contentwrapper">
-            <Header Logout={this.Logout} />
+            <Header Logout={this.Logout} Login={this.LoginSuccessfull} />
             {/* <SeekForm /> */}
             <HomeBanner login={this.loginSuccessfull} />
             <WtWrapper />

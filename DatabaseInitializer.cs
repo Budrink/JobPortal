@@ -67,7 +67,98 @@ namespace JobPortal
 				}
 			};
 			context.Set<Language>().AddRange(langs);
+			var rates = new HourRate[]
+		{
+				new HourRate
+				{
+					HourRateName = "$10 and below"
+				},
+				new HourRate
+				{
+					HourRateName = "$10 - $30"
+				},
+				new HourRate
+				{
+					HourRateName = "$30 - $60"
+				},
+				new HourRate
+				{
+					HourRateName = "$60 - $90"
+				},
+				new HourRate
+				{
+					HourRateName = "$90 &amp;above"
+				}
+		};
+			context.Set<HourRate>().AddRange(rates);
 
+			var skills = new Skill[]
+			{
+				new Skill
+				{
+					Name = "WordPress"
+
+				},
+				new Skill
+				{
+					Name = "Graphic Design"
+				},
+				new Skill
+				{
+					Name = "Software Architecture"
+				},
+				new Skill
+				{
+					Name = "Article Writing"
+				},
+				new Skill
+				{
+					Name = "Website Design"
+				},
+					new Skill
+				{
+					Name = "UI Design"
+				},
+				new Skill
+				{
+					Name = "UX Design"
+				},
+				new Skill
+				{
+					Name = "Technical Writer"
+				},
+				new Skill
+				{
+					Name = "Content Writer"
+				}
+			};
+			context.Set<Skill>().AddRange(skills);
+
+			var userTypes = new UserType[]
+{
+				new UserType
+				{
+					UserTypeName = "Pro Independent Freelancers"
+
+				},
+				new UserType
+				{
+					UserTypeName = "Pro Agency Freelancers"
+				},
+				new UserType
+				{
+					UserTypeName = "Independent Freelancers"
+				},
+				new UserType
+				{
+					UserTypeName = "Agency Freelancers"
+				},
+				new UserType
+				{
+					UserTypeName = "New Rising Talent"
+				}
+};
+			context.Set<UserType>().AddRange(userTypes);
 			var user1 = new User
 			{
 				Country = countries.First(x => x.CountryName == "United States"),

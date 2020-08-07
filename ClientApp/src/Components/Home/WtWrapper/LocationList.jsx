@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetCountryList } from '../../GetData/GetCountryList';
+import { GetCountryList } from '../../GetDataNew/GetCountryList';
 
 class LocationList extends Component {
   constructor(props) {
     super(props);
     // {handleCategoryChange} = this.props;
     this.state = {
-      categoryList: [],
+      countryList: [],
       loading: true,
       isActive: true,
       // CheckedCategories: [],
@@ -31,17 +31,17 @@ class LocationList extends Component {
       data = await GetCountryList();
       this.setState({ isActive: false });
     }
-    this.setState({ categoryList: data }, () => {
+    this.setState({ countryList: data }, () => {
       this.setState({ loading: false }, () => {});
     });
   }
 
-  renderCategory(data) {
-    const name = data.category.countryName.replace('&', '%26');
+  renderCountry(data) {
+    const name = data.country.countryName.replace('&', '%26');
     return (
-      <li key={data.category.countryId}>
+      <li key={data.country.countryId}>
         <Link to={`/UserListing?location=${name}`}>
-          {data.category.countryName}
+          {data.country.countryName}
         </Link>
       </li>
     );
@@ -49,7 +49,7 @@ class LocationList extends Component {
 
   renderTable(cats) {
     if (cats !== []) {
-      return cats.map((category) => this.renderCategory({ category }));
+      return cats.map((country) => this.renderCountry({ country }));
     } else return <div> Loading </div>;
   }
 
@@ -64,7 +64,7 @@ class LocationList extends Component {
         <em>Loading...</em>
       </p>
     ) : (
-      this.renderTable(this.state.categoryList)
+      this.renderTable(this.state.countryList)
     );
     let btnContent = this.state.isActive ? (
       <li className="wt-viewmore">

@@ -5,6 +5,7 @@ export interface HttpRequest<REQB> {
   method?: string;
   body?: REQB;
   accessToken?: string;
+  headers?: any;
 }
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
@@ -14,20 +15,22 @@ export const http = <REQB, RESB>(
   config: HttpRequest<REQB>,
 ): Promise<HttpResponse<RESB>> => {
   if (config.body !== undefined) {
-    console.log(JSON.stringify(config.body));
+    // console.log(JSON.stringify(config.body));
   }
   return new Promise((resolve, reject) => {
     const request = new Request(`${webAPIUrl}${config.path}`, {
       method: config.method || 'get',
-      headers: { 'Content-Type': 'application/json' },
+      headers: config.headers || { 'Content-Type': 'application/json' },
       body: config.body ? JSON.stringify(config.body) : undefined,
     });
 
     let response: HttpResponse<RESB>;
-
     fetch(request)
       .then((res) => {
         console.log(res);
+        if (res.status !== 200) {
+          alert(res.status);
+        }
         response = res;
         try {
           return res.json();

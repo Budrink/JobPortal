@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { Field, reduxForm } from 'redux-form';
-import { GetSkillList } from '../../GetData/GetSkillList';
+import { GetSkillList } from '../../GetDataNew/GetSkillList';
 
 class CategoryForm extends Component {
   constructor(props) {
@@ -68,7 +68,7 @@ class CategoryForm extends Component {
   renderTable(cats) {
     if (cats !== []) {
       return cats.map((skill) => (
-        <div className="form-group" key={skill.iD}>
+        <div className="form-group" key={skill.id}>
           {this.renderCategory({ skill })}
         </div>
       ));

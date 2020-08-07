@@ -67,39 +67,47 @@ export const GetFreelancersbyIds = async (
         servedHours: '25K',
         userSkills: [
           {
-            skill: { iD: '1', name: 'PHP' },
+            id: '1',
+            skill: { id: '1', name: 'PHP' },
             percent: 90,
           },
           {
-            skill: { iD: '2', name: 'Website Design' },
+            id: '1444',
+            skill: { id: '2', name: 'Website Design' },
             percent: 55,
           },
           {
-            skill: { iD: '3', name: 'HTML 5 ' },
+            id: '167777',
+            skill: { id: '3', name: 'HTML 5 ' },
             percent: 99,
           },
 
           {
-            skill: { iD: '4', name: 'Graphic Design' },
+            id: '177778',
+            skill: { id: '4', name: 'Graphic Design' },
             percent: 80,
           },
 
           {
-            skill: { iD: '5', name: '   WordPress ' },
+            id: '166778',
+            skill: { id: '5', name: '   WordPress ' },
             percent: 75,
           },
           {
-            skill: { iD: '6', name: 'SEO' },
+            id: '157575',
+            skill: { id: '6', name: 'SEO' },
             percent: 35,
           },
 
           {
-            skill: { iD: '7', name: 'My SQL' },
+            id: '15y7565',
+            skill: { id: '7', name: 'My SQL' },
             percent: 40,
           },
 
           {
-            skill: { iD: '8', name: 'Content Writing' },
+            id: '1vbnv',
+            skill: { id: '8', name: 'Content Writing' },
             percent: 80,
           },
         ],
@@ -139,26 +147,31 @@ export const GetFreelancersbyIds = async (
         servedHours: '25K',
         userSkills: [
           {
-            skill: { iD: '3', name: 'HTML 5 ' },
+            id: '1',
+            skill: { id: '3', name: 'HTML 5 ' },
             percent: 99,
           },
 
           {
-            skill: { iD: '5', name: '   WordPress ' },
+            id: '1555',
+            skill: { id: '5', name: '   WordPress ' },
             percent: 75,
           },
           {
-            skill: { iD: '6', name: 'JavaScript' },
+            id: '1huyghm',
+            skill: { id: '6', name: 'JavaScript' },
             percent: 35,
           },
 
           {
-            skill: { iD: '7', name: 'Team Managemant' },
+            id: '1vnfgn',
+            skill: { id: '7', name: 'Team Managemant' },
             percent: 40,
           },
 
           {
-            skill: { iD: '8', name: 'jQuery' },
+            id: '1tghrthr',
+            skill: { id: '8', name: 'jQuery' },
             percent: 80,
           },
         ],

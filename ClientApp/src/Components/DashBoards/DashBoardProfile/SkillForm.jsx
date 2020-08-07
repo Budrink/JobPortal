@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import loadScripts1 from '../../Functions/LoadScripts';
 import SkillOption from './SkillOption';
-import { GetSkillList } from '../../GetData/GetSkillList';
+import { GetSkillList } from '../../GetDataNew/GetSkillList';
 class SkillForm extends Component {
   constructor(props) {
     super(props);

@@ -2,7 +2,7 @@
 {
 	public enum JobType
 	{
-		PerHour,
-		FixedPrice
+		PerHour = 0,
+		FixedPrice= 1
 	}
 }

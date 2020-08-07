@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { reduxForm } from 'redux-form';
-
+import { GetNumberOfEmployeers } from '../GetDataNew/GetNumberOfEmployeers';
 // To include the default styles
 import 'react-rangeslider/lib/index.css';
 
@@ -22,16 +21,9 @@ class NumberOfEmployersForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  numberOFEmployersList = [
-    { iD: '1', text: 'Less Than 02' },
-    { iD: '2', text: '02 - 09 Employees' },
-    { iD: '3', text: '10 - 99 Employees' },
-    { iD: '4', text: '100 - 499 Employees' },
-    { iD: '5', text: '500 - 999 Employees' },
-    { iD: '6', text: 'More Than 1000 Employees' },
-  ];
+  numberOFEmployersList = GetNumberOfEmployeers();
   handleChange(event) {
-    console.log(event.target.value);
+    //  console.log(event.target.value);
 
     this.props.handleNumberChange(event.target);
   }
@@ -40,12 +32,12 @@ class NumberOfEmployersForm extends Component {
     return this.numberOFEmployersList.map((number) => (
       <span className="wt-checkbox" key={number.iD}>
         <input
-          id={number.iD}
+          id={number.id}
           type="checkbox"
           name="description"
           value={number.text}
         />
-        <label htmlFor={number.iD}>{number.text}</label>
+        <label htmlFor={number.id}>{number.text}</label>
       </span>
     ));
   }

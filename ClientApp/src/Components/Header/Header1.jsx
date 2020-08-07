@@ -34,17 +34,16 @@ class Header1 extends Component {
     this.Logout = this.Logout.bind(this);
   }
   Login() {
+    this.props.Login();
     this.setState({ loginVisible: false });
-
-    //}
   }
   Logout() {
-    console.log('Logout');
+    this.setState({ loginVisible: true });
     this.props.Logout();
   }
-  submit = (values) => {
-    window.alert(JSON.stringify(values));
-  };
+  // submit = (values) => {
+  //   window.alert(JSON.stringify(values));
+  // };
   componentDidMount() {
     ///check refreshToken!!!!
     if (localStorage.getItem('login') === 'true') {
@@ -55,7 +54,7 @@ class Header1 extends Component {
         this.setState({ loginVisible: 'false' });
       } else this.setState({ loginVisible: true });
     }
-    //   loadScripts1(this.instance, false);
+    loadScripts1(this.instance, false);
   }
   createSideContext() {
     if (this.state.loginVisible) {
@@ -81,7 +80,7 @@ class Header1 extends Component {
           <SideBar
             typeOfUser="company"
             userId={localStorage.getItem('userId')}
-            Logout={this.props.Logout}
+            Logout={this.Logout}
           />
         );
       else
@@ -137,13 +136,13 @@ class Header1 extends Component {
                               <span className="wt-dropdowarrow">
                                 <i className="lnr lnr-chevron-right" />
                               </span>
-                              <Link to="/">Home</Link>
+                              <Link to="/home">Home</Link>
                               <ul className="sub-menu">
                                 <li>
-                                  <Link to="/">Home v1</Link>
+                                  <Link to="/home">Home v1</Link>
                                 </li>
                                 <li className="wt-newnoti">
-                                  <Link to="/homev2">
+                                  <Link to="/">
                                     Home v2<em>without login</em>
                                   </Link>
                                 </li>

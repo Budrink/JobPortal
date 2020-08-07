@@ -43,8 +43,8 @@ namespace JobPortal.Controllers
 
 	public class MessageDTO
 		{
-	    	public Guid SenderId { get; set; }
-			public Guid ReceiverId { get; set; }
+	    	public string SenderId { get; set; }
+			public string ReceiverId { get; set; }
 			public string Text { get; set; }
 			public IEnumerable<Attachment> Attachments { get; set; }
 		}
@@ -58,8 +58,8 @@ namespace JobPortal.Controllers
 				var message = new Message
 			{
 	
-		SenderId = request.SenderId,
-		ReceiverId=request.ReceiverId,
+		SenderId = Guid.Parse(request.SenderId),
+		ReceiverId=Guid.Parse(request.ReceiverId),
 		Status= MessageStatus.New,
 		Date =DateTime.UtcNow,
 		Text = request.Text,

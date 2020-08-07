@@ -4,12 +4,13 @@ export const userPhotoPath = '/images/user/userlisting/';
 export const companyPath = '/images/company/';
 export const categoryPath = '/images/categories/';
 export const globalCategoryPath = '/images/categories/';
-export const globalCategoryDefalutIconPath = '/images/categories/img-01.png';
+export const globalCategoryDefalutIconPath = '/images/categories/img-07.jpg';
 
 export const categorySliderPath = '/images/categories/slider/';
 export const categorySliderDefalutIconPath =
   '/images/categories/slider/img-01.png';
 export const userDefaultIconPath = '/images/user/userlisting/img-01.jpg';
+export const flagDefaultPath = countryFlagsPath + 'img-01.png';
 export const CraftedProjectPath = '/images/user/userlisting/';
 export const CraftedProjectDefaultPath = '/images/user/userlisting/img-01.jpg';
 export const ProjectImgPath = '/images/user/userlisting/';

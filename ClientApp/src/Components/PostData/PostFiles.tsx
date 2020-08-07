@@ -1,28 +1,36 @@
 import { File } from '../Data/Data';
-import { wait } from '../GetData/wait';
+import { http } from '../Data/Http';
 
 export interface fileToPost {
-  iD: string; // remove
   name: string;
   size: number;
   content: string;
 }
-export const PostFiles = async (fileList: fileToPost[]): Promise<File[]> => {
-  // export const getCategoryList = (): CategoryData[] => {
 
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-  let newFIles = fileList.map((file) => {
-    return { iD: file.iD, size: file.size, name: file.name, link: '/' };
-  });
+export const PostFiles = async (file: fileToPost): Promise<any> => {
+  let f: FormData;
+  f = new FormData();
+  f.append('file', file.content, file.name);
+  let response;
+  try {
+    response = await http({
+      path: `Upload/bytes`,
+      method: 'POST',
+      body: f,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    let r = response.parsedBody;
 
-  return newFIles;
+    let newFile: File;
+    // newFile = {
+    //   iD: r.Attachment.Id,
+    //   name: r.Attachment.FileName,
+    //   link: r.Attachment.fileLink,
+    //   size: r.Attachments.FileSize,
+    // };
+    return r;
+  } catch (error) {
+    window.alert(error);
+    return error;
+  }
 };

@@ -32,7 +32,7 @@ export const getTopCategoryList = async (): Promise<TopCategoryData[]> => {
       topCategoryId: 'TC1',
       topCategory: {
         name: 'Graphic & Design',
-        iD: '1',
+        id: '1',
         img: 'img-01.png',
         sliderImg: 'img-01.png',
       },
@@ -40,29 +40,29 @@ export const getTopCategoryList = async (): Promise<TopCategoryData[]> => {
     },
     {
       topCategoryId: 'TC2',
-      topCategory: { name: 'Digital Marketing', iD: '3' },
+      topCategory: { name: 'Digital Marketing', id: '3' },
       itemsAmount: '523,112',
     },
     {
       topCategoryId: 'TC3',
       itemsAmount: '325,442',
-      topCategory: { name: 'Writing & Translation', iD: '4' },
+      topCategory: { name: 'Writing & Translation', id: '4' },
     },
     {
       topCategoryId: 'TC4',
       itemsAmount: '421,305',
-      topCategory: { name: 'Video & Animation', iD: '5' },
+      topCategory: { name: 'Video & Animation', id: '5' },
     },
 
     // {
     //   topCategoryId: 'TC5',
     //   itemsAmount: '421,305',
-    //   topCategory: { name: ' Music & Audio', iD: '6' },
+    //   topCategory: { name: ' Music & Audio', id: '6' },
     // },
     // {
     //   topCategoryId: 'TC6',
     //   itemsAmount: '421,305',
-    //   topCategory: { name: 'Programing & Tech', iD: '7' },
+    //   topCategory: { name: 'Programing & Tech', id: '7' },
     // },
   ];
   categoryList.map(

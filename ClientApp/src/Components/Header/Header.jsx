@@ -33,7 +33,7 @@ class Header extends Component {
   }
   Login() {
     this.setState({ loginVisible: false });
-    this.setState({ loginVisible: false });
+    this.props.Login();
   }
   Logout() {
     this.setState({ loginVisible: true });
@@ -76,7 +76,7 @@ class Header extends Component {
         return (
           <SideBar
             typeOfUser="company"
-            Logout={this.props.Logout}
+            Logout={this.Logout}
             userId={localStorage.getItem('userId')}
           />
         );
@@ -131,13 +131,13 @@ class Header extends Component {
                               <span className="wt-dropdowarrow">
                                 <i className="lnr lnr-chevron-right" />
                               </span>
-                              <Link to="/">Home</Link>
+                              <Link to="/home">Home</Link>
                               <ul className="sub-menu">
                                 <li>
-                                  <Link to="/">Home v1</Link>
+                                  <Link to="/home">Home v1</Link>
                                 </li>
                                 <li className="wt-newnoti">
-                                  <Link to="/homev2">
+                                  <Link to="/">
                                     Home v2<em>without login</em>
                                   </Link>
                                 </li>

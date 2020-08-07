@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetSkillList } from '../../GetData/GetSkillList';
+import { GetSkillList } from '../../GetDataNew/GetSkillList';
 
 class SkillinUSAList extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class SkillinUSAList extends Component {
   renderCategory(data) {
     const name = data.skill.name.replace('&', '%26');
     return (
-      <li key={data.skill.iD}>
+      <li key={data.skill.id}>
         <Link to={`/UserListing?location=United States&skill=${name}`}>
           {data.skill.name} in US
         </Link>
