@@ -69,8 +69,7 @@ namespace JobPortal.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("List")]
+ 		[Route("List")]
 		public async Task<IActionResult> GetJobList(JobListRequestDto dto)
 		{
 			try
@@ -125,7 +124,40 @@ namespace JobPortal.Controllers
 		    try
 		    {
 			    var job = await _jobRepository.FindById(Guid.Parse(jobId));
-			    return Ok(job);
+
+
+			    var result = new
+			    {
+				    JobId = job.JobId,
+				    Qualification = job.CompetenceLevel.ToString(),
+				    Company = new
+				    {
+					    UserId = job.Company.User.Id,
+					    FirstName = job.Company.User.FirstName,
+					    LastName = job.Company.User.LastName,
+					    Email = job.Company.User.Email,
+					    Gender = job.Company.User.Gender,
+					    JoinDate = job.Company.User.JoinDate,
+					    UserName = job.Company.User.UserName,
+					    VerifiedCompany = true,
+					    CompanyId = job.Company.CompanyId,
+					    Country = new
+					    {
+						    CountryId = job.Company.User.Country.CountryId,
+						    CountryFlag = job.Company.User.Country.CountryFlag,
+						    CountryName = job.Company.User.Country.CountryName
+					    }
+				    },
+				    Type = job.JobType,
+				    Duration = job.Duration.DurationText,
+				    JobDetails = job.JobDetails,
+				    SkillRequired = job.SkillsRequired.ToList(),
+				    Attachments = job.Attachments.ToList(),
+					ProposalsCount = job.ProposalsCount,
+					HiredFreelancers = job.HiredFreelancers.Select(x=> x.Id).ToList()
+			    };
+
+				return Ok(job);
 		    }
 		    catch (Exception e)
 		    {

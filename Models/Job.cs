@@ -13,7 +13,6 @@ namespace JobPortal.Models
 		public virtual Company Company { get; set; }
 		public string Title { get; set; }
 		public JobStatus JobStatus { get; set; }
-		public string Duration { get; set; }
 		public string JobDetails { get; set; }
 		public JobType JobType { get; set; }
 		public decimal Tax { get; set; }
@@ -23,6 +22,7 @@ namespace JobPortal.Models
 		public virtual IEnumerable<Skill> SkillsRequired { get; set; }
 		public virtual IEnumerable<Attachment> Attachments { get; set; }
 		public virtual IEnumerable<Tag> Tags { get; set; }
+		public virtual Duration Duration { get; set; }
 		public int ProposalsCount { get; set; }
 		public virtual IEnumerable<User> HiredFreelancers { get; set; }
 	}

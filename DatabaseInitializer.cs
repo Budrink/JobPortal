@@ -135,7 +135,7 @@ namespace JobPortal
 			context.Set<Skill>().AddRange(skills);
 
 			var userTypes = new UserType[]
-{
+			{
 				new UserType
 				{
 					UserTypeName = "Pro Independent Freelancers"
@@ -157,7 +157,9 @@ namespace JobPortal
 				{
 					UserTypeName = "New Rising Talent"
 				}
-};
+			};
+
+			var joinDate = DateTime.Now;
 			context.Set<UserType>().AddRange(userTypes);
 			var user1 = new User
 			{
@@ -166,6 +168,7 @@ namespace JobPortal
 				LastName = "Morn",
 				Email = "alex@somedomain.com",
 				UserName = "alex@somedomain.com",
+				JoinDate = joinDate,
 				EmailConfirmed = true,
 				Company = new Company
 				{
@@ -186,6 +189,7 @@ namespace JobPortal
 				Country = countries.First(x => x.CountryName == "Canada"),
 				FirstName = "John",
 				LastName = "Doe",
+				JoinDate = joinDate,
 				Email = "johndoe@somedomain.com",
 				UserName = "johndoe@somedomain.com",
 				EmailConfirmed = true,
@@ -210,6 +214,7 @@ namespace JobPortal
 				FirstName = "Jain",
 				LastName = "Doe",
 				Email = "Jaindoe@somedomain.com",
+				JoinDate = joinDate,
 				UserName = "Jaindoe@somedomain.com",
 				EmailConfirmed = true,
 				Company = new Company
@@ -232,6 +237,7 @@ namespace JobPortal
 				Country = countries.First(x => x.CountryName == "United States"),
 				FirstName = "Ivan",
 				LastName = "Petrov",
+				JoinDate = joinDate,
 				Freelancer = new Freelancer(),
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
@@ -293,7 +299,7 @@ namespace JobPortal
 				},
 			};
 
-			context.Set<Currency>().Add(currents);
+			context.Set<Currency>().AddRange(currents);
 
 			context.SaveChanges();
 
