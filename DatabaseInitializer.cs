@@ -151,6 +151,11 @@ namespace JobPortal
 			userManager.AddToRoleAsync(freelancer1, "freelancer");
 
 
+			var durations = new[]
+			{
+				new Duration()
+			};
+
 		}
 	}
 }
