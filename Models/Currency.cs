@@ -8,7 +8,7 @@ namespace JobPortal.Models
 	{
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid CurrencyId { get; set; }
-		public string Name { get; set; }
+		public string CurrencyName { get; set; }
 
 	}
 }

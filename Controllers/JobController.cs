@@ -69,8 +69,8 @@ namespace JobPortal.Controllers
 		}
 
 		[HttpPost]
+ 		[Route("List")]
 		[Authorize]
-		[Route("List")]
 		public async Task<IActionResult> GetJobList(JobListRequestDto dto)
 		{
 			try
@@ -86,6 +86,18 @@ namespace JobPortal.Controllers
 					 dto.LocationFilter.Select(i => Guid.Parse(i)).Contains(x.Country.CountryId)) &&
 					(dto.LangFilter.IsNullOrEmpty() ||
 					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId)));
+				if (!dto.StatusFilter.IsNullOrEmpty())
+				{
+					var statusFilter = Enum.Parse<JobStatus>(dto.StatusFilter);
+					jobsFiltered = jobsFiltered.Where(x => x.JobStatus == statusFilter);
+				}
+
+				if (!dto.TypeFilter.IsNullOrEmpty())
+				{
+					jobsFiltered = jobsFiltered.Where(x =>
+						dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType));
+				}
+
 				var count = jobsFiltered.Count();
 
 				var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
@@ -101,7 +113,7 @@ namespace JobPortal.Controllers
 					CountryId = x.Country.CountryId,
 					ProposalsCount = x.ProposalsCount,
 					IsSaved = savedJobsIds.Contains(x.JobId),
-				}).Skip(dto.PageNumber*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage != 0 ? dto.AmountOfItemsOnPage : count).ToList();
+				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
 				{
 					TotalCount = count,
@@ -125,7 +137,40 @@ namespace JobPortal.Controllers
 		    try
 		    {
 			    var job = await _jobRepository.FindById(Guid.Parse(jobId));
-			    return Ok(job);
+
+
+			    var result = new
+			    {
+				    JobId = job.JobId,
+				    Qualification = job.CompetenceLevel.ToString(),
+				    Company = new
+				    {
+					    UserId = job.Company.User.Id,
+					    FirstName = job.Company.User.FirstName,
+					    LastName = job.Company.User.LastName,
+					    Email = job.Company.User.Email,
+					    Gender = job.Company.User.Gender,
+					    JoinDate = job.Company.User.JoinDate,
+					    UserName = job.Company.User.UserName,
+					    VerifiedCompany = true,
+					    CompanyId = job.Company.CompanyId,
+					    Country = new
+					    {
+						    CountryId = job.Company.User.Country.CountryId,
+						    CountryFlag = job.Company.User.Country.CountryFlag,
+						    CountryName = job.Company.User.Country.CountryName
+					    }
+				    },
+				    Type = job.JobType,
+				    Duration = job.Duration.DurationText,
+				    JobDetails = job.JobDetails,
+				    SkillRequired = job.SkillsRequired.ToList(),
+				    Attachments = job.Attachments.ToList(),
+					ProposalsCount = job.ProposalsCount,
+					HiredFreelancers = job.HiredFreelancers.Select(x=> x.Id).ToList()
+			    };
+
+				return Ok(job);
 		    }
 		    catch (Exception e)
 		    {

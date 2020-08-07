@@ -135,7 +135,7 @@ namespace JobPortal
 			context.Set<Skill>().AddRange(skills);
 
 			var userTypes = new UserType[]
-{
+			{
 				new UserType
 				{
 					UserTypeName = "Pro Independent Freelancers"
@@ -157,7 +157,9 @@ namespace JobPortal
 				{
 					UserTypeName = "New Rising Talent"
 				}
-};
+			};
+
+			var joinDate = DateTime.Now;
 			context.Set<UserType>().AddRange(userTypes);
 			var user1 = new User
 			{
@@ -166,6 +168,7 @@ namespace JobPortal
 				LastName = "Morn",
 				Email = "alex@somedomain.com",
 				UserName = "alex@somedomain.com",
+				JoinDate = joinDate,
 				EmailConfirmed = true,
 				Company = new Company
 				{
@@ -186,6 +189,7 @@ namespace JobPortal
 				Country = countries.First(x => x.CountryName == "Canada"),
 				FirstName = "John",
 				LastName = "Doe",
+				JoinDate = joinDate,
 				Email = "johndoe@somedomain.com",
 				UserName = "johndoe@somedomain.com",
 				EmailConfirmed = true,
@@ -210,6 +214,7 @@ namespace JobPortal
 				FirstName = "Jain",
 				LastName = "Doe",
 				Email = "Jaindoe@somedomain.com",
+				JoinDate = joinDate,
 				UserName = "Jaindoe@somedomain.com",
 				EmailConfirmed = true,
 				Company = new Company
@@ -232,6 +237,7 @@ namespace JobPortal
 				Country = countries.First(x => x.CountryName == "United States"),
 				FirstName = "Ivan",
 				LastName = "Petrov",
+				JoinDate = joinDate,
 				Freelancer = new Freelancer(),
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
@@ -265,39 +271,114 @@ namespace JobPortal
 			context.Set<Duration>().AddRange(durations);
 
 
+			var currents = new[]
+			{
+				new Currency
+				{
+					CurrencyName = "Brazilian Real"
+				},
+				new Currency
+				{
+					CurrencyName = "US Dollar"
+				},
+				new Currency
+				{
+					CurrencyName = "Yuan Renminbi"
+				},
+				new Currency
+				{
+					CurrencyName = "Colombian Peso"
+				},
+				new Currency
+				{
+					CurrencyName = "Euro"
+				},
+				new Currency
+				{
+					CurrencyName = "Hong Kong Dollar"
+				},
+			};
+
+
 			var jobs = new[]
 			{
 				new Job
 				{
-						Title= "I want some customization and installation",
-						CompetenceLevel= CompetenceLevel.Expert,
-						JobType=JobType.PerHour,
-
-						Company=			{
-					
-
-		  country:
-				{
-				countryId: 'C4',
-            countryFlag: countryFlagsPath + 'img-04.png',
-            countryName: 'England',
-          },
-        },
-       
-        duration: '03 Months',
-        jobDetails:
-			'Nisi ut aliquip ex ea commodo consequat  duis aute irure dolor in reprehenderit inati voluptate velit esse cillum doloreeutates fugiat nulla pariatur sunt in culpa asequi officia deserunt mollit animid est laborum ut perspiciatis...',
-        skillsRequired: [
-
-		  { id: '1', name: 'PHP' },
-          { id: '2', name: 'HTML' },
-          { id: '3', name: 'JQuery' },
-        ],
+					Company = user1.Company,
+					CompetenceLevel = CompetenceLevel.Expert,
+					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "L01 to 03 Months"),
+					Country = context.Set<Country>().Skip(2).First(),
+					JobDetails = "Lorem Ipsumdfs dfdfsdfs someblablahere",
+					JobStatus = JobStatus.Open,
+					JobType = JobType.PerHour,
+					Language = context.Set<Language>().Skip(3).First(),
+					Title = "SomeAnotherJobToDo",
+					Tax = decimal.FromOACurrency(15),
+					SkillsRequired = new []
+					{
+						new Skill
+						{
+							Name = ".NET"
+						},
+						new Skill
+						{
+							Name = "Photoshop"
+						},
+						new Skill
+						{
+							Name = "Design"
+						},
+						new Skill
+						{
+							Name = "Analysis"
+						}, new Skill
+						{
+							Name = "Another skill"
+						}
+					},
+					ProposalsCount = 3
 				},
-			
+				new Job
+				{
+					Company = user2.Company,
+					CompetenceLevel = CompetenceLevel.Intermidiate,
+					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "Less Than 01 Month"),
+					HiredFreelancers = new[] {freelancer1},
+					Country = context.Set<Country>().First(),
+					JobDetails = "Lorem Ipsum someblablahere",
+					JobStatus = JobStatus.Open,
+					JobType = JobType.PerHour,
+					Language = context.Set<Language>().First(),
+					Title = "SomeJobToDo",
+					Tax = decimal.FromOACurrency(15),
+					SkillsRequired = new []
+					{
+						new Skill
+						{
+							Name = "PHP"
+						},
+						new Skill
+						{
+							Name = "PHP Developer"
+						},
+						new Skill
+						{
+							Name = "MySQL"
+						},
+						new Skill
+						{
+							Name = "Business"
+						}, new Skill
+						{
+							Name = "Collaboration"
+						}
+					},
+					ProposalsCount = 3
+				}
 			};
 
-			context.Set<Duration>().AddRange(durations);
+			context.Set<Currency>().AddRange(currents);
+
 			context.SaveChanges();
 
 		}
