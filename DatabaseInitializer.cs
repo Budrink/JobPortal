@@ -341,7 +341,7 @@ namespace JobPortal
 				new Job
 				{
 					Company = user2.Company,
-					CompetenceLevel = CompetenceLevel.Intermidiate,
+					CompetenceLevel = CompetenceLevel.Intermediate,
 					Duration = context.Set<Duration>().FirstOrDefault(x => x.DurationText == "Less Than 01 Month"),
 					HiredFreelancers = new[] {freelancer1},
 					Country = context.Set<Country>().First(),
@@ -378,7 +378,7 @@ namespace JobPortal
 			};
 
 			context.Set<Currency>().AddRange(currents);
-
+			context.Set<Job>().AddRange(jobs);
 			context.SaveChanges();
 
 		}

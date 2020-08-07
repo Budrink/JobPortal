@@ -116,10 +116,10 @@ namespace JobPortal.Controllers
 				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
 				{
-					TotalCount = count,
+					TotalAmountOfProjects = count,
 					PageNumber = dto.PageNumber,
 					AmountOfItemsOnPage = dto.AmountOfItemsOnPage,
-					Jobs = jobs
+					Projects = jobs
 				};
 				return Ok(result);
 			}

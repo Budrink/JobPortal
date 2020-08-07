@@ -31,11 +31,12 @@ export const GetProjectList = async (
   // await wait(500);
   console.log('ыефегыэ' + statusfilter);
   let projectList: ProjectsProps;
+  projectList = { totalAmountOfProjects: 0, projects: [] };
   let response: HttpResponse<any>;
   let requestBody;
   requestBody = {
     pageNumber: pageNumber,
-    amounOfItemsOnPage: amounOfItemsOnPage,
+    amountOfItemsOnPage: amounOfItemsOnPage,
     categoryFilter: categoryFilter,
     projectTypeFilter: projectTypeFilter,
     locationFilter: locationFilter,

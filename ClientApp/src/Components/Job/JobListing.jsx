@@ -255,6 +255,7 @@ class JobListing extends Component {
     statusFilter,
   ) => {
     let data = [];
+
     if (localStorage.getItem('login') === 'true') {
       data = await GetProjectList(
         pageNumber,
@@ -269,12 +270,15 @@ class JobListing extends Component {
         stringFilter,
         statusFilter,
       );
+    } else {
+      data = {
+        totalAmountOfProjects: 0,
+        projects: [],
+      };
     }
-
-    // console.log(JSON.stringify(data));
     this.setState({ projectList: data }, () => {
       this.setState({ loading: false }, () => {});
-
+      // console.log(data);
       loadScripts(this.instance, false);
 
       // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
@@ -336,7 +340,7 @@ class JobListing extends Component {
     this.statusFilter =
       statusFilter_.indexOf('') === 0 ? statusFilter_.shift() : statusFilter_;
     this.createFilterString();
-
+    console.log(10);
     this.populateData(
       this.state.pageNumber,
       this.state.amountOfItemsOnPage,
@@ -372,10 +376,14 @@ class JobListing extends Component {
     let paging = this.pagingCreate();
     let projectContent =
       localStorage.getItem('login') === 'true' ? (
-        <ProjectList
-          projectList={this.state.projectList}
-          loading={this.state.loading}
-        />
+        this.state.loading !== true ? (
+          <ProjectList
+            projectList={this.state.projectList}
+            loading={this.state.loading}
+          />
+        ) : (
+          <div>Loading....</div>
+        )
       ) : (
         <div> Authorization required </div>
       );

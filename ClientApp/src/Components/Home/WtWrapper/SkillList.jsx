@@ -11,6 +11,7 @@ class SkillList extends Component {
       loading: true,
       isActive: true,
       // CheckedCategories: [],
+      loading: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
