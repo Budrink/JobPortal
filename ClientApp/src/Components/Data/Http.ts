@@ -25,7 +25,6 @@ export const http = <REQB, RESB>(
     });
 
     let response: HttpResponse<RESB>;
-    console.log(request);
     fetch(request)
       .then((res) => {
         console.log(res);

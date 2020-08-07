@@ -26,9 +26,6 @@ class CountryForm extends Component {
       this.setState({ SearchCountry: event.target.value });
     } else {
       this.props.handleLocationChange(target);
-      // const value = target.checked;
-      // const name = target.name;
-      // this.setState({ [name]: value });
     }
   }
 
@@ -46,6 +43,7 @@ class CountryForm extends Component {
   }
 
   renderCountry(data) {
+    console.log(data.country.countryFlag);
     return (
       <span className="wt-checkbox">
         <Field
@@ -58,9 +56,9 @@ class CountryForm extends Component {
         <label htmlFor={data.country.countryId}>
           <img
             src={data.country.countryFlag}
-            // src="images/flag/img-03.png"
+            //  src="images/flag/img-03.png"
             // '/images/flag/'
-            alt={data.countryName}
+            alt={data.country.countryName}
           />
           {data.country.countryName}
         </label>

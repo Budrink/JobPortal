@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { Field, reduxForm } from 'redux-form';
-import { getDurationList } from '../GetData/GetDurationList';
+import { getDurationList } from '../GetDataNew/GetDurationList';
 
 class DurationForm extends Component {
   constructor(props) {

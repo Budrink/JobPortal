@@ -1,5 +1,5 @@
 import { CountryData } from '../Data/Data';
-import { countryFlagsPath } from '../Data/GlobalValues';
+import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
 
 import { http } from '../Data/Http';
 export interface HttpResponse<RESB> extends Response {
@@ -16,10 +16,10 @@ export const GetCountryList = async (
       path: `Countries`,
       method: 'Get',
     });
-    console.log(response);
+    //  console.log(response);
     if (response.parsedBody !== null) {
       countryList = response.parsedBody;
-      console.log(countryList);
+      //   console.log(countryList);
     }
   } catch (e) {
     console.log(e);
@@ -27,9 +27,9 @@ export const GetCountryList = async (
 
   countryList.map(
     (country) =>
-      (country.countryId =
+      (country.countryFlag =
         country.countryFlag === null
-          ? countryFlagsPath + 'img-01.png'
+          ? flagDefaultPath
           : countryFlagsPath + country.countryFlag),
   );
   return countryList;

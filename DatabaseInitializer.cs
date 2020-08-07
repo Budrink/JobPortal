@@ -67,6 +67,30 @@ namespace JobPortal
 				}
 			};
 			context.Set<Language>().AddRange(langs);
+			var rates = new HourRate[]
+		{
+				new HourRate
+				{
+					HourRateName = "$10 and below"
+				},
+				new HourRate
+				{
+					HourRateName = "$10 - $30"
+				},
+				new HourRate
+				{
+					HourRateName = "$30 - $60"
+				},
+				new HourRate
+				{
+					HourRateName = "$60 - $90"
+				},
+				new HourRate
+				{
+					HourRateName = "$90 &amp;above"
+				}
+		};
+			context.Set<HourRate>().AddRange(rates);
 
 			var skills = new Skill[]
 			{

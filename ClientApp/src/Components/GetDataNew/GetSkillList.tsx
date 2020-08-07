@@ -13,7 +13,7 @@ export const GetSkillList = async (
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Skills/list`,
+      path: `Skills`,
       method: 'Get',
     });
 

@@ -68,7 +68,7 @@ class CategoryForm extends Component {
   renderTable(cats) {
     if (cats !== []) {
       return cats.map((skill) => (
-        <div className="form-group" key={skill.iD}>
+        <div className="form-group" key={skill.id}>
           {this.renderCategory({ skill })}
         </div>
       ));

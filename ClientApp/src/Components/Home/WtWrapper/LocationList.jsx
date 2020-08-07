@@ -41,7 +41,7 @@ class LocationList extends Component {
     return (
       <li key={data.country.countryId}>
         <Link to={`/UserListing?location=${name}`}>
-          {data.category.countryName}
+          {data.country.countryName}
         </Link>
       </li>
     );
