@@ -29,7 +29,7 @@ namespace JobPortal.Dto
 		public int ServedHours { get; set; }
 
 		public UserSkill[] UserSkills { get; set; }
-		public int EnglishLevel { get; set; }
+		public EnglishLevel EnglishLevel { get; set; }
 
 		public UserLanguage[] Languages { get; set; }
 

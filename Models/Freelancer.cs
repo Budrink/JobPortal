@@ -46,7 +46,7 @@ namespace JobPortal.Models
 		public double HourRates { get; set; }
 		public int ServedHours { get; set; }
 		public virtual IEnumerable<UserSkill> UserSkills { get; set; }
-		public int EnglishLevel { get; set; }
+		public virtual EnglishLevel EnglishLevel { get; set; }
 		public virtual IEnumerable<UserLanguage> Languages { get; set; }
 		public string Remark { get; set; }
 		public virtual IEnumerable<UserExperience> Experience { get; set; }
