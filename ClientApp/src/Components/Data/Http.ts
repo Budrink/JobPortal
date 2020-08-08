@@ -32,16 +32,18 @@ export const http = <REQB, RESB>(
       headers: config.headers || defaultHeader,
       body: config.body ? JSON.stringify(config.body) : undefined,
     });
-    //  console.log(config.path);
+    //console.log(`${webAPIUrl}${config.path}`);
     //  console.log(request.headers.get('Authorization'));
     let response: HttpResponse<RESB>;
     fetch(request)
       .then((res) => {
-        // console.log(res);
+        console.log(res);
+
         if (res.status !== 200) {
           alert(res.status);
         }
         response = res;
+
         try {
           return res.json();
         } catch (e) {

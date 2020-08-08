@@ -262,19 +262,19 @@ namespace JobPortal
 			{
 				new Duration
 				{
-					DurationText = "Less Than 01 Month"
+					DurationText = "less than 01 month"
 				},
 				new Duration
 				{
-					DurationText = "01 to 03 Months"
+					DurationText = "01 to 03 months"
 				},
 				new Duration
 				{
-					DurationText = "03 to 06 Months"
+					DurationText = "03 to 06 months"
 				},
 				new Duration
 				{
-					DurationText = "More Than 06 Months"
+					DurationText = "more than 06 months"
 				},
 			};
 
@@ -314,12 +314,38 @@ namespace JobPortal
 			context.SaveChanges();
 
 
+			var levels = new[]
+			{
+				new EnglishLevel
+				{
+					EnglishLevelName = "Basic"
+				},
+				new EnglishLevel
+				{
+					EnglishLevelName = "Conversational"
+				},
+				new EnglishLevel
+				{
+					EnglishLevelName = "Fluent"
+				},
+				new EnglishLevel
+				{
+					EnglishLevelName = "Native or bilingual"
+				},
+				new EnglishLevel
+				{
+					EnglishLevelName = "Professional"
+				},
+			};
+
+			context.Set<EnglishLevel>().AddRange(levels);
+			context.SaveChanges();
 			var jobs = new[]
 			{
 				new Job
 				{
 					Company = user1.Company,
-					CompetenceLevel = CompetenceLevel.Expert,
+					CompetenceLevel = CompetenceLevel.Professional,
 					Duration = context.Set<Duration>().Skip(1).First(),
 					Country = context.Set<Country>().Skip(2).First(),
 					JobDetails = "Lorem Ipsumdfs dfdfsdfs someblablahere",
@@ -328,7 +354,7 @@ namespace JobPortal
 					Language = context.Set<Language>().Skip(3).First(),
 					Title = "SomeAnotherJobToDo",
 					Tax = decimal.FromOACurrency(15),
-					SkillsRequired = new []
+				 SkillsRequired = new []
 					{
 						new Skill
 						{
@@ -365,7 +391,7 @@ namespace JobPortal
 					Language = context.Set<Language>().First(),
 					Title = "SomeJobToDo",
 					Tax = decimal.FromOACurrency(15),
-					SkillsRequired = new []
+				    SkillsRequired = new []
 					{
 						new Skill
 						{

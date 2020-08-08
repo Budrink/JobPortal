@@ -1,6 +1,6 @@
 import { JobData } from '../Data/Data';
 import { http } from '../Data/Http';
-import { countryFlagsPath } from '../Data/GlobalValues';
+import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
@@ -28,8 +28,6 @@ export const GetProjectList = async (
   stringForSearching: string,
   statusfilter: string, // ongoing, cancel, completed
 ) => {
-  // await wait(500);
-  console.log('ыефегыэ' + statusfilter);
   let projectList: ProjectsProps;
   projectList = { totalAmountOfProjects: 0, projects: [] };
   let response: HttpResponse<any>;
@@ -59,11 +57,19 @@ export const GetProjectList = async (
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
-      console.log(projectList);
+      // console.log(projectList);
+      projectList.projects.map(
+        (pr) =>
+          (pr.company.country.countryFlag =
+            pr.company.country.countryFlag !== null
+              ? countryFlagsPath + pr.company.country.countryFlag
+              : flagDefaultPath),
+      );
     }
   } catch (e) {
     console.log(e);
   }
+
   // projectList = {
   //   totalAmountOfProjects: 100,
   //   projects: [

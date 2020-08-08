@@ -88,6 +88,7 @@ namespace JobPortal.Controllers
 				    JoinDate = user.JoinDate,
 				    Title = user.Freelancer.Title,
 				    HourRates = user.Freelancer.Rates,
+					EnglishLevel=user.Freelancer.EnglishLevel,
 				    Country = user.Country,
 				    Description = user.Freelancer.Description,
 				    AmountOngoingProjects =

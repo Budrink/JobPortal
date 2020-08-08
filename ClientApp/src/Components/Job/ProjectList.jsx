@@ -49,7 +49,7 @@ class ProjectList extends Component {
   renderTagList(data) {
     if (data) {
       return data.map((skill) => (
-        <a href="/" key={skill.iD + '_skill'}>
+        <a href="/" key={skill.id}>
           {skill.name}
         </a>
       ));
@@ -72,11 +72,6 @@ class ProjectList extends Component {
       </span>
     ) : null;
 
-    console.log(data);
-    console.log(data.project);
-    console.log(data.project.company);
-    console.log(data.project.company.country);
-    console.log(data.project.company.country.countryFlag);
     return (
       <div
         className="wt-userlistinghold wt-featured wt-userlistingholdvtwo"

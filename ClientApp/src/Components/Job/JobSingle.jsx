@@ -18,7 +18,7 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import Header1 from '../Header/Header1';
 import Footer from '../Footer/Footer';
-import { GetJob } from '../GetData/GetJob';
+import { GetJob } from '../GetDataNew/GetJob';
 import { any } from 'prop-types';
 import loadScripts from '../Functions/LoadScripts';
 import ComplainForm from '../Forms/ComplainForm';

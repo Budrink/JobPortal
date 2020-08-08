@@ -2,8 +2,8 @@
 {
 	public enum CompetenceLevel
 	{
-		Etry,
+		Beginner,
 		Intermediate,
-		Expert
+		Professional
 	}
 }

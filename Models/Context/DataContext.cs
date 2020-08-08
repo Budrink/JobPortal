@@ -45,6 +45,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<HourRate>();
 			builder.Entity<Feedback>();
 			builder.Entity<Duration>();
+			builder.Entity<EnglishLevel>();
 
 		}
 	}

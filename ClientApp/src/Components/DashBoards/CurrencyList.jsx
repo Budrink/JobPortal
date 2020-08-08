@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { GetCurrencyList } from '../GetData/GetCurrencyList';
+import { GetCurrencyList } from '../GetDataNew/GetCurrencyList';
 
 class CurrencyList extends Component {
   constructor(props) {

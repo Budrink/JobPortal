@@ -70,12 +70,12 @@ namespace JobPortal.Controllers
 
 		[HttpPost]
  		[Route("List")]
-		[Authorize]
+		//[Authorize]
 		public async Task<IActionResult> GetJobList(JobListRequestDto dto)
 		{
 			try
 			{
-				var user = await _userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
+				//var user = await _userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
 
 				var jobsFiltered = _jobRepository.DbSet().Where(x =>
 					(dto.StringForSearching.IsNullOrEmpty()||x.Title.Contains(dto.StringForSearching)) &&
@@ -85,22 +85,22 @@ namespace JobPortal.Controllers
 					(dto.LocationFilter.IsNullOrEmpty() ||
 					 dto.LocationFilter.Select(i => Guid.Parse(i)).Contains(x.Country.CountryId)) &&
 					(dto.LangFilter.IsNullOrEmpty() ||
-					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId)));
+					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId))).ToList();
 				if (!dto.StatusFilter.IsNullOrEmpty())
 				{
 					var statusFilter = Enum.Parse<JobStatus>(dto.StatusFilter);
-					jobsFiltered = jobsFiltered.Where(x => x.JobStatus == statusFilter);
+					jobsFiltered = jobsFiltered.Where(x => x.JobStatus == statusFilter).ToList();
 				}
 
 				if (!dto.TypeFilter.IsNullOrEmpty())
 				{
 					jobsFiltered = jobsFiltered.Where(x =>
-						dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType));
+						dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType)).ToList();
 				}
 
 				var count = jobsFiltered.Count();
 
-				var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
+				//var savedJobsIds = user.SavedItems.Where(x => x.SavedItemType == SavedItemType.Job).Select(x => x.Id).ToHashSet();
 				var jobs = jobsFiltered.Select(x => new
 				{
 					JobDetails = x.JobDetails,
@@ -108,23 +108,23 @@ namespace JobPortal.Controllers
 						CompanyId = x.Company.CompanyId,
 						CompanyName = x.Company.CompanyName,
 						VerifiedCompany = x.Company.VerifiedCompany,
-						Country = new
-						{
-							CountryId = x.Country.CountryId,
-							CountryName = x.Country.CountryName,
-							CountryFlag = x.Country.CountryFlag
-						},
+						Country = x.Country,
+			
 					},
 					Title = x.Title,
 					JobStatus = x.JobStatus,
 					Type = x.JobType,
 					JobId=x.JobId,
-					Duration = x.Duration,
+					Duration = x.Duration.DurationText,
 					Tax = x.Tax,
-				
+				   qualification=x.CompetenceLevel,
 					ProposalsCount = x.ProposalsCount,
-					SkillsRequired = x.SkillsRequired.ToList(),
-					IsSaved = savedJobsIds.Contains(x.JobId),
+					SkillsRequired = x.SkillsRequired.Select(s => new
+					{
+						Id = s.Id,
+						Name = s.Name
+					}).ToList(),
+					Saved = false,//savedJobsIds.Contains(x.JobId),
 				}).Skip((dto.PageNumber - 1)*dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
 				{
@@ -166,6 +166,7 @@ namespace JobPortal.Controllers
 					    UserName = job.Company.User.UserName,
 					    VerifiedCompany = true,
 					    CompanyId = job.Company.CompanyId,
+						CompanyName=job.Company.CompanyName,
 					    Country = new
 					    {
 						    CountryId = job.Company.User.Country.CountryId,
