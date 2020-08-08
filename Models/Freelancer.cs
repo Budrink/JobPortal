@@ -16,9 +16,11 @@ namespace JobPortal.Models
 		public string Rates { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
+		public virtual IEnumerable<GlobalCategory> GlobalCategories { get; set; }
 		public virtual IEnumerable<JobProposal> JobProposals { get; set; }
 		public virtual IEnumerable<Feedback> Feedbacks { get; set; }
 		public virtual IEnumerable<Contract> Contracts { get; set; }
+		public virtual FreelancerType FreelancerType { get; set; }
 		public virtual User User { get; set; }
 		public string Address { get; set; }
 		public double Longitude { get; set; }
@@ -43,7 +45,7 @@ namespace JobPortal.Models
 		public bool ShareSecurityAlerts { get; set; }
 		public string DetailPageDesign { get; set; }
 		public string NewPassowrd { get; set; }
-		public double HourRates { get; set; }
+		public decimal HourRates { get; set; }
 		public int ServedHours { get; set; }
 		public virtual IEnumerable<UserSkill> UserSkills { get; set; }
 		public virtual EnglishLevel EnglishLevel { get; set; }

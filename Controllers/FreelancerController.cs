@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
@@ -109,6 +110,63 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
+
+	    [HttpGet, Route("")]
+	    public async Task<IActionResult> FreelancerList(FreelancerListRequestModel request)
+	    {
+		    try
+		    {
+			    var freelancerList = await _freelancerRepository.Get(x =>
+				    (request.GlobalCategoryFilter.IsNullOrEmpty() || request.GlobalCategoryFilter.Select(Guid.Parse)
+					     .Intersect(x.GlobalCategories.Select(g => g.GlobalCategoryId)).Any()) &&
+				    (request.LocationFilter.IsNullOrEmpty() ||
+				     request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
+				    (request.ProjectLangFilter.IsNullOrEmpty() || request.ProjectLangFilter.Select(Guid.Parse)
+					     .Intersect(x.Languages.Select(l => l.Id)).Any()) &&
+				    (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
+					     .Contains(x.FreelancerType.FreelancerTypeId)) &&
+				    (request.CategoryFilter.IsNullOrEmpty() || request.CategoryFilter.Select(Guid.Parse)
+					     .Intersect(x.UserSkills.Select(s => s.Id)).Any()) &&
+					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
+						 .Contains(x.EnglishLevel.EnglishLevelId))
+			    ).ToListAsync();
+			    if (request.StringFilter.Any())
+				    freelancerList = freelancerList.Where(x => $"{x.User.FirstName} {x.User.LastName}".Contains(request.StringFilter)).ToList();
+			    return Ok(freelancerList.Skip((request.PageNumber-1)*request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
+				    .Select(x=> new
+				    {
+						UserId = x.User.Id,
+						UserPhoto = x.User.UserPhoto.FileLink,
+						FirstName = x.User.FirstName,
+						LastName = x.User.LastName,
+						Email = x.User.Email,
+						Gender = x.User.Gender,
+						UserName = x.User.UserName,
+						UserRates = x.Rates,
+						PlusMember = true,
+						FeedBackCount = x.Feedbacks.Count(),
+						UserFeedbacks = x.Feedbacks.ToList(),
+						JoinDate = x.User.JoinDate,
+						Title = x.Title,
+						HourRates = x.HourRates,
+						Country = x.User.Country,
+						Description = x.Description,
+						AmountOngoingProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Accepted),
+						AmountCompletedProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Finished),
+						AmountCancelledProject = x.JobProposals.Count(y=> y.ProposalStatus == ProposalStatus.Cancelled),
+						ServedHours = x.ServedHours,
+						UserSkills = x.UserSkills.ToList(),
+						UserType = x.FreelancerType,
+						EnglishLevel = x.EnglishLevel,
+						Languages = x.Languages.ToList()
+				    }).ToList());
+
+		    }
+		    catch (Exception e)
+		    {
+				return BadRequest(e.Message);
+			}
+	    }
 
 
 		[HttpPost]

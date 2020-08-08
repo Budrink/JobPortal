@@ -13,16 +13,16 @@ namespace JobPortal.Controllers
 	[ApiController]
 	public class UserTypesController : ControllerBase
 	{
-		private readonly IGenericRepository<UserType> _userTypesRepository;
+		private readonly IGenericRepository<FreelancerType> _userTypesRepository;
 
-		public UserTypesController(IGenericRepository<UserType> userTypesRepository)
+		public UserTypesController(IGenericRepository<FreelancerType> userTypesRepository)
 		{
 			_userTypesRepository = userTypesRepository;
 		}
 
 		[HttpGet]
 		[Route("")]
-		[ProducesResponseType(typeof(List<UserType>), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(List<FreelancerType>), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
 		public async Task<IActionResult> GetUserTypesList()
 		{

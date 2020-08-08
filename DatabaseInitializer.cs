@@ -139,33 +139,33 @@ namespace JobPortal
 			context.Set<Skill>().AddRange(skills);
 			context.SaveChanges();
 
-			var userTypes = new UserType[]
+			var userTypes = new []
 			{
-				new UserType
+				new FreelancerType
 				{
 					UserTypeName = "Pro Independent Freelancers"
 
 				},
-				new UserType
+				new FreelancerType
 				{
 					UserTypeName = "Pro Agency Freelancers"
 				},
-				new UserType
+				new FreelancerType
 				{
 					UserTypeName = "Independent Freelancers"
 				},
-				new UserType
+				new FreelancerType
 				{
 					UserTypeName = "Agency Freelancers"
 				},
-				new UserType
+				new FreelancerType
 				{
 					UserTypeName = "New Rising Talent"
 				}
 			};
 
 			var joinDate = DateTime.Now;
-			context.Set<UserType>().AddRange(userTypes);
+			context.Set<FreelancerType>().AddRange(userTypes);
 			context.SaveChanges();
 
 			var user1 = new User

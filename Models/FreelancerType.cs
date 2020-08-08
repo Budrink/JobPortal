@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace JobPortal.Models
 {
-	public class UserType
+	public class FreelancerType
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid UserTypeId { get; set; }
+		public Guid FreelancerTypeId { get; set; }
 		public string UserTypeName { get; set; }
 	}
 }
