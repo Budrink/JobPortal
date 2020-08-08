@@ -23,6 +23,8 @@ import { any } from 'prop-types';
 import loadScripts from '../Functions/LoadScripts';
 import ComplainForm from '../Forms/ComplainForm';
 import FavouriteButton from '../Forms/FavouriteButton';
+import { MonthName } from '../Functions/MonthName';
+
 class JobSingle extends React.Component {
   constructor(props) {
     super(props);
@@ -48,9 +50,8 @@ class JobSingle extends React.Component {
   populateData = async (iD) => {
     const data = await GetJob(iD, 1);
     // this.setState({ feedbackList: data.userFeedbacks }, () => {});
-
     // this.setState({ craftedProjectList: data.craftedProjects }, () => {});
-    this.setState({ job: data.job }, () => {
+    this.setState({ job: data }, () => {
       this.setState({ loading: false }, () => {});
     });
   };
@@ -97,13 +98,13 @@ class JobSingle extends React.Component {
   }
 
   createSkills(job) {
-    if (job === undefined)
+    if (job.skillsRequired !== undefined) {
       return job.skillsRequired.map((skill) => (
-        <Link href="/skill" key={skill.iD}>
-          skill.Name
+        <Link to={`/JobListing?category=${skill.name}`} key={skill.id}>
+          {skill.name}
         </Link>
       ));
-    else return null;
+    } else return null;
   }
 
   createSkillContent() {
@@ -135,6 +136,15 @@ class JobSingle extends React.Component {
   }
 
   render() {
+    console.log(this.state.job);
+    const today = new Date();
+    // June 27, 2018
+    const date =
+      MonthName(today.getMonth() + 1) +
+      ' ' +
+      today.getDate() +
+      ', ' +
+      today.getFullYear();
     let contentProfessional =
       this.state.job.qualification === 'Professional' ? (
         <span>
@@ -172,7 +182,7 @@ class JobSingle extends React.Component {
         <div> loading.....</div>
       ) : (
         <div>
-          <title>Jon Single</title>
+          <title>Job Single</title>
           <link href="apple-touch-icon.png" rel="apple-touch-icon" />
           <link href="images/favicon.png" rel="icon" type="image/x-icon" />
           <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -308,7 +318,7 @@ class JobSingle extends React.Component {
                                   <h3>{this.state.job.proposalsCount}</h3>
                                   <span>
                                     Proposals Received Till
-                                    <em>June 27, 2018</em>
+                                    <em>{date}</em>
                                   </span>
                                 </div>
                               </div>

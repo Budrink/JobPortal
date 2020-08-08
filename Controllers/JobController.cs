@@ -94,8 +94,8 @@ namespace JobPortal.Controllers
 
 				if (!dto.TypeFilter.IsNullOrEmpty())
 				{
-					jobsFiltered = jobsFiltered.Where(x =>
-						dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType)).ToList();
+					//jobsFiltered = jobsFiltered.Where(x =>
+					//	dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType)).ToList();
 				}
 
 				var count = jobsFiltered.Count();
@@ -155,7 +155,8 @@ namespace JobPortal.Controllers
 			    {
 				    JobId = job.JobId,
 				    Qualification = job.CompetenceLevel.ToString(),
-				    Company = new
+					Title = job.Title,
+					Company = new
 				    {
 					    UserId = job.Company.User.Id,
 					    FirstName = job.Company.User.FirstName,
@@ -177,13 +178,13 @@ namespace JobPortal.Controllers
 				    Type = job.JobType,
 				    Duration = job.Duration.DurationText,
 				    JobDetails = job.JobDetails,
-				    SkillRequired = job.SkillsRequired.ToList(),
+				    SkillsRequired = job.SkillsRequired.ToList(),
 				    Attachments = job.Attachments.ToList(),
 					ProposalsCount = job.ProposalsCount,
 					HiredFreelancers = job.HiredFreelancers.Select(x=> x.Id).ToList()
 			    };
 
-				return Ok(job);
+				return Ok(result);
 		    }
 		    catch (Exception e)
 		    {

@@ -23,10 +23,9 @@ export const GetJob = async (jobId: string) => {
       job = response.parsedBody;
       // console.log(projectList);
       job.company.country.countryFlag =
-        job.company.country.countryFlag !== undefined
+        job.company.country.countryFlag !== null
           ? countryFlagsPath + job.company.country.countryFlag
           : flagDefaultPath;
-      console.log(job);
       return job;
     }
   } catch (e) {

@@ -49,9 +49,9 @@ class ProjectList extends Component {
   renderTagList(data) {
     if (data) {
       return data.map((skill) => (
-        <a href="/" key={skill.id}>
+        <Link to={`/JobListing?category=${skill.name}`} key={skill.id}>
           {skill.name}
-        </a>
+        </Link>
       ));
     } else return null;
   }
@@ -151,7 +151,6 @@ class ProjectList extends Component {
   //   this.populateData();
   // }
   renderTable(cats) {
-    console.log(cats);
     if (cats !== []) {
       return cats.projects.map((project) => (
         <div className="form-group" key={project.jobId}>

@@ -70,22 +70,22 @@ class ProjectTypeForm extends Component {
             <div className="wt-checkboxholder">
               <span className="wt-radio">
                 <input
-                  id="any"
+                  id="2"
                   type="radio"
                   name="description"
                   value="Any Project Type"
                   defaultChecked
                 />
-                <label htmlFor="any">Any Project Type</label>
+                <label htmlFor="2">Any Project Type</label>
               </span>
               <span className="wt-radio">
                 <input
-                  id="hourly"
+                  id="0"
                   type="radio"
                   name="description"
                   value="Hourly Based Project"
                 />
-                <label htmlFor="hourly">Hourly Based Project</label>
+                <label htmlFor="0">Hourly Based Project</label>
               </span>
               <div
                 className="wt-amountbox"
@@ -106,12 +106,12 @@ class ProjectTypeForm extends Component {
               </div>
               <span className="wt-radio">
                 <input
-                  id="fixed"
+                  id="1"
                   type="radio"
                   name="description"
                   value="Fixed Price Project"
                 />
-                <label htmlFor="fixed">Fixed Price Project</label>
+                <label htmlFor="1">Fixed Price Project</label>
               </span>
 
               <div
