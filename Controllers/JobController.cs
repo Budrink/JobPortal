@@ -187,7 +187,7 @@ namespace JobPortal.Controllers
 					HiredFreelancers = job.HiredFreelancers.Select(x=> x.Id).ToList()
 			    };
 
-				return Ok(job);
+				return Ok(result);
 		    }
 		    catch (Exception e)
 		    {
