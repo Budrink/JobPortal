@@ -12,11 +12,11 @@ export const getEnglishLevelList = async (): Promise<EnglishLevel[]> => {
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Skills`,
+      path: `EnglishLevel`,
       method: 'Get',
     });
 
-    // console.log(response);
+    console.log(response);
     if (response.parsedBody !== null) {
       englishLevelList = response.parsedBody;
     }
