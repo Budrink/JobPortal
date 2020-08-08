@@ -176,7 +176,11 @@ namespace JobPortal.Controllers
 				    Type = job.JobType,
 				    Duration = job.Duration.DurationText,
 				    JobDetails = job.JobDetails,
-				    SkillRequired = job.SkillsRequired.ToList(),
+				    SkillRequired = job.SkillsRequired.Select(x=> new
+				    {
+						Id = x.Id,
+						Name = x.Name
+				    }),
 				    Attachments = job.Attachments.ToList(),
 					ProposalsCount = job.ProposalsCount,
 					HiredFreelancers = job.HiredFreelancers.Select(x=> x.Id).ToList()
