@@ -49,9 +49,13 @@ class FreelancerList extends Component {
   renderTagList(data) {
     if (data) {
       return data.map((uskill) => (
-        <a href="/" className="wt-tag wt-widgettag" key={uskill.skill.iD}>
+        <Link
+          to={`/UserListing?skillFilter=[${uskill.skill.name}]`}
+          className="wt-tag wt-widgettag"
+          key={uskill.skill.id}
+        >
           {uskill.skill.name}
-        </a>
+        </Link>
       ));
     } else return null;
   }

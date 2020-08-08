@@ -1,6 +1,8 @@
 import { JobData } from '../Data/Data';
 import { http } from '../Data/Http';
 import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
+import { type } from 'jquery';
+import { isNullOrUndefined } from 'util';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
@@ -21,7 +23,7 @@ export const GetProjectList = async (
   categoryFilter: string[],
   projectTypeFilter: string[],
   locationFilter: string[],
-  typeFilter: string[],
+  arrayTypeFilter: string[],
   projectLengthFilter: string[],
   langFilter: string[],
   companyFilter: string[],
@@ -32,6 +34,27 @@ export const GetProjectList = async (
   projectList = { totalAmountOfProjects: 0, projects: [] };
   let response: HttpResponse<any>;
   let requestBody;
+  let minPrice = '';
+  let maxPrice = '';
+  let typeFilter = '';
+  console.log(arrayTypeFilter);
+  if (arrayTypeFilter.length > 0) {
+    if (arrayTypeFilter[0].substring(0, 1) === '0') {
+      typeFilter = '0';
+      let startPos = arrayTypeFilter[0].indexOf(' ' + 1);
+      let endPos = arrayTypeFilter[0].indexOf('$');
+      minPrice = arrayTypeFilter[0].substring(startPos, endPos);
+      startPos = endPos + 2;
+      endPos = arrayTypeFilter[0].lastIndexOf('$');
+      maxPrice = arrayTypeFilter[0].substring(startPos, endPos);
+    } else {
+      if (arrayTypeFilter[0].substring(0, 1) === '1') {
+        typeFilter = '1';
+      } else {
+        typeFilter = '';
+      }
+    }
+  }
   requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
@@ -39,6 +62,8 @@ export const GetProjectList = async (
     projectTypeFilter: projectTypeFilter,
     locationFilter: locationFilter,
     typeFilter: typeFilter,
+    minPrice: minPrice,
+    maxPrice: maxPrice,
     projectLengthFilter: projectLengthFilter,
     langFilter: langFilter,
     companyFilter: companyFilter,
@@ -47,7 +72,7 @@ export const GetProjectList = async (
     // statusfilter: statusfilter === undefined ? '' : statusfilter,
     statusfilter: '',
   };
-
+  console.log(requestBody);
   try {
     response = await http({
       path: `Job/List`,

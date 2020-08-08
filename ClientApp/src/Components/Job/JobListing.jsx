@@ -51,6 +51,7 @@ class JobListing extends Component {
       minPrice: 0,
       maxPrice: 150,
       typeProject: 'Any Project Type',
+      resultString: '',
     };
 
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
@@ -280,7 +281,23 @@ class JobListing extends Component {
       this.setState({ loading: false }, () => {});
       // console.log(data);
       loadScripts(this.instance, false);
-
+      const firstResult =
+        (this.state.pageNumber - 1) * this.state.amountOfItemsOnPage + 1;
+      const lastResult =
+        this.state.pageNumber * this.state.amountOfItemsOnPage >
+        this.state.projectList.projectList.totalAmountOfProjects
+          ? this.state.projectList.projectList.totalAmountOfProjects
+          : this.state.pageNumber * this.state.amountOfItemsOnPage;
+      this.setState({
+        resultString:
+          'Items ' +
+          firstResult +
+          ' - ' +
+          lastResult +
+          ' of ' +
+          this.state.projectList.projectList.totalAmountOfProjects +
+          ' results',
+      });
       // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
     });
 
@@ -340,7 +357,6 @@ class JobListing extends Component {
     this.statusFilter =
       statusFilter_.indexOf('') === 0 ? statusFilter_.shift() : statusFilter_;
     this.createFilterString();
-    console.log(10);
     this.populateData(
       this.state.pageNumber,
       this.state.amountOfItemsOnPage,
@@ -554,8 +570,9 @@ class JobListing extends Component {
                           <div className="wt-userlistingholder wt-haslayout">
                             <div className="wt-userlistingtitle">
                               <span>
-                                01 - 48 of 57143 results for{' '}
-                                <em>"PHP Developer"</em>
+                                {this.state.resultString}
+                                {/* for{' '} */}
+                                {/* <em>"PHP Developer"</em> */}
                               </span>
                             </div>
                             <div className="wt-filterholder">

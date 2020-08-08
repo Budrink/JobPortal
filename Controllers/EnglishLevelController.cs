@@ -13,9 +13,9 @@ namespace JobPortal.Controllers
     [ApiController]
     public class EnglishLevelController : ControllerBase
     {
-	    private readonly IGenericRepository<Currency> _englishLevelRepository;
+	    private readonly IGenericRepository<EnglishLevel> _englishLevelRepository;
 
-	    public EnglishLevelController(IGenericRepository<Currency> englishLevelRepository)
+	    public EnglishLevelController(IGenericRepository<EnglishLevel> englishLevelRepository)
 	    {
 			_englishLevelRepository = englishLevelRepository;
 	    }

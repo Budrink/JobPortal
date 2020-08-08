@@ -7,7 +7,9 @@
 		public string[] CategoryFilter { get; set; }
 		public string[] ProjectTypeFilter { get; set; }
 		public string[] LocationFilter { get; set; }
-		public string[] TypeFilter { get; set; }
+		public string TypeFilter { get; set; }
+		public string MinPrice { get; set; }
+		public string MaxPrice { get; set; }
 		public string[] ProjectLength { get; set; }
 		public string[] LangFilter { get; set; }
 		public string[] CompanyFilter { get; set; }

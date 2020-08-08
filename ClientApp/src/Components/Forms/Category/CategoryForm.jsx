@@ -53,12 +53,12 @@ class CategoryForm extends Component {
       <span className="wt-checkbox">
         <Field
           name={data.skill.name}
-          id={data.skill.iD}
+          id={data.skill.id}
           type="checkbox"
           component="input"
           onClick={this.handleChange}
         />
-        <label htmlFor={data.skill.iD}>{data.skill.name}</label>
+        <label htmlFor={data.skill.id}>{data.skill.name}</label>
       </span>
     );
   }
