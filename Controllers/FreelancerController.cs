@@ -85,7 +85,7 @@ namespace JobPortal.Controllers
 				    UserName = user.UserName,
 				    UserRates = user.Freelancer.Rates,
 				    FeedbackCount = user.Freelancer.Feedbacks.Count(),
-				    UserFeedbacks = user.Freelancer.Feedbacks.ToList(),
+				    //UserFeedbacks = user.Freelancer.Feedbacks.ToList(),
 				    JoinDate = user.JoinDate,
 				    Title = user.Freelancer.Title,
 				    HourRates = user.Freelancer.Rates,
@@ -109,6 +109,22 @@ namespace JobPortal.Controllers
 			    return BadRequest(e.Message);
 		    }
 	    }
+
+		[HttpGet, Route("{freelancerId}/feedbacks")]
+		public async Task<IActionResult> GetFeedbackList([FromRoute] string freelancerId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(freelancerId);
+				var feedbackList = user.Freelancer.Feedbacks.Skip((pageNumber - 1) * amountItemsOnPage)
+					.Take(amountItemsOnPage).ToList();
+				return Ok(feedbackList);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
 
 	    [HttpGet, Route("")]

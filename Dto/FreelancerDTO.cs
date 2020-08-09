@@ -25,7 +25,7 @@ namespace JobPortal.Dto
 		public Project[] Projects { get; set; }
 
 
-		public double HourRates { get; set; }
+		public decimal HourRates { get; set; }
 		public int ServedHours { get; set; }
 
 		public UserSkill[] UserSkills { get; set; }
