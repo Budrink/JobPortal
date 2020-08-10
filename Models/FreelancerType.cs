@@ -11,7 +11,7 @@ namespace JobPortal.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Guid FreelancerTypeId { get; set; }
+		public Guid UserTypeId { get; set; }
 		public string UserTypeName { get; set; }
 	}
 }

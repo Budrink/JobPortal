@@ -144,7 +144,7 @@ namespace JobPortal.Controllers
 					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
 					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Id.ToString()))) &&
 					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
-						 .Contains(x.FreelancerType.FreelancerTypeId)) &&
+						 .Contains(x.FreelancerType.UserTypeId)) &&
 					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
 						 .Contains(x.EnglishLevel.EnglishLevelId)) &&
@@ -166,7 +166,7 @@ namespace JobPortal.Controllers
 						UserName = x.User.UserName,
 						UserRates = x.Rates,
 						PlusMember = true,
-						FeedBackCount = x.Feedbacks.Count(),
+						FeedBacksCount = x.Feedbacks.Count(),
 						JoinDate = x.User.JoinDate,
 						Title = x.Title,
 						HourRates = x.HourRates,
