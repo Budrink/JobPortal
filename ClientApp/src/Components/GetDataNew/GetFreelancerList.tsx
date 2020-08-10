@@ -1,6 +1,11 @@
 import { FreelancerData } from '../Data/Data';
 import { http } from '../Data/Http';
-import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
+import {
+  userPhotoPath,
+  userDefaultIconPath,
+  countryFlagsPath,
+  flagDefaultPath,
+} from '../Data/GlobalValues';
 
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
@@ -29,7 +34,7 @@ export const getFreelancerList = async (
     totalAmountOfFreelancers: 0,
     freelancers: [],
   };
-
+  console.log(categoryFilter);
   let requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
@@ -39,11 +44,13 @@ export const getFreelancerList = async (
     projectLangFilter: langFilter,
     levelFilter: levelFilter,
     stringFilter: stringFilter,
-    // langFilter: langFilter,
+    langFilter: langFilter,
     globalCategoryFilter: globalCategoryFilter,
+    rateFilter: rateFilter,
   };
   console.log(requestBody);
   let response: HttpResponse<any>;
+
   try {
     response = await http({
       path: `Freelancer`,
@@ -60,7 +67,14 @@ export const getFreelancerList = async (
               ? userPhotoPath + freelancer.userPhoto
               : userDefaultIconPath),
       );
-      console.log(freelancerList);
+      freelancerList.freelancers.map(
+        (freelancer) =>
+          (freelancer.country.countryFlag =
+            freelancer.country.countryFlag !== null
+              ? countryFlagsPath + freelancer.country.countryFlag
+              : flagDefaultPath),
+      );
+      // console.log(freelancerList);
     }
   } catch (e) {
     console.log(e);

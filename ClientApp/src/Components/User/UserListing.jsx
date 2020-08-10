@@ -239,7 +239,7 @@ class UserListing extends PureComponent {
     this.createFilterString();
 
     const searchParams = new URLSearchParams(this.props.location.search);
-    let skillFilter_ = (searchParams.get('skill') || '').split(',');
+    let skillFilter_ = (searchParams.get('skillFilter') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
     let typeFilter_ = (searchParams.get('type') || '').split(',');
     let levelFilter_ = (searchParams.get('level') || '').split(',');
@@ -272,7 +272,7 @@ class UserListing extends PureComponent {
     this.globalCategoryFilter = globalCategoryFilter_;
     //  stringFilter_.indexOf('') === 0 ? stringFilter_.shift() : stringFilter_;
     // console.log(locationFilter_);
-    // console.log(categoryFilter_);
+    console.log(skillFilter_);
     this.createFilterString();
 
     this.populateData(
