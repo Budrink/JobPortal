@@ -157,13 +157,13 @@ namespace JobPortal.Controllers
 			    var freelancerList = await _freelancerRepository.Get(x =>
 					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.Name == request.GlobalCategoryFilter)) &&
 					(request.LocationFilter.IsNullOrEmpty() ||
-					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
+					 request.LocationFilter.Contains(x.User.Country.CountryName)) &&
 					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Name))) &&
 					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter
 						 .Contains(x.FreelancerType.UserTypeName)) &&
 					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Skill.Name))) &&
-					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
-						 .Contains(x.EnglishLevel.EnglishLevelId)) &&
+					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter
+						 .Contains(x.EnglishLevel.EnglishLevelName)) &&
 					(rateFilter.IsNullOrEmpty() || rateFilter.Any(r => r.MinRate <= x.HourRates && x.HourRates <= r.MaxRate))
 			    ).ToListAsync();
 			    if (!request.StringFilter.IsNullOrEmpty())
