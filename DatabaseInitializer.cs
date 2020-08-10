@@ -250,7 +250,29 @@ namespace JobPortal
 				FirstName = "Ivan",
 				LastName = "Petrov",
 				JoinDate = joinDate,
-				Freelancer = new Freelancer(),
+				Freelancer = new Freelancer
+				{
+					Description = "SomeFreelancerDescription lorem ipsum ibaruri dfne eterbndkf s",
+					Address = "Some adress",
+					UserSkills = new []
+					{
+						new UserSkill
+						{
+							Percent = 80,
+							Skill = new Skill {Name = "PHP"}
+						},
+						new UserSkill
+						{
+							Percent = 70,
+							Skill = new Skill {Name = "JavaScript"}
+						},
+						new UserSkill
+						{
+							Percent = 50,
+							Skill = new Skill {Name = "HTML"}
+						}
+					}
+				},
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
 				UserName = "ivan@somedomain.com",
