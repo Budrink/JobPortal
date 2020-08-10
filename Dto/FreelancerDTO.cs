@@ -31,7 +31,7 @@ namespace JobPortal.Dto
 		public UserSkill[] UserSkills { get; set; }
 		public EnglishLevel EnglishLevel { get; set; }
 
-		public UserLanguage[] Languages { get; set; }
+		public Language[] Languages { get; set; }
 
 		public string Remark { get; set; }
 

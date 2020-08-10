@@ -6,7 +6,7 @@ import {
   ProjectDefaultImgPath,
 } from '../Data/GlobalValues';
 // import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
-import { GetUserSkillList } from './GetUserSkillList';
+// import { GetUserSkillList } from '../GetDataNew/GetUserSkillList';
 import { GetCraftedProjectList } from './GetCraftedProjectList';
 import {
   countryFlagsPath,

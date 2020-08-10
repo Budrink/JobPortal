@@ -2,13 +2,13 @@ import { FreelancerData } from '../Data/Data';
 import { wait } from './wait';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 // import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
-import { GetUserSkillList } from './GetUserSkillList';
+// import { GetUserSkillList } from '../GetDataNew/GetUserSkillList';
 import { countryFlagsPath } from '../Data/GlobalValues';
 
 // Временно
 
 // let feedBackList; //GetFeedbackList('1', 3, 3);
-const userSkillList = GetUserSkillList();
+// const userSkillList = GetUserSkillList();
 interface extendedFreelancer extends FreelancerData {
   saved?: boolean; // it's the property of current user
 }
@@ -213,7 +213,7 @@ export const GetFreelancersbyIds = async (
         amountCompletedProjects: 1590,
         amountCancelledProjects: 2,
         servedHours: '25K',
-        userSkills: userSkillList,
+        // userSkills: userSkillList,
         userType: { userTypeId: '1', userTypeName: 'freelancer' },
         englishLevel: { englishLevelId: '1', englishLevelName: 'professional' },
         Languages: [{ languageId: '1', languageName: 'English' }],
@@ -246,7 +246,7 @@ export const GetFreelancersbyIds = async (
         amountCompletedProjects: 1503,
         amountCancelledProjects: 4,
         servedHours: '25K',
-        userSkills: userSkillList,
+        // userSkills: userSkillList,
         userType: { userTypeId: '1', userTypeName: 'freelancer' },
         englishLevel: { englishLevelId: '1', englishLevelName: 'professional' },
         Languages: [{ languageId: '1', languageName: 'English' }],

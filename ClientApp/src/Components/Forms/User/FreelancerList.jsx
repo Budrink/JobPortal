@@ -50,7 +50,7 @@ class FreelancerList extends Component {
     if (data) {
       return data.map((uskill) => (
         <Link
-          to={`/UserListing?skillFilter=[${uskill.skill.name}]`}
+          to={`/UserListing?skillFilter=${uskill.skill.name}`}
           className="wt-tag wt-widgettag"
           key={uskill.skill.id}
         >
@@ -147,7 +147,7 @@ class FreelancerList extends Component {
                 ? data.freelancer.userRates
                 : 0}
               /<sub>5</sub>
-              <em>( {data.freelancer.feedbacksCount} Feedback)</em>
+              <em>( {data.freelancer.feedBacksCount} Feedback)</em>
             </span>
           </div>
         </div>

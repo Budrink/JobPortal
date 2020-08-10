@@ -13,7 +13,7 @@ namespace JobPortal.Models
 		[Key]
 		public Guid FreelancerId { get; set; }
 		public string SkillsDescription { get; set; }
-		public string Rates { get; set; }
+		public decimal Rates { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual IEnumerable<GlobalCategory> GlobalCategories { get; set; }
@@ -37,7 +37,6 @@ namespace JobPortal.Models
 		public bool ProfileSearchible { get; set; }
 		public bool DisableAccount { get; set; }
 		public bool DisableTemporarily { get; set; }
-		public string LanguageId { get; set; }
 		public string CurrencyId { get; set; }
 		public bool SendWeeklyAlerts { get; set; }
 		public bool SendBonusAlerts { get; set; }
@@ -49,12 +48,15 @@ namespace JobPortal.Models
 		public int ServedHours { get; set; }
 		public virtual IEnumerable<UserSkill> UserSkills { get; set; }
 		public virtual EnglishLevel EnglishLevel { get; set; }
-		public virtual IEnumerable<UserLanguage> Languages { get; set; }
+		public virtual IEnumerable<Language> Languages { get; set; }
 		public string Remark { get; set; }
 		public virtual IEnumerable<UserExperience> Experience { get; set; }
 		public virtual IEnumerable<Education> Education { get; set; }
 		public string CompanyName { get; set; }
 		public string CompanyImage { get; set; }
+		public bool PlusMember { get; set; }
+		public virtual  IEnumerable<CraftedProject> CraftedProjects { get; set; }
+
 
 	}
 }

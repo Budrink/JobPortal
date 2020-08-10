@@ -167,7 +167,7 @@ namespace JobPortal.Controllers
 				Gender = model.Gender,
 				FirstName = model.FirstName,
 				LastName = model.LastName,
-				Freelancer = new Freelancer { Rates = "150ph" }
+				Freelancer = new Freelancer { HourRates = 150, Rates=4.6M }
 
 			};
 
