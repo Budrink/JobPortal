@@ -5,7 +5,7 @@ import {
   ProjectImgPath,
   ProjectDefaultImgPath,
 } from '../Data/GlobalValues';
-import { GetFeedbackList } from './GetFeedBackList';
+// import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
 import { GetUserSkillList } from './GetUserSkillList';
 import { GetCraftedProjectList } from './GetCraftedProjectList';
 import {

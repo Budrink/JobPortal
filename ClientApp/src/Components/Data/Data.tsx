@@ -55,7 +55,7 @@ export interface Currency {
   currencyName: string;
 }
 
-export interface userFeedback {
+export interface UserFeedback {
   feedbackId: string;
   freelancerId: string;
   contract: Contract;
@@ -214,10 +214,10 @@ export interface FreelancerData extends User {
   // lastName: string;
   // email: string;
   // gender: string;
-  userRates: string;
+  userRates?: string;
   feedbacksCount: number;
-  userFeedbacks: userFeedback[];
-  hourRates: string;
+  userFeedbacks?: UserFeedback[];
+  hourRates?: string;
   //   @valentine20658;
 
   servedHours: string;

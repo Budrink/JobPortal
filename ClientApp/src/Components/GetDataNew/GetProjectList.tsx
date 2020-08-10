@@ -69,8 +69,8 @@ export const GetProjectList = async (
     companyFilter: companyFilter,
     stringForSearching:
       stringForSearching === undefined ? '' : stringForSearching,
-    // statusfilter: statusfilter === undefined ? '' : statusfilter,
-    statusfilter: '',
+    statusfilter: statusfilter === undefined ? '' : statusfilter,
+    //  statusfilter: '',
   };
   console.log(requestBody);
   try {
