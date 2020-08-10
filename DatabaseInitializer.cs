@@ -250,7 +250,11 @@ namespace JobPortal
 				FirstName = "Ivan",
 				LastName = "Petrov",
 				JoinDate = joinDate,
-				Freelancer = new Freelancer(),
+				Freelancer = new Freelancer
+				{
+					Description = "SomeFreelancerDescription lorem ipsum ibaruri dfne eterbndkf s",
+					Address = "Some adress"
+				},
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
 				UserName = "ivan@somedomain.com",
