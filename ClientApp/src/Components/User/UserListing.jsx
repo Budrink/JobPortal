@@ -73,8 +73,6 @@ class UserListing extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.location.search);
-    console.log(nextProps.location.search);
     // new URLSearchParams(this.props.location.search)
     //   nextProps.match.params.skillFilter !==
     //     this.props.match.params.skillFilter

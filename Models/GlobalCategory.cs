@@ -9,6 +9,8 @@ namespace JobPortal.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Guid GlobalCategoryId { get; set; }
-		public string Name { get; set; }
+		public string GlobalCategoryName { get; set; }
+		public string GlobalCategoryImg { get; set; }
+		public string Description { get; set; }
 	}
 }

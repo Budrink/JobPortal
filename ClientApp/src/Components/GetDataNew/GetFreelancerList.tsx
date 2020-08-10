@@ -34,7 +34,7 @@ export const getFreelancerList = async (
     totalAmountOfFreelancers: 0,
     freelancers: [],
   };
-  console.log(skillFilter);
+  // console.log(skillFilter);
   let requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
@@ -49,7 +49,7 @@ export const getFreelancerList = async (
     globalCategoryFilter: globalCategoryFilter,
     rateFilter: rateFilter,
   };
-  console.log(requestBody);
+  // console.log(requestBody);
   let response: HttpResponse<any>;
 
   try {

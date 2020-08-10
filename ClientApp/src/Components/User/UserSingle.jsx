@@ -102,6 +102,7 @@ class UserSingle extends React.Component {
   // iD = 4;
   //We got the first time the first feedbacks
   populateData = async (iD) => {
+    console.log(iD);
     const data = await GetFreelancer(iD, 1, amountOfFeedbackOnPage);
     this.setState({ feedbackList: data.userFeedbacks }, () => {});
 

@@ -42,7 +42,46 @@ namespace JobPortal
 			};
 			context.Set<Country>().AddRange(countries);
 			context.SaveChanges();
+			var globalCategories = new GlobalCategory[]
+			{
+				new GlobalCategory
+				{
+	  GlobalCategoryName ="Mobiles",
+      GlobalCategoryImg= "img-01.png",
+      Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+    },
+new GlobalCategory
+				{
+	  GlobalCategoryName ="Digital Marketing",
+	  GlobalCategoryImg= "img-01.png",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
+new GlobalCategory
+				{
+	  GlobalCategoryName ="Writing & Translation",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
+new GlobalCategory
+				{
+	  GlobalCategoryName ="Video & Animation",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
+new GlobalCategory
+				{
+	  GlobalCategoryName ="Programming & Tech",
+	  GlobalCategoryImg= "img-01.png",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
+new GlobalCategory
+				{
+	  GlobalCategoryName ="Music & Audio",
+	  GlobalCategoryImg= "img-01.png",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
 
+			};
+			context.Set<GlobalCategory>().AddRange(globalCategories);
+			context.SaveChanges();
 
 			var langs = new Language[]
 			{
