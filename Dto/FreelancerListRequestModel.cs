@@ -17,7 +17,7 @@
 
 		public string StringFilter { get; set; }
 
-		public string[] GlobalCategoryFilter { get; set; }
+		public string GlobalCategoryFilter { get; set; }
 
 	}
 }

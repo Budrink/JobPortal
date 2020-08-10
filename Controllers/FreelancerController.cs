@@ -127,25 +127,22 @@ namespace JobPortal.Controllers
 		}
 
 
-	    [HttpGet, Route("")]
-	    public async Task<IActionResult> FreelancerList(FreelancerListRequestModel request)
+	    [HttpPost, Route("")]
+	    public async Task<IActionResult> FreelancerList([FromBody] FreelancerListRequestModel request)
 	    {
 		    try
 		    {
 			    var freelancerList = await _freelancerRepository.Get(x =>
-				    (request.GlobalCategoryFilter.IsNullOrEmpty() || request.GlobalCategoryFilter.Select(Guid.Parse)
-					     .Intersect(x.GlobalCategories.Select(g => g.GlobalCategoryId)).Any()) &&
-				    (request.LocationFilter.IsNullOrEmpty() ||
-				     request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
-				    (request.ProjectLangFilter.IsNullOrEmpty() || request.ProjectLangFilter.Select(Guid.Parse)
-					     .Intersect(x.Languages.Select(l => l.Id)).Any()) &&
-				    (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
-					     .Contains(x.FreelancerType.FreelancerTypeId)) &&
-				    (request.CategoryFilter.IsNullOrEmpty() || request.CategoryFilter.Select(Guid.Parse)
-					     .Intersect(x.UserSkills.Select(s => s.Id)).Any()) &&
+					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.GlobalCategoryId.ToString() == request.GlobalCategoryFilter)) &&
+					(request.LocationFilter.IsNullOrEmpty() ||
+					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
+					(request.ProjectLangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.ProjectLangFilter.Contains(l.Id.ToString()))) &&
+					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
+						 .Contains(x.FreelancerType.FreelancerTypeId)) &&
+					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
 						 .Contains(x.EnglishLevel.EnglishLevelId))
-			    ).ToListAsync();
+				).ToListAsync();
 			    if (request.StringFilter.Any())
 				    freelancerList = freelancerList.Where(x => $"{x.User.FirstName} {x.User.LastName}".Contains(request.StringFilter)).ToList();
 			    return Ok(freelancerList.Skip((request.PageNumber-1)*request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
