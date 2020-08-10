@@ -85,8 +85,9 @@ namespace JobPortal.Controllers
 					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId))).ToList();
 				if (!dto.StatusFilter.IsNullOrEmpty())
 				{
-					var statusFilter = Enum.Parse<JobStatus>(dto.StatusFilter);
-					jobsFiltered = jobsFiltered.Where(x => x.JobStatus == statusFilter).ToList();
+					var filterParsed = Enum.TryParse<JobStatus>(dto.StatusFilter, out var status);
+					if (filterParsed)
+						jobsFiltered = jobsFiltered.Where(x => x.JobStatus == status).ToList();
 				}
 
 				if (!dto.TypeFilter.IsNullOrEmpty())

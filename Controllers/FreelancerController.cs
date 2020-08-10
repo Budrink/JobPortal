@@ -134,18 +134,18 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
-			    var rateFilter = _rateRepository.Get(x => request.RateFilter.Contains(x.HourRateId.ToString()))
+			    var rateFilter = request.RateFilter.IsNullOrEmpty()? null : _rateRepository.Get(x => request.RateFilter.Contains(x.HourRateId.ToString()))
 				    .ToList();
 
 
 			    var freelancerList = await _freelancerRepository.Get(x =>
-					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.GlobalCategoryId.ToString() == request.GlobalCategoryFilter)) &&
+					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.Name == request.GlobalCategoryFilter)) &&
 					(request.LocationFilter.IsNullOrEmpty() ||
 					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
-					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Id.ToString()))) &&
-					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
-						 .Contains(x.FreelancerType.UserTypeId)) &&
-					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
+					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Language.Name))) &&
+					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter
+						 .Contains(x.FreelancerType.UserTypeName)) &&
+					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Skill.Name))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
 						 .Contains(x.EnglishLevel.EnglishLevelId)) &&
 					(rateFilter.IsNullOrEmpty() || rateFilter.Any(r => r.MinRate <= x.HourRates && x.HourRates <= r.MaxRate))
