@@ -1,9 +1,9 @@
 import { FreelancerData } from '../Data/Data';
-import { wait } from './wait';
+import { wait } from '../GetData/wait';
 import { userPhotoPath, ProjectDefaultImgPath } from '../Data/GlobalValues';
-import { GetFeedbackList } from './GetFeedBackList';
-import { GetUserSkillList } from './GetUserSkillList';
-import { GetCraftedProjectList } from './GetCraftedProjectList';
+// import { GetFeedbackList } from './GetFeedBackList';
+import { GetUserSkillList } from '../GetData/GetUserSkillList';
+import { GetCraftedProjectList } from '../GetData/GetCraftedProjectList';
 import {
   countryFlagsPath,
   amountOfFeedbackOnPage,
@@ -15,10 +15,10 @@ interface Freelancer extends FreelancerData {
   userName: string;
   saved?: boolean;
 }
-const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
-  return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);
-};
-
+// const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
+//   return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);
+// };
+const feedBackList = undefined;
 // const freelancerfeedBacklist = (freelancerId: string) => {
 //   return feedBackList.filter(
 //     (feedback) => feedback.freelancerId === freelancerId,
@@ -66,7 +66,7 @@ export const GetFreelancer = async (
     userName: 'Valentine Mehring',
     userRates: '5.0',
     feedbacksCount: 31,
-    userFeedbacks: feedBackList(freelancerId, amountOfFeedbackOnPage),
+    // userFeedbacks: await feedBackList(freelancerId, amountOfFeedbackOnPage),
     joinDate: 'May 30, 2013',
     title: 'Classified Posting, Data Entry, Typing Expert',
     hourRates: '44.00',

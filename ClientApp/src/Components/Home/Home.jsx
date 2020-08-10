@@ -9,8 +9,6 @@ import HomeBanner from './HomeBanner/HomeBanner';
 import WtWrapper from './WtWrapper/WtWrapper';
 import Footer from '../Footer/Footer';
 import loadScripts1 from '../Functions/LoadScripts';
-// import { GetFreelancer } from '../GetData/GetFreelancer';
-// import { DashBoardC } from './DashboardC';
 
 class Home extends Component {
   constructor(props) {

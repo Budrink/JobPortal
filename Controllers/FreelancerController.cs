@@ -85,8 +85,8 @@ namespace JobPortal.Controllers
 				    UserName = user.UserName,
 				    UserRates = user.Freelancer.Rates,
 				    FeedbackCount = user.Freelancer.Feedbacks.Count(),
-				    //UserFeedbacks = user.Freelancer.Feedbacks.ToList(),
-				    JoinDate = user.JoinDate,
+					//UserFeedbacks = user.Freelancer.Feedbacks.ToList(),
+					JoinDate = user.JoinDate,
 				    Title = user.Freelancer.Title,
 				    HourRates = user.Freelancer.Rates,
 					EnglishLevel=user.Freelancer.EnglishLevel,
@@ -142,14 +142,15 @@ namespace JobPortal.Controllers
 					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
 						 .Contains(x.EnglishLevel.EnglishLevelId))
-				).ToListAsync();
-			    if (request.StringFilter.Any())
+			    ).ToListAsync();
+			    if (!request.StringFilter.IsNullOrEmpty())
 				    freelancerList = freelancerList.Where(x => $"{x.User.FirstName} {x.User.LastName}".Contains(request.StringFilter)).ToList();
-			    return Ok(freelancerList.Skip((request.PageNumber-1)*request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
-				    .Select(x=> new
-				    {
+			
+				var freelancers= freelancerList.Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
+					.Select(x => new
+					{
 						UserId = x.User.Id,
-						UserPhoto = x.User.UserPhoto.FileLink,
+						UserPhoto = x.User.UserPhoto?.FileLink,
 						FirstName = x.User.FirstName,
 						LastName = x.User.LastName,
 						Email = x.User.Email,
@@ -166,15 +167,25 @@ namespace JobPortal.Controllers
 						Description = x.Description,
 						AmountOngoingProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Accepted),
 						AmountCompletedProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Finished),
-						AmountCancelledProject = x.JobProposals.Count(y=> y.ProposalStatus == ProposalStatus.Cancelled),
+						AmountCancelledProject = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Cancelled),
 						ServedHours = x.ServedHours,
 						UserSkills = x.UserSkills.ToList(),
 						UserType = x.FreelancerType,
 						EnglishLevel = x.EnglishLevel,
 						Languages = x.Languages.ToList()
-				    }).ToList());
+					}).ToList();
+				var count = freelancerList.Count();
+				var result = new
+					{
+						totalAmountOfFreelancers = count,
+						PageNumber = request.PageNumber,
+						AmountOfItemsOnPage = request.AmountOfItemsOnPage,
+						freelancers = freelancers,
+				};
+				return Ok(result);
+				
 
-		    }
+			}
 		    catch (Exception e)
 		    {
 				return BadRequest(e.Message);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetFreelancer } from '../GetData/GetFreelancer';
+import { GetFreelancer } from '../GetDataNew/GetFreelancer';
 import GetCompany from '../GetData/GetCompany';
 import { userDefaultIconPath } from '../Data/GlobalValues';
 

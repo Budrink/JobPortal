@@ -1,13 +1,13 @@
 import { FreelancerData } from '../Data/Data';
 import { wait } from './wait';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
-import { GetFeedbackList } from './GetFeedBackList';
+// import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
 import { GetUserSkillList } from './GetUserSkillList';
 import { countryFlagsPath } from '../Data/GlobalValues';
 
 // Временно
 
-const feedBackList = GetFeedbackList('1', 3, 3);
+// let feedBackList; //GetFeedbackList('1', 3, 3);
 const userSkillList = GetUserSkillList();
 interface extendedFreelancer extends FreelancerData {
   saved?: boolean; // it's the property of current user
@@ -46,9 +46,10 @@ export const GetFreelancersbyIds = async (
         userRates: '5.0',
         plusMember: true,
         feedbacksCount: 860,
-        userFeedbacks: feedBackList.filter(
-          (feedback) => feedback.freelancerId === '1',
-        ),
+        userFeedbacks: [],
+        //  feedBackList.filter(
+        // //   (feedback) => feedback.freelancerId === '1',
+        // // ),
 
         joinDate: 'May 30, 2013',
         title: 'Classified Posting, Data Entry, Typing Expert',
@@ -126,9 +127,10 @@ export const GetFreelancersbyIds = async (
         userName: 'Alfredo Bossard',
         userRates: '4.5',
         feedbacksCount: 760,
-        userFeedbacks: feedBackList.filter(
-          (feedback) => feedback.freelancerId === '2',
-        ),
+        userFeedbacks: [],
+        // feedBackList.filter(
+        //   (feedback) => feedback.freelancerId === '2',
+        // ),
 
         joinDate: 'May 30, 2015',
         title: 'Classifieds Posting, Data Entry, Typing',
@@ -190,9 +192,11 @@ export const GetFreelancersbyIds = async (
         gender: 'male',
         userRates: '4.5',
         feedbacksCount: 760,
-        userFeedbacks: feedBackList.filter(
-          (feedback) => feedback.freelancerId === '3',
-        ),
+        userFeedbacks: [],
+        // userFeedbacks: feedBackList.filter(
+        //   (feedback) => feedback.freelancerId === '3',
+        //
+        //    ),
 
         joinDate: 'May 30, 2017',
         title: 'SEO/PPC Social Media Marketing Expert',
@@ -225,9 +229,7 @@ export const GetFreelancersbyIds = async (
         userName: 'Herlinda Hundley',
         userRates: '4.5',
         feedbacksCount: 760,
-        userFeedbacks: feedBackList.filter(
-          (feedback) => feedback.freelancerId === '4',
-        ),
+        userFeedbacks: [],
 
         joinDate: 'May 30, 2016',
         title: 'Classified Posting, Data Entry, Typing Expert',

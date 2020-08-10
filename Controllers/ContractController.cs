@@ -45,7 +45,7 @@ namespace JobPortal.Controllers
 				{
 					JobProposal = proposal,
 					Freelancer = freelancer,
-					Start = DateTime.Now
+					BeginDate = DateTime.Now
 				};
 				_proposalRepository.Update(proposal);
 				await _contraRepository.Create(contract);

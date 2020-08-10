@@ -139,7 +139,7 @@ namespace JobPortal
 			context.Set<Skill>().AddRange(skills);
 			context.SaveChanges();
 
-			var userTypes = new []
+			var userTypes = new[]
 			{
 				new FreelancerType
 				{
@@ -242,6 +242,8 @@ namespace JobPortal
 			result = userManager.CreateAsync(user3, "Wsxedc!2345").GetAwaiter().GetResult();
 			userManager.AddToRoleAsync(user3, "company").Wait();
 
+
+
 			var freelancer1 = new User
 			{
 				Country = countries.First(x => x.CountryName == "United States"),
@@ -256,6 +258,8 @@ namespace JobPortal
 
 			result = userManager.CreateAsync(freelancer1, "Wsxedc!2345").GetAwaiter().GetResult();
 			userManager.AddToRoleAsync(freelancer1, "freelancer");
+
+
 
 
 			var durations = new[]
@@ -391,7 +395,7 @@ namespace JobPortal
 					Language = context.Set<Language>().First(),
 					Title = "SomeJobToDo",
 					Tax = decimal.FromOACurrency(15),
-				    SkillsRequired = new []
+					SkillsRequired = new []
 					{
 						new Skill
 						{
@@ -420,6 +424,92 @@ namespace JobPortal
 
 			context.SaveChanges();
 
+
+			var contracts = new[]
+			{
+				new Contract {
+					Job = jobs[0],
+					Freelancer = freelancer1.Freelancer,
+					BeginDate = DateTime.Parse("2020-04-01"),
+					EndDate = DateTime.Parse("2020-08-01"),
+					Status = ContractStatus.finishied,
+					Terms = "Beginner",
+					 Tax = 15
+				},
+				new Contract {
+					Job = jobs[1],
+					Freelancer = freelancer1.Freelancer,
+					BeginDate = DateTime.Parse("2020-04-01"),
+					EndDate = DateTime.Parse("2020-08-01"),
+					Status = ContractStatus.finishied,
+					Terms = "Beginner",
+				Tax = 15
+				},
+			};
+			context.Set<Contract>().AddRange(contracts);
+			context.SaveChanges();
+
+			var feedbacks = new[]
+				{
+				new Feedback {
+					Contract = contracts[0],
+					User = freelancer1.Freelancer.User,
+					Mark = 4,
+					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
+				},
+			new Feedback {
+					Contract = contracts[1],
+					User = freelancer1.Freelancer.User,
+					Mark = 5,
+					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
+				},
+			};
+			context.Set<Feedback>().AddRange(feedbacks);
+			context.SaveChanges();
+
+			var userSkills = new[]
+			{
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[0],
+				 Percent=80
+				},
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[1],
+				 Percent=60
+				},
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[2],
+				 Percent=40
+				},
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[3],
+				 Percent=30
+				},
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[4],
+				 Percent=90
+				},
+				new UserSkill
+				{
+				 UserId= freelancer1.Id,
+				 Skill = skills[5],
+				 Percent=90
+				}
+			};
+			context.Set<UserSkill>().AddRange(userSkills);
+			context.SaveChanges();
+
 		}
-	}
+		}
+	
 }

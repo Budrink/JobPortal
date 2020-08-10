@@ -26,7 +26,7 @@ import CategoriesSlider from '../Forms/Category/CategoriesSlider';
 import loadScripts1 from '../Functions/LoadScripts';
 import FreelancerList from '../Forms/User/FreelancerList';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { getFreelancerList } from '../GetData/GetFreelancerList';
+import { getFreelancerList } from '../GetDataNew/GetFreelancerList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
@@ -246,6 +246,8 @@ class UserListing extends PureComponent {
     let rateFilter_ = (searchParams.get('rate') || '').split(',');
     let pageNumber = (searchParams.get('page') || '').split(',');
     let stringFilter_ = (searchParams.get('string') || '').split(',');
+    console.log(searchParams.get('string') || '');
+    console.log(stringFilter_);
     let globalCategoryFilter_ = (
       searchParams.get('globalCategory') || ''
     ).split(',');

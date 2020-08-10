@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { amountOfFeedbackOnPage } from '../../Data/GlobalValues';
 import { reduxForm } from 'redux-form';
-import { GetFeedbackList } from '../../GetData/GetFeedBackList';
+import { GetFeedbackList } from '../../GetDataNew/GetFeedBackList';
 import '../../../css/rating.css';
 //import { array } from 'prop-types';
 class ClientFeedBackList extends Component {

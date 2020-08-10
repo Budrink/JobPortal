@@ -55,5 +55,6 @@ namespace JobPortal.Models
 		public virtual IEnumerable<Education> Education { get; set; }
 		public string CompanyName { get; set; }
 		public string CompanyImage { get; set; }
+
 	}
 }
