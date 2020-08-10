@@ -158,7 +158,7 @@ namespace JobPortal.Controllers
 						UserName = x.User.UserName,
 						UserRates = x.Rates,
 						PlusMember = true,
-						FeedBackыCount = x.Feedbacks.Count(),
+						FeedBacksCount = x.Feedbacks.Count(),
 						JoinDate = x.User.JoinDate,
 						Title = x.Title,
 						HourRates = x.HourRates,
