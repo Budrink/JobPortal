@@ -28,7 +28,7 @@ export const GetFreelancer = async (
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Freelancer/${freelancer}`,
+      path: `Freelancer/${freelancerId}`,
       method: 'Get',
     });
 

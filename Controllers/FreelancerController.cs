@@ -155,7 +155,7 @@ namespace JobPortal.Controllers
 
 
 			    var freelancerList = await _freelancerRepository.Get(x =>
-					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.Name == request.GlobalCategoryFilter)) &&
+					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.GlobalCategoryName == request.GlobalCategoryFilter)) &&
 					(request.LocationFilter.IsNullOrEmpty() ||
 					 request.LocationFilter.Contains(x.User.Country.CountryName)) &&
 					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Name))) &&

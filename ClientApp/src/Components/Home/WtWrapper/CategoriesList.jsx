@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetGlobalCategoryList } from '../../GetData/GetGlobalCategoryList';
+import { GetGlobalCategoryList } from '../../GetDataNew/GetGlobalCategoryList';
 
 class CategoriesList extends Component {
   constructor(props) {

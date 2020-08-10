@@ -46,7 +46,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<Feedback>();
 			builder.Entity<Duration>();
 			builder.Entity<EnglishLevel>();
-
+			builder.Entity<GlobalCategory>();
 		}
 	}
 }
