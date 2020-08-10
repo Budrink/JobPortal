@@ -212,6 +212,7 @@ class UserListing extends PureComponent {
     globalCategoryFilter,
   ) => {
     // if (this.state.freelancerList.length === 0) {
+    console.log(stringFilter);
     const data = await getFreelancerList(
       pageNumber,
       amountOfItemsOnPage,
@@ -245,12 +246,9 @@ class UserListing extends PureComponent {
     let langFilter_ = (searchParams.get('lang') || '').split(',');
     let rateFilter_ = (searchParams.get('rate') || '').split(',');
     let pageNumber = (searchParams.get('page') || '').split(',');
-    let stringFilter_ = (searchParams.get('string') || '').split(',');
-    console.log(searchParams.get('string') || '');
-    console.log(stringFilter_);
-    let globalCategoryFilter_ = (
-      searchParams.get('globalCategory') || ''
-    ).split(',');
+    let stringFilter_ = searchParams.get('string') || ''; //.split(',');
+
+    let globalCategoryFilter_ = searchParams.get('globalCategory'); //|| ''.split(',');
     if (pageNumber[0] === '') {
       this.setState({ pageNumber: 1 });
     } else {

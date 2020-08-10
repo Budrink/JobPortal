@@ -96,7 +96,7 @@ class FreelancerList extends Component {
               <Link to={`/UserSingle/${data.freelancer.userId}`}>
                 {/* <Link to="UserSingle/4"> */}
                 <i className="fa fa-check-circle" />
-                {data.freelancer.userName}
+                {data.freelancer.firstName + ` ` + data.freelancer.lastName}
               </Link>
               <h2>{data.freelancer.title}</h2>
             </div>
@@ -143,7 +143,10 @@ class FreelancerList extends Component {
               <i className="fa fa-star fill" />
             </span> */}
             <span className="wt-starcontent">
-              {data.freelancer.userRates}/<sub>5</sub>
+              {data.freelancer.userRates !== null
+                ? data.freelancer.userRates
+                : 0}
+              /<sub>5</sub>
               <em>( {data.freelancer.feedbacksCount} Feedback)</em>
             </span>
           </div>
@@ -162,7 +165,7 @@ class FreelancerList extends Component {
   //   this.populateData();
   // }
   renderTable(cats) {
-    // console.log(JSON.stringify(cats));
+    console.log(cats);
     if (cats !== []) {
       return cats.freelancerList.freelancers.map((freelancer) => (
         <div className="form-group" key={freelancer.userId}>

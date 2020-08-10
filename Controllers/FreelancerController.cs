@@ -138,7 +138,7 @@ namespace JobPortal.Controllers
 					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
 					(request.ProjectLangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.ProjectLangFilter.Contains(l.Id.ToString()))) &&
 					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
-						 .Contains(x.FreelancerType.FreelancerTypeId)) &&
+						 .Contains(x.FreelancerType.UserTypeId)) &&
 					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
 						 .Contains(x.EnglishLevel.EnglishLevelId))
