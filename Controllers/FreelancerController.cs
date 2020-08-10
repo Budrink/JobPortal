@@ -78,13 +78,13 @@ namespace JobPortal.Controllers
 			    var result = new
 			    {
 				    UserId = user.Id,
-					userPhoto= user.UserPhoto.FileLink,
+					userPhoto= user.UserPhoto?.FileLink,
 				    UserPhotoFile = new
 				    {
-					    Id = user.UserPhoto.Id,
-					    Name = user.UserPhoto.FileName,
-					    Link = user.UserPhoto.FileLink,
-					    Size = user.UserPhoto.FileSize
+					    Id = user.UserPhoto?.Id,
+					    Name = user.UserPhoto?.FileName,
+					    Link = user.UserPhoto?.FileLink,
+					    Size = user.UserPhoto?.FileSize
 				    },
 				    FirstName = user.FirstName,
 				    LastName = user.LastName,
