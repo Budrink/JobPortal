@@ -21,7 +21,7 @@ interface FreelancersProps {
 export const getFreelancerList = async (
   pageNumber: number,
   amounOfItemsOnPage: number,
-  categoryFilter?: string[],
+  skillFilter?: string[],
   locationFilter?: string[],
   typeFilter?: string[],
   levelFilter?: string[],
@@ -34,11 +34,12 @@ export const getFreelancerList = async (
     totalAmountOfFreelancers: 0,
     freelancers: [],
   };
-  console.log(categoryFilter);
+  console.log(skillFilter);
   let requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
-    categoryFilter: categoryFilter,
+
+    categoryFilter: skillFilter,
     locationFilter: locationFilter,
     typeFilter: typeFilter,
     projectLangFilter: langFilter,

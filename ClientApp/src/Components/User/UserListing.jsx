@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, componentWillReceiveProps } from 'react';
 import '../../css/bootstrap.min.css';
 import '../../css/normalize.css';
 import '../../css/scrollbar.css';
@@ -71,7 +71,19 @@ class UserListing extends PureComponent {
   Logout() {
     this.props.history.push('/Home');
   }
-  //Создаем массив строк, содержащих названия выбранных фильтров. Если в этой форме ничего не выбрано -
+
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.location.search);
+    console.log(nextProps.location.search);
+    // new URLSearchParams(this.props.location.search)
+    //   nextProps.match.params.skillFilter !==
+    //     this.props.match.params.skillFilter
+    // );
+    if (this.props.location.search !== nextProps.location.search) {
+      const searchParams = new URLSearchParams(nextProps.location.search);
+      this.ApplyFilters(searchParams);
+    }
+  } //Создаем массив строк, содержащих названия выбранных фильтров. Если в этой форме ничего не выбрано -
   // добвыляем строку ANY
   createFilterString() {
     let filterString = [''];
@@ -212,7 +224,7 @@ class UserListing extends PureComponent {
     globalCategoryFilter,
   ) => {
     // if (this.state.freelancerList.length === 0) {
-    console.log(stringFilter);
+
     const data = await getFreelancerList(
       pageNumber,
       amountOfItemsOnPage,
@@ -236,9 +248,13 @@ class UserListing extends PureComponent {
   };
 
   componentDidMount() {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.ApplyFilters(searchParams);
+  }
+
+  ApplyFilters(searchParams) {
     this.createFilterString();
 
-    const searchParams = new URLSearchParams(this.props.location.search);
     let skillFilter_ = (searchParams.get('skillFilter') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
     let typeFilter_ = (searchParams.get('type') || '').split(',');
@@ -272,7 +288,6 @@ class UserListing extends PureComponent {
     this.globalCategoryFilter = globalCategoryFilter_;
     //  stringFilter_.indexOf('') === 0 ? stringFilter_.shift() : stringFilter_;
     // console.log(locationFilter_);
-    console.log(skillFilter_);
     this.createFilterString();
 
     this.populateData(
