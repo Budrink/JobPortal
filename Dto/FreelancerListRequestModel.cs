@@ -12,9 +12,10 @@
 
 		public string[] TypeFilter { get; set; }
 
-		public string[] ProjectLangFilter { get; set; }
+		public string[] LangFilter { get; set; }
 		public string[] LevelFilter { get; set; }
 
+		public string[] RateFilter { get; set; }
 		public string StringFilter { get; set; }
 
 		public string GlobalCategoryFilter { get; set; }

@@ -29,9 +29,10 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<UserLanguage> _userLanguageRepository;
 		private readonly IGenericRepository<UserExperience> _userExperienceRepository;
 		private readonly IGenericRepository<Education> _educationRepository;
+		private readonly IGenericRepository<HourRate> _rateRepository;
 		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository, IGenericRepository<Award> awardRepository,
 			IGenericRepository<Project> projectRepository, IGenericRepository<UserSkill> userSkillRepository, IGenericRepository<UserLanguage> userLanguageRepository,
-			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository)
+			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository, IGenericRepository<HourRate> rateRepository)
 	    {
 		    _freelancerRepository = freelancerRepository;
 		    _proposalRepository = proposalRepository;
@@ -44,7 +45,8 @@ namespace JobPortal.Controllers
 			_userLanguageRepository = userLanguageRepository;
 			_userExperienceRepository = userExperienceRepository;
 			_educationRepository = educationRepository;
-		}
+			_rateRepository = rateRepository;
+	    }
 
 	    [HttpGet]
 	    [Route("proposalList")]
@@ -132,16 +134,21 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
+			    var rateFilter = _rateRepository.Get(x => request.RateFilter.Contains(x.HourRateId.ToString()))
+				    .ToList();
+
+
 			    var freelancerList = await _freelancerRepository.Get(x =>
 					(request.GlobalCategoryFilter.IsNullOrEmpty() || x.GlobalCategories.Any(y => y.GlobalCategoryId.ToString() == request.GlobalCategoryFilter)) &&
 					(request.LocationFilter.IsNullOrEmpty() ||
 					 request.LocationFilter.Select(Guid.Parse).Contains(x.User.Country.CountryId)) &&
-					(request.ProjectLangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.ProjectLangFilter.Contains(l.Id.ToString()))) &&
+					(request.LangFilter.IsNullOrEmpty() || x.Languages.Any(l => request.LangFilter.Contains(l.Id.ToString()))) &&
 					   (request.TypeFilter.IsNullOrEmpty() || request.TypeFilter.Select(Guid.Parse)
 						 .Contains(x.FreelancerType.FreelancerTypeId)) &&
 					   (request.CategoryFilter.IsNullOrEmpty() || x.UserSkills.Any(s => request.CategoryFilter.Contains(s.Id.ToString()))) &&
 					(request.LevelFilter.IsNullOrEmpty() || request.LevelFilter.Select(Guid.Parse)
-						 .Contains(x.EnglishLevel.EnglishLevelId))
+						 .Contains(x.EnglishLevel.EnglishLevelId)) &&
+					(rateFilter.IsNullOrEmpty() || rateFilter.Any(r => r.MinRate <= x.HourRates && x.HourRates <= r.MaxRate))
 			    ).ToListAsync();
 			    if (!request.StringFilter.IsNullOrEmpty())
 				    freelancerList = freelancerList.Where(x => $"{x.User.FirstName} {x.User.LastName}".Contains(request.StringFilter)).ToList();
@@ -149,6 +156,7 @@ namespace JobPortal.Controllers
 				var freelancers= freelancerList.Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
 					.Select(x => new
 					{
+						Saved = false,
 						UserId = x.User.Id,
 						UserPhoto = x.User.UserPhoto?.FileLink,
 						FirstName = x.User.FirstName,

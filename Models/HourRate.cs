@@ -9,6 +9,7 @@ namespace JobPortal.Models
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid HourRateId { get; set; }
 		public string HourRateName { get; set; }
-
+		public decimal MinRate { get; set; }
+		public decimal MaxRate { get; set; }
 	}
 }

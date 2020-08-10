@@ -196,7 +196,7 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
-				var jobList = (await _freelancerRepository.FindById(Guid.Parse(freelancerId))).Contracts.Select(x => x.JobProposal.Job).ToList();
+				var jobList = (await _userManager.FindByIdAsync(freelancerId)).Freelancer.Contracts.Select(x => x.JobProposal.Job).ToList();
 				return Ok(jobList);
 			}
 			catch (Exception e)

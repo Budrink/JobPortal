@@ -74,23 +74,33 @@ namespace JobPortal
 		{
 				new HourRate
 				{
-					HourRateName = "$10 and below"
+					HourRateName = "$10 and below",
+					MinRate =0,
+					MaxRate = 10
 				},
 				new HourRate
 				{
-					HourRateName = "$10 - $30"
+					HourRateName = "$10 - $30",
+					MinRate = 10,
+					MaxRate = 30
 				},
 				new HourRate
 				{
-					HourRateName = "$30 - $60"
+					HourRateName = "$30 - $60",
+					MinRate = 30,
+					MaxRate = 60
 				},
 				new HourRate
 				{
-					HourRateName = "$60 - $90"
+					HourRateName = "$60 - $90",
+					MinRate = 60,
+					MaxRate = 90
 				},
 				new HourRate
 				{
-					HourRateName = "$90 &amp;above"
+					HourRateName = "$90 &amp;above",
+					MinRate = 90,
+					MaxRate = 1000000
 				}
 			};
 			context.Set<HourRate>().AddRange(rates);
