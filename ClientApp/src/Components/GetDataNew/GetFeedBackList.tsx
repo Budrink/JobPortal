@@ -2,43 +2,55 @@ import { UserFeedback } from '../Data/Data';
 // import { wait } from './wait';
 import { flagDefaultPath, countryFlagsPath } from '../Data/GlobalValues';
 import { http } from '../Data/Http';
-
+import { request } from 'https';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
 
-// export const GetFeedbackList = async (
-//   userId: string,
-//   numberOfPage: number,
-//   amountOfItemsOnPage: number,
-// ): Promise<UserFeedback[]> => {
-//   // export const getEnglishLevelList = (): EnglishLevelData[] => {
-//   let userFeedbacks: UserFeedback[] = [];
+export interface UserFeedbacks {
+  totalFeedbackAmount: number;
+  userFeedbacks: UserFeedback[];
+}
 
-//   let response: HttpResponse<any>;
-//   try {
-//     response = await http({
-//       path: `Freelancer/${userId}/feedbacks`,
-//       method: 'Get',
-//     });
+export const GetFeedbackList = async (
+  userId: string,
+  pageNumber: number,
+  amountOfItemsOnPage: number,
+): Promise<any> => {
+  let userFeedbacks: UserFeedbacks;
+  console.log(pageNumber);
+  userFeedbacks = { totalFeedbackAmount: 0, userFeedbacks: [] };
+  const requestBody = {
+    freelancerId: userId,
+    pageNumber: pageNumber,
+    amountItemsOnPage: amountOfItemsOnPage,
+  };
+  console.log(requestBody);
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `freelancer/feedbacks`,
+      method: 'Post',
+      body: requestBody,
+    });
 
-//     console.log(response);
-//     if (response.parsedBody !== null) {
-//       userFeedbacks = response.parsedBody;
-//       userFeedbacks.map(
-//         (feedback) =>
-//           (feedback.contract.job.company.country.countryFlag =
-//             feedback.contract.job.company.country.countryFlag !== null
-//               ? countryFlagsPath +
-//                 feedback.contract.job.company.country.countryFlag
-//               : flagDefaultPath),
-//       );
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-//   return userFeedbacks;
-// };
+    console.log(response);
+    if (response.parsedBody !== null) {
+      userFeedbacks = response.parsedBody;
+      userFeedbacks.userFeedbacks.map(
+        (feedback) =>
+          (feedback.contract.job.company.country.countryFlag =
+            feedback.contract.job.company.country.countryFlag !== null
+              ? countryFlagsPath +
+                feedback.contract.job.company.country.countryFlag
+              : flagDefaultPath),
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  return userFeedbacks;
+};
 // //Функция для получения списка с севрера
 // //   await fetch('http://localhost:17525/api/user')
 // //     .then((res) => res.json())

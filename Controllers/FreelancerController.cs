@@ -114,7 +114,7 @@ namespace JobPortal.Controllers
 					Languages=user.Freelancer.Languages.ToList(),
 					PlusMember=user.Freelancer.PlusMember,
 					Remark = user.Freelancer.Remark,
-					CraftedProjects=user.Freelancer.CraftedProjects.ToList(),///Add PAging
+					CraftedProjects=user.Freelancer.CraftedProjects.ToList(),
 
 
 
@@ -128,15 +128,33 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-		[HttpGet, Route("{freelancerId}/feedbacks")]
-		public async Task<IActionResult> GetFeedbackList([FromRoute] string freelancerId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+		public class queryFeedbackDTO
+		{
+			public string freelancerId { get; set; }
+			public int pageNumber { get; set; }
+			public int amountItemsOnPage { get; set; }
+		}
+		[HttpPost, Route("/feedbacks")]
+		public async Task<IActionResult> GetFeedbackList( [FromQuery] queryFeedbackDTO query )
 		{
 			try
 			{
-				var user = await _userManager.FindByIdAsync(freelancerId);
-				var feedbackList = user.Freelancer.Feedbacks.Skip((pageNumber - 1) * amountItemsOnPage)
-					.Take(amountItemsOnPage).ToList();
-				return Ok(feedbackList);
+				var user = await _userManager.FindByIdAsync(query.freelancerId);
+				IEnumerable<Feedback> feedbackList;
+				if (query.pageNumber > 0)
+				{
+					 feedbackList = user.Freelancer.Feedbacks.Skip((query.pageNumber - 1) * query.amountItemsOnPage)
+					  .Take(query.amountItemsOnPage).ToList();
+				}
+				else
+				{
+					feedbackList = user.Freelancer.Feedbacks.ToList();
+				}
+
+				return Ok(new {
+					userFeedbacks = feedbackList,
+					totalFeedbackAmount = feedbackList.Count()
+				});
 			}
 			catch (Exception e)
 			{
