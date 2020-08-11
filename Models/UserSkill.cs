@@ -16,6 +16,6 @@ namespace JobPortal.Models
         [ForeignKey("User")]
         public Guid UserId { get; set; }
         public virtual Skill Skill { get; set; }
-      public int Percent { get; set; }
+		public int Percent { get; set; }
     }
 }
