@@ -140,15 +140,27 @@ namespace JobPortal.Controllers
 			try
 			{
 				var user = await _userManager.FindByIdAsync(query.freelancerId);
-				IEnumerable<Feedback> feedbackList;
+				IEnumerable<FeedbackResponseModel> feedbackList;
 				if (query.pageNumber > 0)
 				{
-					 feedbackList = user.Freelancer.Feedbacks.Skip((query.pageNumber - 1) * query.amountItemsOnPage)
+					 feedbackList = user.Freelancer.Feedbacks.Select(x=> new FeedbackResponseModel
+					 {
+						 FeedbackId = x.FeedbackId,
+						 FreelancerId = x.Freelancer.User.Id,
+						 Text = x.Text,
+						 Mark = x.Mark
+					 }).Skip((query.pageNumber - 1) * query.amountItemsOnPage)
 					  .Take(query.amountItemsOnPage).ToList();
 				}
 				else
 				{
-					feedbackList = user.Freelancer.Feedbacks.ToList();
+					feedbackList = user.Freelancer.Feedbacks.Select(x => new FeedbackResponseModel
+					{
+						FeedbackId = x.FeedbackId,
+						FreelancerId = x.Freelancer.User.Id,
+						Text = x.Text,
+						Mark = x.Mark
+					}).ToList();
 				}
 
 				return Ok(new {
