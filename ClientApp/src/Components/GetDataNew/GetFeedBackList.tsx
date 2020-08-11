@@ -6,7 +6,6 @@ import { request } from 'https';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
-
 export interface UserFeedbacks {
   totalFeedbackAmount: number;
   userFeedbacks: UserFeedback[];

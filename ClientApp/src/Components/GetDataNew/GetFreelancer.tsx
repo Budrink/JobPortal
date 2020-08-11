@@ -20,8 +20,8 @@ export interface HttpResponse<RESB> extends Response {
 
 export const GetFreelancer = async (
   freelancerId: string,
-  amountofFeedBaacksOnPage?: number,
   pageNumber?: number,
+  amountofFeedBaacksOnPage?: number,
 ): Promise<any> => {
   // const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
   //   return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);

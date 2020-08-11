@@ -134,8 +134,8 @@ namespace JobPortal.Controllers
 			public int pageNumber { get; set; }
 			public int amountItemsOnPage { get; set; }
 		}
-		[HttpPost, Route("/feedbacks")]
-		public async Task<IActionResult> GetFeedbackList( [FromQuery] queryFeedbackDTO query )
+		[HttpPost, Route("feedbacks")]
+		public async Task<IActionResult> GetFeedbackList( [FromBody] queryFeedbackDTO query )
 		{
 			try
 			{
