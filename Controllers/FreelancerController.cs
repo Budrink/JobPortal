@@ -147,6 +147,7 @@ namespace JobPortal.Controllers
 					 {
 						 FeedbackId = x.FeedbackId,
 						 FreelancerId = x.Freelancer.User.Id,
+						 Contract = x.Contract,
 						 Text = x.Text,
 						 Mark = x.Mark
 					 }).Skip((query.pageNumber - 1) * query.amountItemsOnPage)
@@ -158,6 +159,7 @@ namespace JobPortal.Controllers
 					{
 						FeedbackId = x.FeedbackId,
 						FreelancerId = x.Freelancer.User.Id,
+						Contract = x.Contract,
 						Text = x.Text,
 						Mark = x.Mark
 					}).ToList();
