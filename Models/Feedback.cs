@@ -8,7 +8,7 @@ namespace JobPortal.Models
 	{
 		[Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid FeedbackId { get; set; }
-		public virtual User User { get; set; }
+		public virtual Freelancer Freelancer { get; set; }
 		public virtual Contract Contract { get; set; }
 
 		public int Mark { get; set; }

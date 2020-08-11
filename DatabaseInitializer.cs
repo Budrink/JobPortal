@@ -524,13 +524,13 @@ new GlobalCategory
 				{
 				new Feedback {
 					Contract = contracts[0],
-					User = freelancer1.Freelancer.User,
+					Freelancer = freelancer1.Freelancer,
 					Mark = 4,
 					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
 				},
 			new Feedback {
 					Contract = contracts[1],
-					User = freelancer1.Freelancer.User,
+					Freelancer = freelancer1.Freelancer,
 					Mark = 5,
 					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
 				},
