@@ -17,7 +17,7 @@ namespace JobPortal.Controllers
 {
 	[Route("api/[controller]")]
     [ApiController]
-    public class FreelancerController : ControllerBase
+    public partial class FreelancerController : ControllerBase
     {
 	    private readonly IGenericRepository<Freelancer> _freelancerRepository;
 	    private readonly IGenericRepository<JobProposal> _proposalRepository;
@@ -128,38 +128,64 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-		public class queryFeedbackDTO
-		{
-			public string freelancerId { get; set; }
-			public int pageNumber { get; set; }
-			public int amountItemsOnPage { get; set; }
-		}
-		[HttpPost, Route("feedbacks")]
-		public async Task<IActionResult> GetFeedbackList( [FromBody] queryFeedbackDTO query )
+	    [HttpPost, Route("feedbacks")]
+		public async Task<IActionResult> GetFeedbackList( [FromBody] QueryFeedbackDto query )
 		{
 			try
 			{
-				var user = await _userManager.FindByIdAsync(query.freelancerId);
-				IEnumerable<FeedbackResponseModel> feedbackList;
-				if (query.pageNumber > 0)
+				var user = await _userManager.FindByIdAsync(query.FreelancerId);
+				IEnumerable<Object> feedbackList;
+				if (query.PageNumber > 0)
 				{
-					 feedbackList = user.Freelancer.Feedbacks.Select(x=> new FeedbackResponseModel
+					 feedbackList = user.Freelancer.Feedbacks.Select(x=> new
 					 {
 						 FeedbackId = x.FeedbackId,
 						 FreelancerId = x.Freelancer.User.Id,
-						 Contract = x.Contract,
+						 Contract = new
+						 {
+							 Status = x.Contract.Status,
+							 BeginDate = x.Contract.BeginDate,
+							 EndDate = x.Contract.EndDate,
+							 Job = new {
+								 Qualification = x.Contract.Job.CompetenceLevel,
+								 Title = x.Contract.Job.Title,
+								 Company = new {
+									 //CompanyImagePng = x.Contract.Job.Company.
+									 CompanyName = x.Contract.Job.Company.CompanyName,
+									 CompanyId = x.Contract.Job.Company.CompanyId,
+								 }
+							 }
+
+						 },
 						 Text = x.Text,
 						 Mark = x.Mark
-					 }).Skip((query.pageNumber - 1) * query.amountItemsOnPage)
-					  .Take(query.amountItemsOnPage).ToList();
+					 }).Skip((query.PageNumber - 1) * query.AmountItemsOnPage)
+					  .Take(query.AmountItemsOnPage).ToList();
 				}
 				else
 				{
-					feedbackList = user.Freelancer.Feedbacks.Select(x => new FeedbackResponseModel
+					feedbackList = user.Freelancer.Feedbacks.Select(x => new
 					{
 						FeedbackId = x.FeedbackId,
 						FreelancerId = x.Freelancer.User.Id,
-						Contract = x.Contract,
+						Contract = new
+						{
+							Status = x.Contract.Status,
+							BeginDate = x.Contract.BeginDate,
+							EndDate = x.Contract.EndDate,
+							Job = new
+							{
+								Qualification = x.Contract.Job.CompetenceLevel,
+								Title = x.Contract.Job.Title,
+								Company = new
+								{
+									//CompanyImagePng = x.Contract.Job.Company.
+									CompanyName = x.Contract.Job.Company.CompanyName,
+									CompanyId = x.Contract.Job.Company.CompanyId,
+								}
+							}
+
+						},
 						Text = x.Text,
 						Mark = x.Mark
 					}).ToList();
