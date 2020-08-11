@@ -331,25 +331,25 @@ new GlobalCategory
 				new Award
 				{
 					Title = "Top PHP Excel Skills",
-					Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img ="img-07.jpg"
 	},
 				new Award
 				{
 					Title = " Monster Developer Award",
-						Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				},
 					new Award
 				{
 				Title = "Top PHP Excel Skills",
-						Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				},
 						new Award
 				{
 				Title = "Top PHP Excel Skills",
-					Date= Convert.ToDateTime("06-27-2018"),
+				Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				}
 			};

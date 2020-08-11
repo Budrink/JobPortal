@@ -28,7 +28,7 @@ export const GetProjectList = async (
   langFilter: string[],
   companyFilter: string[],
   stringForSearching: string,
-  statusfilter: string, // ongoing, cancel, completed
+  statusFilter: string[], // ongoing, cancel, completed
 ) => {
   let projectList: ProjectsProps;
   projectList = { totalAmountOfProjects: 0, projects: [] };
@@ -63,15 +63,14 @@ export const GetProjectList = async (
     typeFilter: typeFilter,
     minPrice: minPrice,
     maxPrice: maxPrice,
-    projectLengthFilter: projectLengthFilter,
+    projectLength: projectLengthFilter,
     langFilter: langFilter,
     companyFilter: companyFilter,
     stringForSearching:
       stringForSearching === undefined ? '' : stringForSearching,
-    statusfilter: statusfilter === undefined ? '' : statusfilter,
-    //  statusfilter: '',
+    statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
-  // console.log(requestBody);
+  console.log(statusFilter);
   try {
     response = await http({
       path: `Job/List`,
