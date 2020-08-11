@@ -37,7 +37,6 @@ export const GetProjectList = async (
   let minPrice = '';
   let maxPrice = '';
   let typeFilter = '';
-  console.log(arrayTypeFilter);
   if (arrayTypeFilter.length > 0) {
     if (arrayTypeFilter[0].substring(0, 1) === '0') {
       typeFilter = '0';
@@ -72,7 +71,7 @@ export const GetProjectList = async (
     statusfilter: statusfilter === undefined ? '' : statusfilter,
     //  statusfilter: '',
   };
-  console.log(requestBody);
+  // console.log(requestBody);
   try {
     response = await http({
       path: `Job/List`,

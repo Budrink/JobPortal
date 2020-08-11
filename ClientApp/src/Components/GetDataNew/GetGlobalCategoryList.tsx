@@ -13,15 +13,21 @@ export const GetGlobalCategoryList = async (
 ): Promise<any> => {
   // export const getCategoryList = (): CategoryData[] => {
   let categoryList: GlobalCategoryData[] = [];
-
+  if (amountOfCategories === undefined) {
+    amountOfCategories = 0;
+  }
+  let requestBody = {
+    AmountOfCategories: amountOfCategories,
+  };
   let response: HttpResponse<any>;
-  try {
+   try {
     response = await http({
-      path: `EnglishLevel`,
-      method: 'Get',
+      path: `GlobalCategory`,
+      method: 'Post',
+      body: requestBody,
     });
 
-    console.log(response);
+ 
     if (response.parsedBody !== null) {
       categoryList = response.parsedBody;
     }
@@ -36,7 +42,7 @@ export const GetGlobalCategoryList = async (
         ? globalCategoryPath + cat.globalCategoryImg
         : globalCategoryDefalutIconPath),
   );
-
+  console.log(categoryList);
   return categoryList;
 };
 

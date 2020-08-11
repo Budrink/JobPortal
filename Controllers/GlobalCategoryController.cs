@@ -13,25 +13,29 @@ namespace JobPortal.Controllers
 	[ApiController]
 	public class GlobalCategoryController : ControllerBase
 	{
-		private readonly IGenericRepository<Language> _globalCategoryRepository;
+		private readonly IGenericRepository<GlobalCategory> _globalCategoryRepository;
 
-		public GlobalCategoryController(IGenericRepository<Language> globalCategoryRepository)
+		public GlobalCategoryController(IGenericRepository<GlobalCategory> globalCategoryRepository)
 		{
 			_globalCategoryRepository = globalCategoryRepository;
 		}
 
-		[HttpGet]
+		public class RequestDTO
+		{
+			public int AmountOfCategories { get; set; }
+		}
+			[HttpPost]
 		[Route("")]
-		[ProducesResponseType(typeof(List<Language>), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(List<GlobalCategory>), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> GetLanguagesList(int? amountOfCategories)
+		public async Task<IActionResult> GetGlobalCategoriesList([FromBody] RequestDTO request)
 		{
 			try
 			{
 				var categoryList = await _globalCategoryRepository.Get();
-				if (amountOfCategories!=null)
+				if (request.AmountOfCategories != 0)
 				{
-					categoryList = categoryList.Take(amountOfCategories.Value);
+					categoryList = categoryList.Take(request.AmountOfCategories);
 
 				}	
 				return Ok(categoryList.ToList());
