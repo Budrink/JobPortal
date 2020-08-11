@@ -7,16 +7,22 @@ class UserSkillsList extends Component {
   constructor(props) {
     super(props);
     let oldList = [];
-    for (let i = 0; i < amountOfSkillsOnPage; i++) {
-      oldList.push(this.props.skillList[i]);
+    let buttonVisible = true;
+    if (this.props.skillList === undefined) {
+      oldList = [];
+      buttonVisible = false;
+    } else if (this.props.skillList.length <= amountOfSkillsOnPage) {
+      oldList = this.props.skillList;
+      buttonVisible = false;
+    } else {
+      oldList = this.props.skillList.slice(0, amountOfSkillsOnPage);
     }
-    // console.log(JSON.stringify(oldList));
+
     this.state = {
       skillList: oldList,
       pageNumber: 1,
+      buttonVisible: buttonVisible,
     };
-    // console.log(JSON.stringify(this.state.skillList));
-    // this.handleChange = this.handleChange.bind(this);
     this.btnClick = this.btnClick.bind(this);
   }
 
@@ -31,6 +37,12 @@ class UserSkillsList extends Component {
       i++
     ) {
       newList.push(this.props.skillList[i]);
+      if (
+        (this.state.pageNumber + 1) * amountOfSkillsOnPage >=
+        this.props.skillList.length - 1
+      ) {
+        this.setState({ buttonVisible: false });
+      }
     }
 
     this.setState({ skillList: newList });
@@ -54,10 +66,10 @@ class UserSkillsList extends Component {
   }
 
   renderTable(skills) {
-    // console.log(JSON.stringify(skills));
+    // console.log(skills);
     if (skills !== undefined) {
       return skills.map((skill) => (
-        <div className="form-group" key={skill.skill.iD}>
+        <div className="form-group" key={skill.skill.id}>
           {this.renderSkill({ skill })}
         </div>
       ));
@@ -71,7 +83,12 @@ class UserSkillsList extends Component {
       ) : (
         <div> No skills </div>
       );
-
+    let button =
+      this.state.buttonVisible === true ? (
+        <button onClick={this.btnClick}>View More</button>
+      ) : (
+        <div></div>
+      );
     return (
       <div id="wt-ourskill" className="wt-widget">
         <div className="wt-widgettitle">
@@ -83,7 +100,8 @@ class UserSkillsList extends Component {
         >
           {contents}
           <div className="wt-btnarea">
-            <button onClick={this.btnClick}>View More</button>
+            {/* <button onClick={this.btnClick}>View More</button> */}
+            {button}
           </div>
         </div>
       </div>

@@ -20,14 +20,13 @@ export const GetGlobalCategoryList = async (
     AmountOfCategories: amountOfCategories,
   };
   let response: HttpResponse<any>;
-   try {
+  try {
     response = await http({
       path: `GlobalCategory`,
       method: 'Post',
       body: requestBody,
     });
 
- 
     if (response.parsedBody !== null) {
       categoryList = response.parsedBody;
     }

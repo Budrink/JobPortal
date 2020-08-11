@@ -7,16 +7,21 @@ class UserEduicationList extends Component {
   constructor(props) {
     super(props);
     let oldList = [];
-    for (let i = 0; i < amountOfEducationsOnPage; i++) {
-      oldList.push(this.props.educationList[i]);
+    let buttonVisible = true;
+    if (this.props.educationList === undefined) {
+      oldList = [];
+      buttonVisible = false;
+    } else if (this.props.educationList.length <= amountOfEducationsOnPage) {
+      oldList = this.props.educationList;
+      buttonVisible = false;
+    } else {
+      oldList = this.props.educationList.slice(0, amountOfEducationsOnPage);
     }
-    // console.log(JSON.stringify(oldList));
     this.state = {
       educationList: oldList,
       pageNumber: 1,
+      buttonVisible: buttonVisible,
     };
-    // console.log(JSON.stringify(this.state.skillList));
-    // this.handleChange = this.handleChange.bind(this);
     this.btnClick = this.btnClick.bind(this);
   }
 
@@ -31,6 +36,12 @@ class UserEduicationList extends Component {
       i++
     ) {
       newList.push(this.props.educationList[i]);
+      if (
+        (this.state.pageNumber + 1) * amountOfEducationsOnPage >=
+        this.props.educationList.length - 1
+      ) {
+        this.setState({ buttonVisible: false });
+      }
     }
 
     this.setState({ educationList: newList });
@@ -71,7 +82,6 @@ class UserEduicationList extends Component {
   }
 
   renderTable(educations) {
-    // console.log(JSON.stringify(skills));
     if (educations !== undefined) {
       return educations.map((education) => (
         <div className="form-group" key={education.iD}>
@@ -84,12 +94,19 @@ class UserEduicationList extends Component {
   render() {
     // console.log(JSON.stringify(this.props.experienceList));
     let contents =
-      this.state.educationList !== undefined ? (
+      this.state.educationList.length > 0 ? (
         this.renderTable(this.state.educationList)
       ) : (
-        <div> No skills </div>
+        <div> No Education </div>
       );
-
+    let button =
+      this.state.buttonVisible === true ? (
+        <button className="wt-btn" onClick={this.btnClick}>
+          Load More
+        </button>
+      ) : (
+        <div></div>
+      );
     return (
       <div className="wt-experience wt-education">
         <div className="wt-usertitle">
@@ -98,14 +115,11 @@ class UserEduicationList extends Component {
 
         <div className="wt-experiencelisting-hold">{contents}</div>
         <div className="wt-btnarea">
-          <button className="wt-btn" onClick={this.btnClick}>
+          {/* <button className="wt-btn" onClick={this.btnClick}>
             Load More
-          </button>
+          </button> */}
+          {button}
         </div>
-
-        {/* <div className="wt-btnarea">
-            <button onClick={this.btnClick}>View More</button>
-          </div> */}
       </div>
     );
   }

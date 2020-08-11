@@ -1,6 +1,6 @@
 import { FreelancerData } from '../Data/Data';
 import { http } from '../Data/Http';
-// import { GetFeedbackList } from './GetFeedBackList';
+import { GetFeedbackList } from './GetFeedBackList';
 import { GetCraftedProjectList } from '../GetData/GetCraftedProjectList';
 import {
   userPhotoPath,
@@ -11,6 +11,8 @@ import {
   amountOfFeedbackOnPage,
   amountOfCraftedProjectsOnPage,
 } from '../Data/GlobalValues';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import { PostFreelancerData } from 'Components/PostData/PostFreelancerData';
 
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
@@ -19,11 +21,12 @@ export interface HttpResponse<RESB> extends Response {
 export const GetFreelancer = async (
   freelancerId: string,
   amountofFeedBaacksOnPage?: number,
-): Promise<FreelancerData> => {
+  pageNumber?: number,
+): Promise<any> => {
   // const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
   //   return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);
   // };
-  let freelancer: any;
+  let freelancer: FreelancerData;
 
   let response: HttpResponse<any>;
   try {
@@ -43,13 +46,20 @@ export const GetFreelancer = async (
           ? countryFlagsPath + freelancer.country.countryFlag
           : flagDefaultPath;
 
-      // console.log(freelancerList);
+      let FeedbackList = await GetFeedbackList(
+        freelancerId,
+        pageNumber === undefined ? 0 : pageNumber,
+        amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
+      );
+
+      freelancer.userFeedbacks = FeedbackList;
+      console.log(freelancer);
+      return freelancer;
     }
   } catch (e) {
     console.log(e);
+    return null;
   }
-
-  return freelancer;
 };
 
 // let freelancer: Freelancer = {

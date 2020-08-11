@@ -12,7 +12,7 @@ class ClientFeedBackList extends Component {
     this.state = {
       loading: false,
       feedbacks: oldList,
-      iD: oldList[0].freelancerId,
+      iD: oldList === undefined ? undefined : oldList[0].freelancerId,
       value: 1,
     };
     this.handleChange = this.handleChange.bind(this);

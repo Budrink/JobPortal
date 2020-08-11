@@ -7,13 +7,21 @@ class UserExperienceList extends Component {
   constructor(props) {
     super(props);
     let oldList = [];
-    for (let i = 0; i < amountOfExperiencesOnPage; i++) {
-      oldList.push(this.props.experienceList[i]);
+    let buttonVisible = true;
+    if (this.props.skillList === undefined) {
+      oldList = [];
+      buttonVisible = false;
+    } else if (this.props.experienceList.length <= amountOfExperiencesOnPage) {
+      oldList = this.props.experienceList;
+      buttonVisible = false;
+    } else {
+      oldList = this.props.experienceList.slice(0, amountOfExperiencesOnPage);
     }
-    // console.log(JSON.stringify(oldList));
+
     this.state = {
       experienceList: oldList,
       pageNumber: 1,
+      buttonVisible: buttonVisible,
     };
     // console.log(JSON.stringify(this.state.skillList));
     // this.handleChange = this.handleChange.bind(this);
@@ -31,17 +39,18 @@ class UserExperienceList extends Component {
       i++
     ) {
       newList.push(this.props.experienceList[i]);
+      if (
+        (this.state.pageNumber + 1) * amountOfExperiencesOnPage >=
+        this.props.skillList.length - 1
+      ) {
+        this.setState({ buttonVisible: false });
+      }
     }
 
     this.setState({ experienceList: newList });
-    // console.log(JSON.stringify(oldList));
     this.setState({ pageNumber: this.state.pageNumber + 1 });
-
-    // loadScripts1(this.instance, false);
   }
   renderExperience(data) {
-    // console.log(JSON.stringify(data));
-
     return (
       <div className="wt-experiencelisting wt-bgcolor">
         <div className="wt-title">
@@ -72,9 +81,10 @@ class UserExperienceList extends Component {
 
   renderTable(experiences) {
     // console.log(JSON.stringify(skills));
-    if (experiences !== undefined) {
+    console.log(experiences);
+    if (experiences !== undefined && experiences.length > 0) {
       return experiences.map((experience) => (
-        <div className="form-group" key={experience.iD}>
+        <div className="form-group" key={experience.id}>
           {this.renderExperience({ experience })}
         </div>
       ));
@@ -82,12 +92,19 @@ class UserExperienceList extends Component {
   }
 
   render() {
-    // console.log(JSON.stringify(this.props.experienceList));
     let contents =
       this.state.experienceList !== undefined ? (
         this.renderTable(this.state.experienceList)
       ) : (
         <div> No skills </div>
+      );
+    let button =
+      this.state.buttonVisible === true ? (
+        <button className="wt-btn" onClick={this.btnClick}>
+          Load More
+        </button>
+      ) : (
+        <div></div>
       );
 
     return (
@@ -97,11 +114,7 @@ class UserExperienceList extends Component {
         </div>
 
         <div className="wt-experiencelisting-hold">{contents}</div>
-        <div className="wt-btnarea">
-          <button className="wt-btn" onClick={this.btnClick}>
-            Load More
-          </button>
-        </div>
+        <div className="wt-btnarea">{button}</div>
       </div>
     );
   }

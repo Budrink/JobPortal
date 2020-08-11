@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
 import { amountOfCraftedProjectsOnPage } from '../../Data/GlobalValues';
-import { GetCraftedProjectList } from '../../GetData/GetCraftedProjectList';
+// import { GetCraftedProjectList } from '../../GetData/GetCraftedProjectList';
 
 //import { array } from 'prop-types';
 class CraftedProjectList extends Component {
   constructor(props) {
     super(props);
-    // const oldList = this.props.craftedProjectList;
+    let oldList = [];
+    let buttonVisible = true;
+    if (this.props.educationList === undefined) {
+      buttonVisible = false;
+    } else if (
+      this.props.craftedProjectList.length <= amountOfCraftedProjectsOnPage
+    ) {
+      oldList = this.props.craftedProjectList;
+      buttonVisible = false;
+    } else {
+      oldList = this.props.craftedProjectList.slice(
+        0,
+        amountOfCraftedProjectsOnPage,
+      );
+    }
     this.state = {
       loading: false,
-      craftedProjects: [],
+      craftedProjects: oldList,
+      pageNumber: 1,
+      buttonVisible: buttonVisible,
     };
 
     this.btnClick = this.btnClick.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ craftedProjects: this.props.craftedProjectList });
+    // this.setState({ craftedProjects: this.props.craftedProjectList });
   }
-  //the initial list of feedbacks
-  // craftedProjectList = this.props.craftedProjectList;
 
-  //total amount of feedbacks for recent freelancers
-  // craftedProjectsAmount of feedbacks shown on page (== amountOfFeedbackOnPage but can be changed by button ShowMore )
   shownCraftedProjectsAmount = amountOfCraftedProjectsOnPage;
 
   renderCraftedProject(data) {
@@ -49,17 +61,23 @@ class CraftedProjectList extends Component {
 
   btnClick(event) {
     event.preventDefault();
-    this.shownCraftedProgectsAmount =
-      this.shownCraftedProgectsAmount + amountOfCraftedProjectsOnPage;
-    let newCraftedProjects = GetCraftedProjectList(
-      this.state.iD,
-      this.shownCraftedProjectsAmount,
-      this.state.value,
-    );
-    if (newCraftedProjects !== 'undefined') {
-      let projects = this.state.craftedProjects;
-      this.setState({ craftedProjects: projects.push(newCraftedProjects) });
+    let newList = [];
+    for (
+      let i = 0;
+      i <= this.props.craftedProjectList.length - 1 &&
+      i < (this.state.pageNumber + 1) * amountOfCraftedProjectsOnPage;
+      i++
+    ) {
+      newList.push(this.props.craftedProjectList[i]);
+      if (
+        (this.state.pageNumber + 1) * amountOfCraftedProjectsOnPage >=
+        this.props.craftedProjectList.length - 1
+      ) {
+        this.setState({ buttonVisible: false });
+      }
     }
+    this.setState({ craftedProjects: newList });
+    this.setState({ pageNumber: this.state.pageNumber + 1 });
   }
 
   render() {
@@ -71,6 +89,14 @@ class CraftedProjectList extends Component {
       this.renderTable(this.props.craftedProjectList)
     ) : null;
 
+    let button =
+      this.state.buttonVisible === true ? (
+        <button className="wt-btn" onClick={this.btnClick}>
+          Load More
+        </button>
+      ) : (
+        <div></div>
+      );
     return (
       <form className="wt-clientfeedback" ref={(el) => (this.instance = el)}>
         <div
@@ -83,10 +109,7 @@ class CraftedProjectList extends Component {
             </div>
             <div className="wt-projects">
               {contents}
-
-              <button className="wt-btn" onClick={this.btnClick}>
-                Load More
-              </button>
+              {button}
             </div>
           </div>
         </div>
