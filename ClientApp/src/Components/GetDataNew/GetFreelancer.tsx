@@ -1,18 +1,18 @@
 import { FreelancerData } from '../Data/Data';
 import { http } from '../Data/Http';
 import { GetFeedbackList } from './GetFeedBackList';
-import { GetCraftedProjectList } from '../GetData/GetCraftedProjectList';
+import { GetCraftedProjectList } from './GetCraftedProjectList';
 import {
   userPhotoPath,
   userDefaultIconPath,
   countryFlagsPath,
   flagDefaultPath,
+  CraftedProjectPath,
+  CraftedProjectDefaultPath,
   ProjectDefaultImgPath,
   amountOfFeedbackOnPage,
   amountOfCraftedProjectsOnPage,
 } from '../Data/GlobalValues';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-import { PostFreelancerData } from 'Components/PostData/PostFreelancerData';
 
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
@@ -20,8 +20,8 @@ export interface HttpResponse<RESB> extends Response {
 
 export const GetFreelancer = async (
   freelancerId: string,
-  amountofFeedBaacksOnPage?: number,
   pageNumber?: number,
+  amountofFeedBaacksOnPage?: number,
 ): Promise<any> => {
   // const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
   //   return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);
@@ -45,16 +45,27 @@ export const GetFreelancer = async (
         freelancer.country.countryFlag !== null
           ? countryFlagsPath + freelancer.country.countryFlag
           : flagDefaultPath;
+      console.log(freelancer.craftedProjects);
+      if (freelancer.craftedProjects !== undefined) {
+        freelancer.craftedProjects.map(
+          (project) =>
+            (project.img =
+              project.img === null
+                ? CraftedProjectPath + project.img
+                : CraftedProjectDefaultPath),
+        );
 
-      let FeedbackList = await GetFeedbackList(
-        freelancerId,
-        pageNumber === undefined ? 0 : pageNumber,
-        amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
-      );
+        // let FeedbackList = await GetFeedbackList(
+        //   freelancerId,
+        //   pageNumber === undefined ? 0 : pageNumber,
+        //   amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
+        // );
 
-      freelancer.userFeedbacks = FeedbackList;
-      console.log(freelancer);
-      return freelancer;
+        // freelancer.userFeedbacks = FeedbackList;
+        // console.log(freelancer);
+
+        return freelancer;
+      }
     }
   } catch (e) {
     console.log(e);

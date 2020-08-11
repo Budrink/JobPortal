@@ -11,8 +11,6 @@ namespace JobPortal.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Id { get; set; }
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public string Img { get; set; }

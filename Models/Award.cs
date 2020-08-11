@@ -10,9 +10,7 @@ namespace JobPortal.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Id { get; set; }
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
-        public string Title { get; set; }
+         public string Title { get; set; }
         public DateTime Date { get; set; }
         public string Img { get; set; }
         public virtual IEnumerable<Attachment> Files { get; set; }

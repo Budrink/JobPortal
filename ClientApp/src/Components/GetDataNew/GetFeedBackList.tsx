@@ -6,7 +6,6 @@ import { request } from 'https';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
-
 export interface UserFeedbacks {
   totalFeedbackAmount: number;
   userFeedbacks: UserFeedback[];
@@ -18,7 +17,6 @@ export const GetFeedbackList = async (
   amountOfItemsOnPage: number,
 ): Promise<any> => {
   let userFeedbacks: UserFeedbacks;
-  console.log(pageNumber);
   userFeedbacks = { totalFeedbackAmount: 0, userFeedbacks: [] };
   const requestBody = {
     freelancerId: userId,

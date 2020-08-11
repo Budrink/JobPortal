@@ -32,6 +32,7 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<Education> _educationRepository;
 		private readonly IGenericRepository<HourRate> _rateRepository;
 		private readonly IGenericRepository<Language> _languageRepository;
+	
 		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository, IGenericRepository<Award> awardRepository,
 			IGenericRepository<Project> projectRepository, IGenericRepository<UserSkill> userSkillRepository, IGenericRepository<UserLanguage> userLanguageRepository,
 			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository, IGenericRepository<HourRate> rateRepository,
@@ -50,8 +51,7 @@ namespace JobPortal.Controllers
 			_educationRepository = educationRepository;
 			_rateRepository = rateRepository;
 			_languageRepository = languageRepository;
-
-		}
+				}
 
 	    [HttpGet]
 	    [Route("proposalList")]
@@ -201,6 +201,38 @@ namespace JobPortal.Controllers
 				return BadRequest(e.Message);
 			}
 		}
+		
+	
+		[HttpPost, Route("craftedProjects ")]
+		public async Task<IActionResult> GetcradtedProjects([FromBody] queryFeedbackDTO query)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(query.freelancerId);
+				IEnumerable<CraftedProject> craftedProjectsList;
+				if (query.pageNumber > 0)
+				{
+					craftedProjectsList = user.Freelancer.CraftedProjects.ToList().Skip((query.pageNumber - 1) * query.amountItemsOnPage)
+					 .Take(query.amountItemsOnPage).ToList();
+				}
+				else
+				{
+					craftedProjectsList = user.Freelancer.CraftedProjects.ToList();
+			
+				}
+
+				return Ok(new
+				{
+					craftedProjectList = craftedProjectsList,
+					totalFeedbackAmount = craftedProjectsList.Count()
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 
 		[HttpPost, Route("byIds")]
 		public async Task<IActionResult> FreelancerListByIds([FromBody] FreelancerListByIdsRequestModel request)

@@ -7,7 +7,7 @@ import {
 } from '../Data/GlobalValues';
 // import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
 // import { GetUserSkillList } from '../GetDataNew/GetUserSkillList';
-import { GetCraftedProjectList } from './GetCraftedProjectList';
+import { GetCraftedProjectList } from '../GetDataNew/GetCraftedProjectList';
 import {
   countryFlagsPath,
   amountOfFeedbackOnPage,
