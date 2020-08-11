@@ -144,6 +144,54 @@ namespace JobPortal.Controllers
 			}
 		}
 
+		[HttpPost, Route("byIds")]
+		public async Task<IActionResult> FreelancerListByIds([FromBody] FreelancerListByIdsRequestModel request)
+		{
+			try
+			{
+				var userList = new List<Freelancer>();
+				foreach (var id in request.FreelancerIds)
+				{
+					var user = await _userManager.FindByIdAsync(id);
+					if (user!=null)
+						userList.Add(user.Freelancer);
+				}
+
+				var result = userList.Select(x => new
+				{
+					Saved = false,
+					UserId = x.User.Id,
+					UserPhoto = x.User.UserPhoto?.FileLink,
+					FirstName = x.User.FirstName,
+					LastName = x.User.LastName,
+					Email = x.User.Email,
+					Gender = x.User.Gender,
+					UserName = x.User.UserName,
+					UserRates = x.Rates,
+					PlusMember = true,
+					FeedBacksCount = x.Feedbacks.Count(),
+					JoinDate = x.User.JoinDate,
+					Title = x.Title,
+					HourRates = x.HourRates,
+					Country = x.User.Country,
+					Description = x.Description,
+					AmountOngoingProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Accepted),
+					AmountCompletedProjects = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Finished),
+					AmountCancelledProject = x.JobProposals.Count(y => y.ProposalStatus == ProposalStatus.Cancelled),
+					ServedHours = x.ServedHours,
+					UserSkills = x.UserSkills.ToList(),
+					UserType = x.FreelancerType,
+					EnglishLevel = x.EnglishLevel,
+					Languages = x.Languages.ToList()
+				}).ToList();
+				return Ok(result);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 
 	    [HttpPost, Route("")]
 	    public async Task<IActionResult> FreelancerList([FromBody] FreelancerListRequestModel request)
