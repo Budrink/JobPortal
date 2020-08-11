@@ -77,12 +77,12 @@ namespace JobPortal.Controllers
 				var jobsFiltered = _jobRepository.DbSet().Where(x =>
 					(dto.StringForSearching.IsNullOrEmpty() || x.Title.Contains(dto.StringForSearching)) &&
 					(dto.CompanyFilter.IsNullOrEmpty() ||
-					 dto.CompanyFilter.Select(i => Guid.Parse(i)).Contains(x.Company.CompanyId)) &&
+					 dto.CompanyFilter.Contains(x.Company.CompanyName)) &&
 					//  (dto.CategoryFilter.IsNullOrEmpty() || dto.CategoryFilter.Select(i => Guid.Parse(i)).Contains(x.Category)) &&
 					(dto.LocationFilter.IsNullOrEmpty() ||
-					 dto.LocationFilter.Select(i => Guid.Parse(i)).Contains(x.Country.CountryId)) &&
+					 dto.LocationFilter.Contains(x.Country.CountryName)) &&
 					(dto.LangFilter.IsNullOrEmpty() ||
-					 dto.LangFilter.Select(i => Guid.Parse(i)).Contains(x.Language.LanguageId))).ToList();
+					 dto.LangFilter.Contains(x.Language.Name))).ToList();
 				if (!dto.StatusFilter.IsNullOrEmpty())
 				{
 					var filterParsed = Enum.TryParse<JobStatus>(dto.StatusFilter, out var status);
