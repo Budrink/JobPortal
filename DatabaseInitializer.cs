@@ -213,9 +213,42 @@ new GlobalCategory
 				}
 			};
 
-			var joinDate = DateTime.Now;
+		;
 			context.Set<FreelancerType>().AddRange(userTypes);
 			context.SaveChanges();
+
+				var craftedProjects  = new[]
+			{
+				new CraftedProject
+				{
+					Name = "themeforest",
+					Link="https://themeforest.net"
+				},
+				new CraftedProject
+				{
+					Name = "Videohive",
+					Link="https://Videohive.net",
+					Img="img-o2.jpg"
+				},
+					new CraftedProject
+				{
+					Name = "Codecanyon",
+					Link="https://Codecanyon.net",
+					Img="img-o3.jpg"
+				},
+						new CraftedProject
+				{
+					Name = "Graphicriver",
+					Link="https://Graphicriver.net",
+					Img="img-o2.jpg"
+				}
+			};
+
+		
+			//context.Set<CraftedProject>().AddRange(craftedProjects);
+			//context.SaveChanges();
+
+			var joinDate = DateTime.Now;
 
 			var user1 = new User
 			{
@@ -291,7 +324,35 @@ new GlobalCategory
 			result = userManager.CreateAsync(user3, "Wsxedc!2345").GetAwaiter().GetResult();
 			userManager.AddToRoleAsync(user3, "company").Wait();
 
-
+		
+			var awards = new[]
+		{
+				
+				new Award
+				{
+					Title = "Top PHP Excel Skills",
+					Date= Convert.ToDateTime("06-27-2018"),
+					Img ="img-07.jpg"
+	},
+				new Award
+				{
+					Title = " Monster Developer Award",
+						Date= Convert.ToDateTime("06-27-2018"),
+					Img="img-07.jpg"
+				},
+					new Award
+				{
+				Title = "Top PHP Excel Skills",
+						Date= Convert.ToDateTime("06-27-2018"),
+					Img="img-07.jpg"
+				},
+						new Award
+				{
+				Title = "Top PHP Excel Skills",
+					Date= Convert.ToDateTime("06-27-2018"),
+					Img="img-07.jpg"
+				}
+			};
 
 			var freelancer1 = new User
 			{
@@ -301,7 +362,7 @@ new GlobalCategory
 				JoinDate = joinDate,
 				Freelancer = new Freelancer
 				{
-					Description = "SomeFreelancerDescription lorem ipsum ibaruri dfne eterbndkf s",
+					Description = "SomeFreelancerDescription loremipsum ibaruri dfne eterbndkf s",
 					Address = "Some adress",
 					UserSkills = new []
 					{
@@ -320,7 +381,9 @@ new GlobalCategory
 							Percent = 50,
 							Skill = new Skill {Name = "HTML"}
 						}
-					}
+					},
+					CraftedProjects= craftedProjects,
+
 				},
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
@@ -537,6 +600,7 @@ new GlobalCategory
 			};
 			context.Set<Feedback>().AddRange(feedbacks);
 			context.SaveChanges();
+
 
 			var userSkills = new[]
 			{

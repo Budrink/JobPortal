@@ -17,7 +17,6 @@ export const GetFeedbackList = async (
   amountOfItemsOnPage: number,
 ): Promise<any> => {
   let userFeedbacks: UserFeedbacks;
-  console.log(pageNumber);
   userFeedbacks = { totalFeedbackAmount: 0, userFeedbacks: [] };
   const requestBody = {
     freelancerId: userId,

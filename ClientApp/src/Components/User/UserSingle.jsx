@@ -27,6 +27,7 @@ import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
 import CraftedProjectList from '../Forms/User/CraftedProjectsList';
 import UserSkillsList from '../Forms/User/UserSkillList';
 import UserExperienceList from '../Forms/User/UserExperienceList';
+import UserAwardsList from '../Forms/User/UserAwardsList';
 import UserEducationList from '../Forms/User/UserEducationList';
 import UserTags from '../Forms/User/UserTags';
 import ComplainForm from '../Forms/ComplainForm';
@@ -102,7 +103,6 @@ class UserSingle extends React.Component {
   // iD = 4;
   //We got the first time the first feedbacks
   populateData = async (iD) => {
-    console.log(iD);
     const data = await GetFreelancer(iD, 1, amountOfFeedbackOnPage);
     this.setState({ feedbackList: data.userFeedbacks }, () => {});
 
@@ -421,82 +421,9 @@ class UserSingle extends React.Component {
                                   <h2>Awards &amp; Certifications</h2>
                                 </div>
                                 <div className="wt-widgetcontent">
-                                  <div className="wt-particlehold">
-                                    <figure>
-                                      <img
-                                        src="/images/thumbnail/img-07.jpg"
-                                        alt=" description"
-                                      />
-                                    </figure>
-                                    <div className="wt-particlecontent">
-                                      <h3>
-                                        <a href="javascript.html">
-                                          Top PHP Excel Skills
-                                        </a>
-                                      </h3>
-                                      <span>
-                                        <i className="lnr lnr-calendar"></i> Jun
-                                        27, 2018
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="wt-particlehold">
-                                    <figure>
-                                      <img
-                                        src="/images/thumbnail/img-08.jpg"
-                                        alt=" description"
-                                      />
-                                    </figure>
-                                    <div className="wt-particlecontent">
-                                      <h3>
-                                        <a href="javascript.html">
-                                          Monster Developer Award
-                                        </a>
-                                      </h3>
-                                      <span>
-                                        <i className="lnr lnr-calendar"></i> Apr
-                                        27, 2018
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="wt-particlehold">
-                                    <figure>
-                                      <img
-                                        src="/images/thumbnail/img-09.jpg"
-                                        alt="description"
-                                      />
-                                    </figure>
-                                    <div className="wt-particlecontent">
-                                      <h3>
-                                        <a href="javascript.html">
-                                          Best Communication 2015
-                                        </a>
-                                      </h3>
-                                      <span>
-                                        <i className="lnr lnr-calendar"></i> May
-                                        27, 2018
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="wt-particlehold">
-                                    <figure>
-                                      <img
-                                        src="/images/thumbnail/img-10.jpg"
-                                        alt=" description"
-                                      />
-                                    </figure>
-                                    <div className="wt-particlecontent">
-                                      <h3>
-                                        <a href="javascript.html">
-                                          Best Logo Design Winner
-                                        </a>
-                                      </h3>
-                                      <span>
-                                        <i className="lnr lnr-calendar"></i> Aug
-                                        27, 2018
-                                      </span>
-                                    </div>
-                                  </div>
+                                  <UserAwardsList
+                                    awardsList={this.state.freelancer.awards}
+                                  />
                                 </div>
                               </div>
                               <div className="wt-proposalsr">

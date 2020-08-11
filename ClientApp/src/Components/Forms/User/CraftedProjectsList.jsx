@@ -39,7 +39,7 @@ class CraftedProjectList extends Component {
 
   renderCraftedProject(data) {
     return (
-      <div className="wt-project" key={data.iD}>
+      <div className="wt-project" key={data.id}>
         <figure>
           <img src={data.img} alt="description" />
         </figure>

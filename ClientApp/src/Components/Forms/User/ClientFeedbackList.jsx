@@ -8,11 +8,15 @@ import '../../../css/rating.css';
 class ClientFeedBackList extends Component {
   constructor(props) {
     super(props);
-    const oldList = this.props.feedbackList;
+    let oldList = [];
+    if (this.props.feedbackList !== undefined) {
+      oldList = this.props.feedbackList.userFeedbacks;
+    }
+    console.log(oldList);
     this.state = {
       loading: false,
       feedbacks: oldList,
-      iD: oldList === undefined ? undefined : oldList[0].freelancerId,
+      iD: oldList.length === 0 ? undefined : oldList[0].freelancerId,
       value: 1,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -84,6 +88,7 @@ class ClientFeedBackList extends Component {
   }
 
   renderFeedback(data) {
+    console.log(data);
     const qualificationContent = this.qualificationContent(
       data.feedback.contract.job.qualification,
     );
@@ -121,12 +126,10 @@ class ClientFeedBackList extends Component {
               <li>
                 <span>
                   <img
-                    src={
-                      data.feedback.contract.job.company.country.companyImgPng
-                    }
-                    alt={data.feedback.contract.job.company.country.companyName}
+                    src={data.feedback.contract.job.company.country.countryFlag}
+                    alt={data.feedback.contract.job.company.country.countryName}
                   />
-                  {data.feedback.contract.job.company.country.companyName}
+                  {data.feedback.contract.job.company.country.сountryName}
                 </span>
               </li>
               <li>{calendarContent}</li>
