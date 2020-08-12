@@ -45,7 +45,6 @@ export const GetFreelancer = async (
         freelancer.country.countryFlag !== null
           ? countryFlagsPath + freelancer.country.countryFlag
           : flagDefaultPath;
-      console.log(freelancer.craftedProjects);
       if (freelancer.craftedProjects !== undefined) {
         freelancer.craftedProjects.map(
           (project) =>
@@ -55,15 +54,13 @@ export const GetFreelancer = async (
                 : CraftedProjectDefaultPath),
         );
 
-        // let FeedbackList = await GetFeedbackList(
-        //   freelancerId,
-        //   pageNumber === undefined ? 0 : pageNumber,
-        //   amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
-        // );
+        let FeedbackList = await GetFeedbackList(
+          freelancerId,
+          amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
+          pageNumber === undefined ? 0 : pageNumber,
+        );
 
-        // freelancer.userFeedbacks = FeedbackList;
-        // console.log(freelancer);
-
+        freelancer.userFeedbacks = FeedbackList;
         return freelancer;
       }
     }

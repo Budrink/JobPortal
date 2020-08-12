@@ -165,7 +165,6 @@ class FreelancerList extends Component {
   //   this.populateData();
   // }
   renderTable(cats) {
-    console.log(cats);
     if (cats !== []) {
       return cats.freelancerList.freelancers.map((freelancer) => (
         <div className="form-group" key={freelancer.userId}>

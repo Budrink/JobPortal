@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
@@ -144,15 +145,20 @@ namespace JobPortal.Controllers
 						 Contract = new
 						 {
 							 Status = x.Contract.Status,
-							 BeginDate = x.Contract.BeginDate,
-							 EndDate = x.Contract.EndDate,
+							 BeginDate = x.Contract.BeginDate.ToString("MMM d, yyyy", CultureInfo.CreateSpecificCulture("en-US")),
+							 EndDate = x.Contract.EndDate.Value.ToString("MMM d, yyyy", CultureInfo.CreateSpecificCulture("en-US")),
 							 Job = new {
 								 Qualification = x.Contract.Job.CompetenceLevel,
 								 Title = x.Contract.Job.Title,
 								 Company = new {
-									 //CompanyImagePng = x.Contract.Job.Company.
+									 CompanyImgPng = x.Contract.Job.Company.companyImgPng,
 									 CompanyName = x.Contract.Job.Company.CompanyName,
 									 CompanyId = x.Contract.Job.Company.CompanyId,
+									 Country = new
+									 {
+										 CountryFlag = x.Contract.Job.Company.User.Country.CountryFlag,
+										 CountryName = x.Contract.Job.Company.User.Country.CountryName,
+									 }
 								 }
 							 }
 
@@ -182,6 +188,11 @@ namespace JobPortal.Controllers
 									//CompanyImagePng = x.Contract.Job.Company.
 									CompanyName = x.Contract.Job.Company.CompanyName,
 									CompanyId = x.Contract.Job.Company.CompanyId,
+									Country= new
+									{
+										CountryFlag=x.Contract.Job.Company.User.Country.CountryFlag,
+										CountryName= x.Contract.Job.Company.User.Country.CountryName,
+									}
 								}
 							}
 
@@ -204,16 +215,16 @@ namespace JobPortal.Controllers
 		
 	
 		[HttpPost, Route("craftedProjects ")]
-		public async Task<IActionResult> GetcradtedProjects([FromBody] queryFeedbackDTO query)
+		public async Task<IActionResult> GetcradtedProjects([FromBody] QueryFeedbackDto query)
 		{
 			try
 			{
-				var user = await _userManager.FindByIdAsync(query.freelancerId);
+				var user = await _userManager.FindByIdAsync(query.FreelancerId);
 				IEnumerable<CraftedProject> craftedProjectsList;
-				if (query.pageNumber > 0)
+				if (query.PageNumber > 0)
 				{
-					craftedProjectsList = user.Freelancer.CraftedProjects.ToList().Skip((query.pageNumber - 1) * query.amountItemsOnPage)
-					 .Take(query.amountItemsOnPage).ToList();
+					craftedProjectsList = user.Freelancer.CraftedProjects.ToList().Skip((query.PageNumber - 1) * query.AmountItemsOnPage)
+					 .Take(query.AmountItemsOnPage).ToList();
 				}
 				else
 				{

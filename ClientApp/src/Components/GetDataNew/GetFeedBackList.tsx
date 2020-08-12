@@ -1,8 +1,12 @@
 import { UserFeedback } from '../Data/Data';
 // import { wait } from './wait';
-import { flagDefaultPath, countryFlagsPath } from '../Data/GlobalValues';
+import {
+  flagDefaultPath,
+  countryFlagsPath,
+  companyPath,
+  companyDefaultImg,
+} from '../Data/GlobalValues';
 import { http } from '../Data/Http';
-import { request } from 'https';
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
@@ -13,17 +17,17 @@ export interface UserFeedbacks {
 
 export const GetFeedbackList = async (
   userId: string,
-  pageNumber: number,
   amountOfItemsOnPage: number,
+  pageNumber: number,
 ): Promise<any> => {
   let userFeedbacks: UserFeedbacks;
   userFeedbacks = { totalFeedbackAmount: 0, userFeedbacks: [] };
   const requestBody = {
-    freelancerId: userId,
-    pageNumber: pageNumber,
-    amountItemsOnPage: amountOfItemsOnPage,
+    AmountItemsOnPage: amountOfItemsOnPage,
+    FreelancerId: userId,
+    PageNumber: pageNumber,
   };
-  console.log(requestBody);
+  // console.log(requestBody);
   let response: HttpResponse<any>;
   try {
     response = await http({
@@ -32,7 +36,6 @@ export const GetFeedbackList = async (
       body: requestBody,
     });
 
-    console.log(response);
     if (response.parsedBody !== null) {
       userFeedbacks = response.parsedBody;
       userFeedbacks.userFeedbacks.map(
@@ -42,6 +45,13 @@ export const GetFeedbackList = async (
               ? countryFlagsPath +
                 feedback.contract.job.company.country.countryFlag
               : flagDefaultPath),
+      );
+      userFeedbacks.userFeedbacks.map(
+        (feedback) =>
+          (feedback.contract.job.company.companyImgPng =
+            feedback.contract.job.company.companyImgPng !== null
+              ? companyPath + feedback.contract.job.company.companyImgPng
+              : companyDefaultImg),
       );
     }
   } catch (e) {

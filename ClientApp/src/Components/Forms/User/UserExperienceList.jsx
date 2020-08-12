@@ -80,15 +80,13 @@ class UserExperienceList extends Component {
   }
 
   renderTable(experiences) {
-    // console.log(JSON.stringify(skills));
-    console.log(experiences);
     if (experiences !== undefined && experiences.length > 0) {
       return experiences.map((experience) => (
         <div className="form-group" key={experience.id}>
           {this.renderExperience({ experience })}
         </div>
       ));
-    } else return <div> No skill </div>;
+    } else return <div> No experience </div>;
   }
 
   render() {
@@ -96,7 +94,7 @@ class UserExperienceList extends Component {
       this.state.experienceList !== undefined ? (
         this.renderTable(this.state.experienceList)
       ) : (
-        <div> No skills </div>
+        <div> No experience </div>
       );
     let button =
       this.state.buttonVisible === true ? (
