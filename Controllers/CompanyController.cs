@@ -63,7 +63,10 @@ namespace JobPortal.Controllers
 		    try
 		    {
 				var companies = await _companyRepository.Get(x=> (request.Country.IsNullOrEmpty() || x.User.Country.CountryName == request.Country) && 
-				                                           (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString))).ToListAsync();
+				                                           (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString)))
+					.Skip((request.PageNumber-1)*request.AmountOfItemsOnPage)
+					.Take(request.AmountOfItemsOnPage)
+					.ToListAsync();
 				return Ok(companies.Select(x => new
 				{
 					CompanyId = x.CompanyId,
