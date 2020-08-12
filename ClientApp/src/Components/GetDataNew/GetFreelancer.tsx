@@ -9,9 +9,8 @@ import {
   flagDefaultPath,
   CraftedProjectPath,
   CraftedProjectDefaultPath,
-  ProjectDefaultImgPath,
-  amountOfFeedbackOnPage,
-  amountOfCraftedProjectsOnPage,
+  awardDefalutIconPath,
+  awardPath,
 } from '../Data/GlobalValues';
 
 export interface HttpResponse<RESB> extends Response {
@@ -53,16 +52,25 @@ export const GetFreelancer = async (
                 ? CraftedProjectPath + project.img
                 : CraftedProjectDefaultPath),
         );
-
-        let FeedbackList = await GetFeedbackList(
-          freelancerId,
-          amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
-          pageNumber === undefined ? 0 : pageNumber,
-        );
-
-        freelancer.userFeedbacks = FeedbackList;
-        return freelancer;
       }
+      if (freelancer.awards !== undefined) {
+        freelancer.awards.map(
+          (award) =>
+            (award.img =
+              award.img === null
+                ? awardPath + award.img
+                : awardDefalutIconPath),
+        );
+      }
+      console.log(freelancer.awards);
+      let FeedbackList = await GetFeedbackList(
+        freelancerId,
+        amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,
+        pageNumber === undefined ? 0 : pageNumber,
+      );
+
+      freelancer.userFeedbacks = FeedbackList;
+      return freelancer;
     }
   } catch (e) {
     console.log(e);
