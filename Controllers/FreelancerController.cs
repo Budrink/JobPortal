@@ -151,7 +151,7 @@ namespace JobPortal.Controllers
 								 Qualification = x.Contract.Job.CompetenceLevel,
 								 Title = x.Contract.Job.Title,
 								 Company = new {
-									 CompanyImgPng = x.Contract.Job.Company.companyImgPng,
+									 CompanyImgPng = x.Contract.Job.Company.CompanyImgPng,
 									 CompanyName = x.Contract.Job.Company.CompanyName,
 									 CompanyId = x.Contract.Job.Company.CompanyId,
 									 Country = new

@@ -13,9 +13,9 @@ namespace JobPortal.Models
 		public Guid CompanyId { get; set; }
 		public bool VerifiedCompany { get; set; }
 		public string CompanyName { get; set; }
-		public string companyImgJpg { get; set; }
-
-		 public string companyImgPng { get; set; }
+		public string CompanyImgJpg { get; set; }
+		public string Description { get; set; }
+		public string CompanyImgPng { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual CompanySize CompanySize { get; set; }
