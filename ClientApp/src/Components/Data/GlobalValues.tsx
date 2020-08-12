@@ -2,10 +2,12 @@
 export const countryFlagsPath = '/images/flag/';
 export const userPhotoPath = '/images/user/userlisting/';
 export const companyPath = '/images/company/';
+export const companyDefaultImg = '/images/company/img-07.jpg';
 export const categoryPath = '/images/categories/';
 export const globalCategoryPath = '/images/categories/';
-export const globalCategoryDefalutIconPath = '/images/categories/img-07.jpg';
-
+export const globalCategoryDefalutIconPath = '/images/categories/img-01.jpg';
+export const awardPath = '/images/categories/';
+export const awardDefalutIconPath = '/images/categories/img-10.png';
 export const categorySliderPath = '/images/categories/slider/';
 export const categorySliderDefalutIconPath =
   '/images/categories/slider/img-01.png';

@@ -108,10 +108,10 @@ export default class Register2 extends Component {
                               <a href="/Register2">02</a>
                             </li>
                             <li>
-                              <a>03</a>
+                              <a href="#">03</a>
                             </li>
                             <li>
-                              <a>04</a>
+                              <a href="#">04</a>
                             </li>
                           </ul>
                           <RegisterForm2 onRegister={this.onRegister} />

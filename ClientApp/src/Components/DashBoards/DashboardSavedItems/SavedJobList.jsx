@@ -101,7 +101,7 @@ class SavedJobList extends React.Component {
                 </span>
               </li>
               <li>
-                <a className="wt-clicksavefolder">
+                <a href="#" className="wt-clicksavefolder">
                   <i className="far fa-folder"></i>
                   Type: {project.type}
                 </a>

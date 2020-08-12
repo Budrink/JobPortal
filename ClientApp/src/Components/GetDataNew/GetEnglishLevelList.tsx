@@ -16,7 +16,6 @@ export const getEnglishLevelList = async (): Promise<EnglishLevel[]> => {
       method: 'Get',
     });
 
-    console.log(response);
     if (response.parsedBody !== null) {
       englishLevelList = response.parsedBody;
     }

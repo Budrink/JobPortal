@@ -102,12 +102,12 @@ export default class Register3 extends Component {
                         <div className="wt-joinforms">
                           <ul className="wt-joinsteps">
                             <li className="wt-done-next">
-                              <a>
+                              <a href="#">
                                 <i className="fa fa-check"></i>
                               </a>
                             </li>
                             <li className="wt-done-next">
-                              <a>
+                              <a href="#">
                                 <i className="fa fa-check"></i>
                               </a>
                             </li>
@@ -115,7 +115,7 @@ export default class Register3 extends Component {
                               <a href="/Register3">03</a>
                             </li>
                             <li>
-                              <a>04</a>
+                              <a href="#">04</a>
                             </li>
                           </ul>
                         </div>

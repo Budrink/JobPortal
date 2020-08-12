@@ -81,9 +81,10 @@ class UserAwardsList extends Component {
   }
 
   renderTable(awards) {
+    console.log(awards);
     if (awards !== undefined) {
       return awards.map((award) => (
-        <div className="wt-particlehold">
+        <div className="wt-particlehold" key={award.id}>
           <figure>
             <img src={award.img} alt=" description" />
           </figure>

@@ -13,11 +13,15 @@ namespace JobPortal.Models
 		public Guid CompanyId { get; set; }
 		public bool VerifiedCompany { get; set; }
 		public string CompanyName { get; set; }
+		public string companyImgJpg { get; set; }
+
+		 public string companyImgPng { get; set; }
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual CompanySize CompanySize { get; set; }
 		public virtual Department Department { get; set; }
 		public virtual User User { get; set; }
 		public virtual IEnumerable<Job> Jobs { get; set; }
+
 	}
 }

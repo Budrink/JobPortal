@@ -8,24 +8,25 @@ import '../../../css/rating.css';
 class ClientFeedBackList extends Component {
   constructor(props) {
     super(props);
-    let oldList = [];
-    if (this.props.feedbackList !== undefined) {
-      oldList = this.props.feedbackList.userFeedbacks;
-    }
-    console.log(oldList);
     this.state = {
       loading: false,
-      feedbacks: oldList,
-      iD: oldList.length === 0 ? undefined : oldList[0].freelancerId,
+      feedbacks:
+        this.props.feedbackList !== undefined ? this.props.feedbackList : [],
+      iD: '',
       value: 1,
     };
     this.handleChange = this.handleChange.bind(this);
     this.btnClick = this.btnClick.bind(this);
   }
-  //the initial list of feedbacks
-  feedBackList = this.props.feedbackList;
-  //total amount of feedbacks for recent freelancers
-  feedBackAmount = this.props.feedbacksAmount;
+
+  componentDidMount() {
+    this.setState({
+      iD:
+        this.state.feedbacks.length === 0
+          ? undefined
+          : this.state.feedbacks.userFeedbacks[0].freelancerId,
+    });
+  }
   // Fmount of feedbacks shown on page (== amountOfFeedbackOnPage but can be changed by button ShowMore )
   shownFeedBacksAmount = amountOfFeedbackOnPage;
 
@@ -88,7 +89,6 @@ class ClientFeedBackList extends Component {
   }
 
   renderFeedback(data) {
-    console.log(data);
     const qualificationContent = this.qualificationContent(
       data.feedback.contract.job.qualification,
     );
@@ -190,31 +190,33 @@ class ClientFeedBackList extends Component {
     );
     return pageSelect;
   }
-  handleChange(event) {
+  async handleChange(event) {
     //Return to initial state of amount of feedbacks on page
     this.shownFeedBacksAmount = amountOfFeedbackOnPage;
     const value = event.target.value;
+    let feedbacks;
     if (value !== '0') {
-      let feedbacks = GetFeedbackList(
+      feedbacks = await GetFeedbackList(
         this.state.iD,
         amountOfFeedbackOnPage,
         value,
       );
       this.setState({ feedbacks: feedbacks });
     } else {
-      let feedbacks = GetFeedbackList(
+      feedbacks = await GetFeedbackList(
         this.state.iD,
         this.props.feedbacksAmount,
         1,
       );
+
       this.setState({ feedbacks: feedbacks });
     }
   }
-  btnClick(event) {
+  async btnClick(event) {
     event.preventDefault();
     this.shownFeedBacksAmount =
       this.shownFeedBacksAmount + amountOfFeedbackOnPage;
-    let feedbacks = GetFeedbackList(
+    let feedbacks = await GetFeedbackList(
       this.state.iD,
       this.shownFeedBacksAmount,
       this.state.value,
@@ -227,10 +229,19 @@ class ClientFeedBackList extends Component {
       <p>
         <em>Loading...</em>
       </p>
-    ) : this.props.feedbackList !== undefined ? (
-      this.renderTable(this.state.feedbacks)
+    ) : this.state.feedbacks !== undefined ? (
+      this.renderTable(this.state.feedbacks.userFeedbacks)
     ) : null;
     let pagesSelect = this.createPagesOptions();
+
+    let buttonContent =
+      this.state.value * amountOfFeedbackOnPage >= this.shownFeedBacksAmount ? (
+        <div></div>
+      ) : (
+        <button className="wt-btn" onClick={this.btnClick}>
+          Load More
+        </button>
+      );
 
     return (
       <form className="wt-clientfeedback" ref={(el) => (this.instance = el)}>
@@ -245,16 +256,14 @@ class ClientFeedBackList extends Component {
         </div>
         {contents}
         <div className="wt-btnarea">
-          <button className="wt-btn" onClick={this.btnClick}>
+          {/* <button className="wt-btn" onClick={this.btnClick}>
             Load More
-          </button>
+          </button> */}
+          {buttonContent}
         </div>
       </form>
     );
   }
 }
-ClientFeedBackList = reduxForm({
-  form: 'ClientFeedBackList',
-})(ClientFeedBackList);
 
 export default ClientFeedBackList;

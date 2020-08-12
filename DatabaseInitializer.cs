@@ -244,9 +244,9 @@ new GlobalCategory
 				}
 			};
 
-		
-			//context.Set<CraftedProject>().AddRange(craftedProjects);
-			//context.SaveChanges();
+
+			context.Set<CraftedProject>().AddRange(craftedProjects);
+			context.SaveChanges();
 
 			var joinDate = DateTime.Now;
 
@@ -331,25 +331,25 @@ new GlobalCategory
 				new Award
 				{
 					Title = "Top PHP Excel Skills",
-					Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img ="img-07.jpg"
 	},
 				new Award
 				{
 					Title = " Monster Developer Award",
-						Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				},
 					new Award
 				{
 				Title = "Top PHP Excel Skills",
-						Date= Convert.ToDateTime("06-27-2018"),
+					Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				},
 						new Award
 				{
 				Title = "Top PHP Excel Skills",
-					Date= Convert.ToDateTime("06-27-2018"),
+				Date=DateTime.ParseExact("27/06/2018", "dd/MM/yyyy", null),
 					Img="img-07.jpg"
 				}
 			};
@@ -364,30 +364,32 @@ new GlobalCategory
 				{
 					Description = "SomeFreelancerDescription loremipsum ibaruri dfne eterbndkf s",
 					Address = "Some adress",
-					UserSkills = new []
+					UserSkills = new[]
 					{
 						new UserSkill
 						{
 							Percent = 80,
-							Skill = new Skill {Name = "PHP"}
+							Skill = new Skill { Name = "PHP" }
 						},
 						new UserSkill
 						{
 							Percent = 70,
-							Skill = new Skill {Name = "JavaScript"}
+							Skill = new Skill { Name = "JavaScript" }
 						},
 						new UserSkill
 						{
 							Percent = 50,
-							Skill = new Skill {Name = "HTML"}
+							Skill = new Skill { Name = "HTML" }
 						}
 					},
-					CraftedProjects= craftedProjects,
-
+					CraftedProjects = craftedProjects,
+					Awards= awards
+					
 				},
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
 				UserName = "ivan@somedomain.com",
+				
 			};
 
 			result = userManager.CreateAsync(freelancer1, "Wsxedc!2345").GetAwaiter().GetResult();
@@ -583,23 +585,7 @@ new GlobalCategory
 			context.Set<Contract>().AddRange(contracts);
 			context.SaveChanges();
 
-			var feedbacks = new[]
-				{
-				new Feedback {
-					Contract = contracts[0],
-					Freelancer = freelancer1.Freelancer,
-					Mark = 4,
-					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
-				},
-			new Feedback {
-					Contract = contracts[1],
-					Freelancer = freelancer1.Freelancer,
-					Mark = 5,
-					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
-				},
-			};
-			context.Set<Feedback>().AddRange(feedbacks);
-			context.SaveChanges();
+			
 
 
 			var userSkills = new[]
@@ -643,7 +629,26 @@ new GlobalCategory
 			};
 			context.Set<UserSkill>().AddRange(userSkills);
 			context.SaveChanges();
+			var feedbacks = new[]
+			{
+				new Feedback {
+					Contract = contracts[0],
+					Freelancer = freelancer1.Freelancer,
+					Mark = 4,
+					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
+				},
+			new Feedback {
+					Contract = contracts[1],
+					Freelancer = freelancer1.Freelancer,
+					Mark = 5,
+					Text="Consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliquaenim ad minim veniamac quis nostrud exercitation ullamco laboris."
+				},
+			};
 
+			//freelancer1.Freelancer.Feedbacks = feedbacks;
+			context.Set<Feedback>().AddRange(feedbacks);
+			context.Set<Freelancer>().Find(freelancer1.Freelancer.FreelancerId).Feedbacks = feedbacks;
+			context.SaveChanges();
 		}
 		}
 	

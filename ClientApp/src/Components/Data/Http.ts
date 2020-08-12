@@ -37,7 +37,7 @@ export const http = <REQB, RESB>(
     let response: HttpResponse<RESB>;
     fetch(request)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.status !== 200) {
           alert(res.status);
@@ -86,6 +86,5 @@ export const FetchData = <REQB, RESB>(
     console.log(11);
     console.log(response);
     return 1;
-    console.log(12);
   });
 };
