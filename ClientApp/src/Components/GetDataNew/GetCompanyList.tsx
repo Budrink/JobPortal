@@ -26,7 +26,7 @@ export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
 export const getCompanyList = async (
-  pageNumber: number,
+  pageNumber: string,
   amountOfItemsOnPage: number,
   countryFilter?: string[],
   stringFilter?: string,
@@ -38,12 +38,14 @@ export const getCompanyList = async (
     companies: [],
   };
   let requestBody = {
-    pageNumber: pageNumber,
+    pageNumber: parseInt(pageNumber),
     amountOfItemsOnPage: amountOfItemsOnPage,
-    // country: country,
-    // searchString: stringFilter,
+    countryFilter: countryFilter,
+    searchString: stringFilter,
+    numberOfEmployees: numberFilter,
+    jobTypeFilter: typeFilter,
   };
-  // console.log(requestBody);
+  console.log(requestBody);
   let response: HttpResponse<any>;
 
   try {

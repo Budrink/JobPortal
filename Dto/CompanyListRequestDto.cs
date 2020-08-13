@@ -8,7 +8,7 @@ namespace JobPortal.Dto
 		public int AmountOfItemsOnPage { get; set; }
 		public string[]CountryFilter { get; set; }
 		public string SearchString { get; set; }
-		public IEnumerable<string> NumberOfEmplyees { get; set; }
+		public IEnumerable<string> NumberOfEmployees { get; set; }
 		public string JobTypeFilter { get; set; }
 	}
 }

@@ -106,6 +106,7 @@ class UserListing extends PureComponent {
   }
   async handleFilterSubmit(event) {
     event.preventDefault();
+    console.log(this.locationFilter);
     this.setState({ loading: true }, () => {});
     let data = await getCompanyList(
       this.state.pageNumber,
@@ -127,26 +128,26 @@ class UserListing extends PureComponent {
     let target = event.target;
     const name = target.name;
     console.log('target ' + target.name);
-    this.setState({ pageNumber: name });
-    console.log(this.state.amountOfItemsOnPage);
+
     this.populateData(
-      this.state.pageNumber,
+      name,
       this.state.amountOfItemsOnPage,
       this.locationFilter,
       this.typeFilter,
       this.numberFilter,
       this.stringFilter,
     );
+    this.setState({ pageNumber: name });
   }
 
   handleNumberOfEmployeersChange(target) {
     const name = target.value;
-    console.log(target);
     this.numberFilter = createArrayForFilter(name, this.numberFilter);
   }
   handleLocationChange(target) {
     const name = target.name;
     this.locationFilter = createArrayForFilter(name, this.locationFilter);
+    console.log(this.locationFilter);
   }
 
   handleTypeChange(target) {
@@ -175,22 +176,13 @@ class UserListing extends PureComponent {
       numberFilter,
       typeFilter,
     );
-    console.log(data);
     this.setState({ companyList: data.companies }, () => {
       this.setState({ loading: false }, () => {});
       this.setState({ totalAmountOfCompanies: data.totalAmount });
-
-      console.log(this.state.totalAmount);
-      // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
     });
-    // }
   };
 
   componentDidMount() {
-    // loadScripts1(this.instance, false);
-
-    this.createFilterString();
-
     const searchParams = new URLSearchParams(this.props.location.search);
     let numberFilter_ = (searchParams.get('number') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');

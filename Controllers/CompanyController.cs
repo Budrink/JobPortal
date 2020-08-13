@@ -64,7 +64,7 @@ namespace JobPortal.Controllers
 		    {	var companies = await _companyRepository.Get(x=> (request.CountryFilter.IsNullOrEmpty() ||
 					 request.CountryFilter.Contains(x.User.Country.CountryName))&& 
 			 (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString))
-		&& (request.NumberOfEmplyees.IsNullOrEmpty() || request.NumberOfEmplyees.Contains(x.NumberOfEmployees.Text))).ToListAsync();
+		&& (request.NumberOfEmployees.IsNullOrEmpty() || request.NumberOfEmployees.Contains(x.NumberOfEmployees.Text))).ToListAsync();
 				var count = companies.Count;
 				var result = new
 				{
