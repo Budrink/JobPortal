@@ -248,6 +248,34 @@ new GlobalCategory
 			context.Set<CraftedProject>().AddRange(craftedProjects);
 			context.SaveChanges();
 
+			var numbers = new NumberOfEmployees[] {
+			new NumberOfEmployees
+			{
+				Text="Less Than 02"
+			},
+			new NumberOfEmployees
+			{
+				Text="02 - 09 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="10 - 99 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="100 - 499 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="500 - 999 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="More Than 1000 Employees"
+			}
+			};
+			context.Set<NumberOfEmployees>().AddRange(numbers);
+			context.SaveChanges();
 			var joinDate = DateTime.Now;
 
 			var user1 = new User

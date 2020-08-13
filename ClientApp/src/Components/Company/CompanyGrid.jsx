@@ -16,13 +16,13 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import { amountOfCompanyItemsInList } from '../Data/GlobalValues';
 import Header1 from '../Header/Header1';
-import NumberOfEmployersForm from '../Forms/NumberOfEmployersForm';
+import NumberOfEmployeesForm from '../Forms/NumberOfEmployeesForm';
 import CountryForm from '../Forms/CountryForm';
 import JobTypeForm from '../Forms/JobTypeForm';
 import loadScripts1 from '../Functions/LoadScripts';
 import Companies from './Companies';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { getCompanyList } from '../GetData/GetCompanyList';
+import { getCompanyList } from '../GetDataNew/GetCompanyList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
@@ -302,7 +302,7 @@ class UserListing extends PureComponent {
                                 <h2>No. Of Emplyee</h2>
                               </div>
                               <div className="wt-widgetcontent">
-                                <NumberOfEmployersForm
+                                <NumberOfEmployeesForm
                                   handleNumberChange={
                                     this.handleNumberOfEmployeersChange
                                   }

@@ -129,7 +129,8 @@ export interface Project {
 export interface Award {
   iD: string;
   title: string;
-  date: string;
+  date: Date;
+  dateString: string;
   img?: string;
   files?: File[];
 }

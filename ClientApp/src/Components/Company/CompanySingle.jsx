@@ -23,7 +23,7 @@ import FollowersForm from './FollowersForm';
 import loadScripts from '../Functions/LoadScripts';
 import ComplainForm from '../Forms/ComplainForm';
 import { amountOfProjectItemsInList } from '../Data/GlobalValues';
-import GetCompany from '../GetData/GetCompany';
+import GetCompany from '../GetDataNew/GetCompany';
 import { GetProjectList } from '../GetDataNew/GetProjectList';
 import Paging from '../Forms/Paging';
 import FavouriteButton from '../Forms/FavouriteButton';
