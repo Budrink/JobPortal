@@ -308,7 +308,7 @@ class JobListing extends Component {
     // loadScripts1(this.instance, false);
 
     this.createFilterString();
-
+    console.log(this.props.match.params);
     if (this.props.match.params.length !== 0) {
       // console.log(this.props.match.params);
       this.stringFilter = this.props.match.params.stringForSearching;
@@ -329,7 +329,7 @@ class JobListing extends Component {
     } else {
       this.setState({ pageNumber: pageNumber[0] });
     }
-
+    console.log(companyFilter_);
     this.categoryFilter =
       categoryFilter_.indexOf('') === 0
         ? categoryFilter_.shift()

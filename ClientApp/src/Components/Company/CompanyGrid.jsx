@@ -189,7 +189,6 @@ class UserListing extends PureComponent {
     });
   };
   ApplyFilters(searchParams) {
-    console.log(searchParams);
     let numberFilter_ = (searchParams.get('number') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
     let typeFilter_ = (searchParams.get('type') || '').split(',');

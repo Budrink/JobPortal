@@ -31,7 +31,7 @@ export const getCompanyList = async (
   countryFilter?: string[],
   stringFilter?: string,
   numberFilter?: string[],
-  // typeFilter?: string[],
+  typeFilter?: string[],
 ): Promise<any> => {
   let companyList: CompanyProps = {
     totalAmountOfCompanies: 0,
@@ -46,7 +46,7 @@ export const getCompanyList = async (
         : countryFilter.length === 0
         ? []
         : countryFilter,
-    // searchString: stringFilter,
+    searchString: stringFilter,
     numberOfEmployees:
       numberFilter === undefined
         ? []
@@ -55,7 +55,7 @@ export const getCompanyList = async (
         : numberFilter,
     // jobTypeFilter: typeFilter,
   };
-  console.log(requestBody);
+
   let response: HttpResponse<any>;
 
   try {
