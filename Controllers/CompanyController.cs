@@ -35,7 +35,7 @@ namespace JobPortal.Controllers
 			    var user = await _userManager.FindByIdAsync(companyId);
 			    return Ok(new
 			    {
-				    CompanyId = user.Company.CompanyId,
+				    CompanyId = user.Id,
 				    CompanyName = user.Company.CompanyName,
 				    CompanyImgJpg = user.Company.CompanyImgJpg,
 				    CompanyImgPng = user.Company.CompanyImgPng,
@@ -90,7 +90,7 @@ namespace JobPortal.Controllers
 				    JobDetails = x.JobDetails,
 				    Company = new
 				    {
-					    CompanyId = x.Company.CompanyId,
+					    CompanyId = x.Company.UserId,
 					    CompanyName = x.Company.CompanyName,
 					    VerifiedCompany = x.Company.VerifiedCompany,
 					    Country = x.Country,
@@ -143,7 +143,7 @@ namespace JobPortal.Controllers
 					AmountOfItemsOnPage = request.AmountOfItemsOnPage,
 					companies = companies.Select(x => new
 						{
-							CompanyId = x.CompanyId,
+							CompanyId = x.UserId,
 							x.CompanyName,
 							x.CompanyImgJpg,
 							x.CompanyImgPng,
