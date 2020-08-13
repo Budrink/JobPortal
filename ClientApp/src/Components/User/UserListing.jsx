@@ -1,4 +1,4 @@
-import React, { PureComponent, componentWillReceiveProps } from 'react';
+import React, { PureComponent } from 'react';
 import '../../css/bootstrap.min.css';
 import '../../css/normalize.css';
 import '../../css/scrollbar.css';
@@ -81,8 +81,8 @@ class UserListing extends PureComponent {
       const searchParams = new URLSearchParams(nextProps.location.search);
       this.ApplyFilters(searchParams);
     }
-  } //Создаем массив строк, содержащих названия выбранных фильтров. Если в этой форме ничего не выбрано -
-  // добвыляем строку ANY
+  }
+
   createFilterString() {
     let filterString = [''];
     if (this.skillFilter === undefined) {
@@ -329,7 +329,7 @@ class UserListing extends PureComponent {
       ) {
         endNumber =
           this.state.freelancerList.freelancerList.totalAmountOfFreelancers >
-          this.state.pageNumber  * this.state.amountOfItemsOnPage
+          this.state.pageNumber * this.state.amountOfItemsOnPage
             ? ' - ' +
               this.state.freelancerList.freelancerList.totalAmountOfFreelancers
             : ' ';
@@ -337,25 +337,16 @@ class UserListing extends PureComponent {
         endNumber =
           ' - ' + this.state.pageNumber * this.state.amountOfItemsOnPage;
       }
-      // this.state.freelancerList.freelancerList.totalAmountOfFreelancers
-      // ? this.state.freelancerList.freelancerList.totalAmountOfFreelancers
-      // : this.state.pageNumber * this.state.amountOfItemsOnPage +
-
       resultContent =
         (this.state.pageNumber - 1) * this.state.amountOfItemsOnPage +
         1 +
-        // ' - ' +
         endNumber +
-        //this.state.freelancerList.freelancerList.totalAmountOfFreelancers;
-        // ? this.state.freelancerList.freelancerList.totalAmountOfFreelancers
-        // : this.state.pageNumber * this.state.amountOfItemsOnPage +
         ' of ' +
         this.state.freelancerList.freelancerList.totalAmountOfFreelancers +
         ' results';
     } else {
       resultContent = ' 0 results';
     }
-    console.log(this.state.freelancerList);
     return (
       <div>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -524,6 +515,7 @@ class UserListing extends PureComponent {
                             </div>
                             <div className="wt-filterholder">
                               <FilterTags
+                                Listing="UserListing"
                                 filterCategoryStrings={
                                   this.state.filterCategoryStrings
                                 }

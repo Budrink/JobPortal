@@ -104,9 +104,19 @@ class UserListing extends PureComponent {
     filterString.shift();
     this.setState({ filterCategoryStrings: filterString });
   }
+
+  componentWillReceiveProps(nextProps) {
+    // new URLSearchParams(this.props.location.search)
+    //   nextProps.match.params.skillFilter !==
+    //     this.props.match.params.skillFilter
+    // );
+    if (this.props.location.search !== nextProps.location.search) {
+      const searchParams = new URLSearchParams(nextProps.location.search);
+      this.ApplyFilters(searchParams);
+    }
+  }
   async handleFilterSubmit(event) {
     event.preventDefault();
-    console.log(this.locationFilter);
     this.setState({ loading: true }, () => {});
     let data = await getCompanyList(
       this.state.pageNumber,
@@ -118,16 +128,13 @@ class UserListing extends PureComponent {
     );
     this.setState({ companyList: data.companies }, () => {});
     this.setState({ loading: false }, () => {});
-    console.log(data);
     this.setState({ totalAmountOfCompanies: data.totalAmount });
     this.createFilterString();
-    console.log(this.state.totalAmountOfCompanies);
   }
 
   handlePageChange(event) {
     let target = event.target;
     const name = target.name;
-    console.log('target ' + target.name);
 
     this.populateData(
       name,
@@ -181,9 +188,8 @@ class UserListing extends PureComponent {
       this.setState({ totalAmountOfCompanies: data.totalAmount });
     });
   };
-
-  componentDidMount() {
-    const searchParams = new URLSearchParams(this.props.location.search);
+  ApplyFilters(searchParams) {
+    console.log(searchParams);
     let numberFilter_ = (searchParams.get('number') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
     let typeFilter_ = (searchParams.get('type') || '').split(',');
@@ -215,6 +221,11 @@ class UserListing extends PureComponent {
     loadScripts1(this.instance, false);
   }
 
+  componentDidMount() {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.ApplyFilters(searchParams);
+  }
+
   pagingCreate() {
     if (this.state.companyList !== undefined) {
       console.log(this.state.companyList);
@@ -233,8 +244,33 @@ class UserListing extends PureComponent {
   render() {
     let paging =
       this.state.loading !== true ? this.pagingCreate() : <div></div>;
+    let resultContent;
+    if (this.state.loading === false) {
+      let endNumber;
+      if (
+        this.state.pageNumber * this.state.amountOfItemsOnPage >
+        this.state.totalAmountOfCompanies
+      ) {
+        endNumber =
+          this.state.totalAmountOfCompanies >
+          this.state.pageNumber * this.state.amountOfItemsOnPage
+            ? ' - ' + this.state.totalAmountOfCompanies
+            : ' ';
+      } else {
+        endNumber =
+          ' - ' + this.state.pageNumber * this.state.amountOfItemsOnPage;
+      }
+      resultContent =
+        (this.state.pageNumber - 1) * this.state.amountOfItemsOnPage +
+        1 +
+        endNumber +
+        ' of ' +
+        this.state.totalAmountOfCompanies +
+        ' results';
+    } else {
+      resultContent = ' 0 results';
+    }
 
-    //   .totalAmountOfFreelancers))
     return (
       <div>
         {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
@@ -338,12 +374,13 @@ class UserListing extends PureComponent {
                           <div className="wt-userlistingholder wt-userlisting wt-haslayout">
                             <div className="wt-userlistingtitle">
                               <span>
-                                01 - 48 of 57143 results for
-                                <em>"Logo Design"</em>
+                                {resultContent}
+                                {/* <em>"Logo Design"</em> */}
                               </span>
                             </div>
                             <div className="wt-filterholder">
                               <FilterTags
+                                Listing="CompanyGrid"
                                 filterCategoryStrings={
                                   this.state.filterCategoryStrings
                                 }

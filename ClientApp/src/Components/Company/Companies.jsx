@@ -81,7 +81,7 @@ class Companies extends Component {
             </div>
             <ul className="wt-postarticlemeta">
               <li>
-                <Link to={`/JobListing?company=${data.company.companyId}`}>
+                <Link to={`/JobListing?company=${data.company.CompanyName}`}>
                   <span>Open Jobs</span>
                 </Link>
               </li>

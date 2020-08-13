@@ -371,7 +371,16 @@ class JobListing extends Component {
       statusFilter_,
     );
   }
-
+  componentWillReceiveProps(nextProps) {
+    // new URLSearchParams(this.props.location.search)
+    //   nextProps.match.params.skillFilter !==
+    //     this.props.match.params.skillFilter
+    // );
+    if (this.props.location.search !== nextProps.location.search) {
+      const searchParams = new URLSearchParams(nextProps.location.search);
+      this.ApplyFilters(searchParams);
+    }
+  }
   pagingCreate() {
     if (this.state.projectList.projectList !== undefined) {
       return (
@@ -577,6 +586,7 @@ class JobListing extends Component {
                             </div>
                             <div className="wt-filterholder">
                               <FilterTags
+                                Listing="JobListing"
                                 filterCategoryStrings={
                                   this.state.filterCategoryStrings
                                 }

@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+
 class FilterTags extends Component {
   constructor(props) {
     super(props);
@@ -62,10 +63,10 @@ class FilterTags extends Component {
       <div className="wt-filterholder">
         <ul className="wt-filtertag" key="wt-filtertag">
           <li className="wt-filtertagclear" key="0">
-            <a href="/Userlisting">
+            <Link to={`/${this.props.Listing}`}>
               <i className="fa fa-times" />
               <span>Clear All Filter</span>
-            </a>
+            </Link>
           </li>
           {contents}
         </ul>
