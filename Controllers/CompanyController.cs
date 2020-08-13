@@ -52,13 +52,33 @@ namespace JobPortal.Controllers
 		    }
 		    catch (Exception e)
 		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
+	    [HttpPost, Route("{companyId}/ongoingJobs")]
+	    public async Task<IActionResult> GetOngoingJobsList([FromRoute] string companyId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).Select(x=> new
+			    {
+					JobId = x.JobId,
+					Title = x.Title,
+					Duration = x.Duration
+			    }).ToList();
+			    return Ok(jobs);
+		    }
+		    catch (Exception e)
+		    {
 			    Console.WriteLine(e);
 			    throw;
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/ongoingJobs")]
-	    public async Task<IActionResult> GetOngoingJobList([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+	    [HttpPost, Route("{companyId}/ongoingJobsDetailed")]
+	    public async Task<IActionResult> GetOngoingJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
 		    {
@@ -101,10 +121,9 @@ namespace JobPortal.Controllers
 			}
 		    catch (Exception e)
 		    {
-			    Console.WriteLine(e);
-			    throw;
+				return BadRequest(e.Message);
 		    }
-	    }
+		}
 
 
 
