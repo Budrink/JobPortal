@@ -52,12 +52,82 @@ namespace JobPortal.Controllers
 		    }
 		    catch (Exception e)
 		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
+	    [HttpPost, Route("{companyId}/ongoingJobs")]
+	    public async Task<IActionResult> GetOngoingJobsList([FromRoute] string companyId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).Select(x=> new
+			    {
+					JobId = x.JobId,
+					Title = x.Title,
+					Duration = x.Duration
+			    }).ToList();
+			    return Ok(jobs);
+		    }
+		    catch (Exception e)
+		    {
 			    Console.WriteLine(e);
 			    throw;
 		    }
 	    }
 
-	    [HttpPost, Route("list")]
+	    [HttpPost, Route("{companyId}/ongoingJobsDetailed")]
+	    public async Task<IActionResult> GetOngoingJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).ToList();
+			    var count = jobs.Count;
+			    var result = jobs.Select(x => new
+			    {
+				    JobDetails = x.JobDetails,
+				    Company = new
+				    {
+					    CompanyId = x.Company.CompanyId,
+					    CompanyName = x.Company.CompanyName,
+					    VerifiedCompany = x.Company.VerifiedCompany,
+					    Country = x.Country,
+
+				    },
+				    Title = x.Title,
+				    JobStatus = x.JobStatus,
+				    Type = x.JobType,
+				    JobId = x.JobId,
+				    Duration = x.Duration.DurationText,
+				    Tax = x.Tax,
+				    qualification = x.CompetenceLevel,
+				    ProposalsCount = x.ProposalsCount,
+				    SkillsRequired = x.SkillsRequired.Select(s => new
+				    {
+					    Id = s.Id,
+					    Name = s.Name
+				    }).ToList(),
+				    Saved = false,
+				}).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
+			    return Ok(new
+			    {
+					TotalAmount = count,
+					pageNumber,
+					amountItemsOnPage,
+					Jobs = result
+			    });
+			}
+		    catch (Exception e)
+		    {
+				return BadRequest(e.Message);
+		    }
+		}
+
+
+
+		[HttpPost, Route("list")]
 	    public async Task<IActionResult> GetCompanyList([FromBody] CompanyListRequestDto request)
 	    {
 		    try
