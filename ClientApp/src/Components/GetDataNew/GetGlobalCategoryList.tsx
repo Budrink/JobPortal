@@ -41,7 +41,6 @@ export const GetGlobalCategoryList = async (
         ? globalCategoryPath + cat.globalCategoryImg
         : globalCategoryDefalutIconPath),
   );
-  console.log(categoryList);
   return categoryList;
 };
 

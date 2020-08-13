@@ -16,13 +16,13 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import { amountOfCompanyItemsInList } from '../Data/GlobalValues';
 import Header1 from '../Header/Header1';
-import NumberOfEmployersForm from '../Forms/NumberOfEmployersForm';
+import NumberOfEmployeesForm from '../Forms/NumberOfEmployeesForm';
 import CountryForm from '../Forms/CountryForm';
 import JobTypeForm from '../Forms/JobTypeForm';
 import loadScripts1 from '../Functions/LoadScripts';
 import Companies from './Companies';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { getCompanyList } from '../GetData/GetCompanyList';
+import { getCompanyList } from '../GetDataNew/GetCompanyList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
@@ -42,7 +42,7 @@ class UserListing extends PureComponent {
       //   filter: [],
       loading: true,
       companyList: [],
-      totalAmountOfCompanies: 1,
+      totalAmountOfCompanies: 0,
       amountOfItemsOnPage: amountOfCompanyItemsInList,
       pageNumber: 1,
       filterCategoryStrings: [],
@@ -106,44 +106,48 @@ class UserListing extends PureComponent {
   }
   async handleFilterSubmit(event) {
     event.preventDefault();
+    console.log(this.locationFilter);
     this.setState({ loading: true }, () => {});
     let data = await getCompanyList(
       this.state.pageNumber,
       this.state.amountOfItemsOnPage,
       this.locationFilter,
-      this.typeFilter,
-      this.numberFilter,
       this.stringFilter,
+      this.numberFilter,
+      this.typeFilter,
     );
     this.setState({ companyList: data.companies }, () => {});
     this.setState({ loading: false }, () => {});
-    this.setState({ totalAmountOfCompanies: data.totalAmountOfCompanies });
+    console.log(data);
+    this.setState({ totalAmountOfCompanies: data.totalAmount });
     this.createFilterString();
+    console.log(this.state.totalAmountOfCompanies);
   }
 
   handlePageChange(event) {
     let target = event.target;
     const name = target.name;
     console.log('target ' + target.name);
-    this.setState({ pageNumber: name });
+
     this.populateData(
-      this.pageNumber,
-      this.amountOfItemsOnPage,
+      name,
+      this.state.amountOfItemsOnPage,
       this.locationFilter,
       this.typeFilter,
       this.numberFilter,
       this.stringFilter,
     );
+    this.setState({ pageNumber: name });
   }
 
   handleNumberOfEmployeersChange(target) {
     const name = target.value;
-    console.log(target);
     this.numberFilter = createArrayForFilter(name, this.numberFilter);
   }
   handleLocationChange(target) {
     const name = target.name;
     this.locationFilter = createArrayForFilter(name, this.locationFilter);
+    console.log(this.locationFilter);
   }
 
   handleTypeChange(target) {
@@ -168,26 +172,17 @@ class UserListing extends PureComponent {
       pageNumber,
       amountOfItemsOnPage,
       locationFilter,
-      typeFilter,
-      numberFilter,
       stringFilter,
+      numberFilter,
+      typeFilter,
     );
-
     this.setState({ companyList: data.companies }, () => {
       this.setState({ loading: false }, () => {});
-      this.setState({ totalAmountOfCompanies: data.totalAmountOfCompanies });
-      loadScripts1(this.instance, false);
-
-      // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
+      this.setState({ totalAmountOfCompanies: data.totalAmount });
     });
-    // }
   };
 
   componentDidMount() {
-    // loadScripts1(this.instance, false);
-
-    this.createFilterString();
-
     const searchParams = new URLSearchParams(this.props.location.search);
     let numberFilter_ = (searchParams.get('number') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
@@ -217,10 +212,12 @@ class UserListing extends PureComponent {
       typeFilter_,
       numberFilter_,
     );
+    loadScripts1(this.instance, false);
   }
 
   pagingCreate() {
     if (this.state.companyList !== undefined) {
+      console.log(this.state.companyList);
       return (
         <Paging
           linkName="CompanyGrid"
@@ -234,7 +231,8 @@ class UserListing extends PureComponent {
   }
 
   render() {
-    let paging = this.pagingCreate();
+    let paging =
+      this.state.loading !== true ? this.pagingCreate() : <div></div>;
 
     //   .totalAmountOfFreelancers))
     return (
@@ -302,7 +300,7 @@ class UserListing extends PureComponent {
                                 <h2>No. Of Emplyee</h2>
                               </div>
                               <div className="wt-widgetcontent">
-                                <NumberOfEmployersForm
+                                <NumberOfEmployeesForm
                                   handleNumberChange={
                                     this.handleNumberOfEmployeersChange
                                   }

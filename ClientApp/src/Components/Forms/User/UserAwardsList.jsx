@@ -4,25 +4,25 @@ import React, { Component } from 'react';
 
 //import { array } from 'prop-types';
 class UserAwardsList extends Component {
-  constructor(props) {
-    super(props);
-    // let oldList = [];
-    // let buttonVisible = true;
-    // if (this.props.educationList === undefined) {
-    //   oldList = [];
-    //   buttonVisible = false;
-    // } else if (this.props.educationList.length <= amountOfEducationsOnPage) {
-    //   oldList = this.props.educationList;
-    //   buttonVisible = false;
-    // } else {
-    //   oldList = this.props.educationList.slice(0, amountOfEducationsOnPage);
-    // }
-    // this.state = {
-    //   educationList: oldList,
-    //   pageNumber: 1,
-    //   buttonVisible: buttonVisible,
-    // };
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
+  // let oldList = [];
+  // let buttonVisible = true;
+  // if (this.props.educationList === undefined) {
+  //   oldList = [];
+  //   buttonVisible = false;
+  // } else if (this.props.educationList.length <= amountOfEducationsOnPage) {
+  //   oldList = this.props.educationList;
+  //   buttonVisible = false;
+  // } else {
+  //   oldList = this.props.educationList.slice(0, amountOfEducationsOnPage);
+  // }
+  // this.state = {
+  //   educationList: oldList,
+  //   pageNumber: 1,
+  //   buttonVisible: buttonVisible,
+  // };
 
   // skillList = this.props.skillList;
   // btnClick(event) {
@@ -49,36 +49,6 @@ class UserAwardsList extends Component {
 
   //   // loadScripts1(this.instance, false);
   // }
-  renderEducation(data) {
-    // console.log(JSON.stringify(data));
-
-    return (
-      <div className="wt-experiencelisting wt-bgcolor">
-        <div className="wt-title">
-          <h3>{data.education.title}</h3>
-        </div>
-        <div className="wt-experiencecontent">
-          <ul className="wt-userlisting-breadcrumb">
-            <li>
-              <span>
-                <i className="far fa-building"></i>
-                {data.education.companyName}
-              </span>
-            </li>
-            <li>
-              <span>
-                <i className="far fa-calendar"></i> {data.education.beginDate}(
-                ({data.education.endDate})
-              </span>
-            </li>
-          </ul>
-          <div className="wt-description">
-            <p>{data.education.description}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   renderTable(awards) {
     console.log(awards);
@@ -94,7 +64,7 @@ class UserAwardsList extends Component {
             </h3>
             <span>
               <i className="lnr lnr-calendar"></i>
-              {award.date}
+              {award.dateString}
             </span>
           </div>
         </div>

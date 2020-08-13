@@ -74,15 +74,17 @@ class Paging extends Component {
   }
   componentDidMount() {
     this.page = Number(this.props.pageNumber);
+    console.log(this.page);
+    console.log(this.props.totalAmountOfItems);
+    console.log(this.props.amountOfItemsOnPage);
     //Total amount of pages
     // console.log(this.props.totalAmountOfItems);
     // console.log(this.props.amountOfItemsOnPage);
     this.amountOfPages = Math.ceil(
       this.props.totalAmountOfItems / this.props.amountOfItemsOnPage,
     );
-    // console.log(this.amountOfPages);
+    console.log(this.amountOfPages);
     this.initConst();
-    // this.setState({loading:false});
   }
 
   handlePageChange(event) {

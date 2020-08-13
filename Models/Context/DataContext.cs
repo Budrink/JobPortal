@@ -47,6 +47,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<Duration>();
 			builder.Entity<EnglishLevel>();
 			builder.Entity<GlobalCategory>();
+			builder.Entity<NumberOfEmployees>();
 		}
 	}
 }

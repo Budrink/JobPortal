@@ -1,7 +1,7 @@
 import { FreelancerData } from '../Data/Data';
 import { http } from '../Data/Http';
 import { GetFeedbackList } from './GetFeedBackList';
-import { GetCraftedProjectList } from './GetCraftedProjectList';
+// import dateformat from 'dateformat';
 import {
   userPhotoPath,
   userDefaultIconPath,
@@ -61,8 +61,15 @@ export const GetFreelancer = async (
                 ? awardPath + award.img
                 : awardDefalutIconPath),
         );
+        // );
+        var dateFormat = require('dateformat');
+        freelancer.awards.map(
+          (award) =>
+            //  (award.dateString = dateFormat(award.date, 'mmmm dS - d, yyyy ')),
+            (award.dateString = dateFormat(award.date, 'mmmm d, yyyy ')),
+        );
       }
-      console.log(freelancer.awards);
+
       let FeedbackList = await GetFeedbackList(
         freelancerId,
         amountofFeedBaacksOnPage === undefined ? 0 : amountofFeedBaacksOnPage,

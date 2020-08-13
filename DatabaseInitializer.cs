@@ -248,6 +248,34 @@ new GlobalCategory
 			context.Set<CraftedProject>().AddRange(craftedProjects);
 			context.SaveChanges();
 
+			var numbers = new NumberOfEmployees[] {
+			new NumberOfEmployees
+			{
+				Text="Less Than 02"
+			},
+			new NumberOfEmployees
+			{
+				Text="02 - 09 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="10 - 99 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="100 - 499 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="500 - 999 Employees"
+			},
+			new NumberOfEmployees
+			{
+				Text="More Than 1000 Employees"
+			}
+			};
+			context.Set<NumberOfEmployees>().AddRange(numbers);
+			context.SaveChanges();
 			var joinDate = DateTime.Now;
 
 			var user1 = new User
@@ -263,6 +291,7 @@ new GlobalCategory
 				{
 					CompanyName = "Ember Planner & Organizer",
 					CompanySize = CompanySize.Large,
+					NumberOfEmployees= numbers.Where(x=>x.Text== "500 - 999 Employees").First(),
 					VerifiedCompany = true,
 					Department = new Department
 					{
@@ -288,6 +317,7 @@ new GlobalCategory
 					VerifiedCompany = true,
 					CompanyName = "Firy Birds & Company",
 					CompanySize = CompanySize.Large,
+					NumberOfEmployees = numbers.Where(x => x.Text == "10 - 99 Employees").First(),
 					Department = new Department
 					{
 						Name = "Management"
@@ -312,6 +342,7 @@ new GlobalCategory
 				{
 					CompanyName = "VAV Creative Studio",
 					CompanySize = CompanySize.Medium,
+					NumberOfEmployees = numbers.Where(x => x.Text == "500 - 999 Employees").First(),
 					VerifiedCompany = true,
 					Department = new Department
 					{

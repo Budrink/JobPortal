@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 
 namespace JobPortal.Models
 {
@@ -19,6 +18,7 @@ namespace JobPortal.Models
 		[ForeignKey("User")]
 		public Guid UserId { get; set; }
 		public virtual CompanySize CompanySize { get; set; }
+		public virtual NumberOfEmployees NumberOfEmployees { get; set; }
 		public virtual Department Department { get; set; }
 		public virtual User User { get; set; }
 		public virtual IEnumerable<Job> Jobs { get; set; }

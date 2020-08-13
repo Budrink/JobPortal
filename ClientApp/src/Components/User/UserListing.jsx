@@ -320,8 +320,42 @@ class UserListing extends PureComponent {
 
   render() {
     let paging = this.pagingCreate();
+    let resultContent;
+    if (this.state.loading === false) {
+      let endNumber;
+      if (
+        this.state.pageNumber * this.state.amountOfItemsOnPage >
+        this.state.freelancerList.freelancerList.totalAmountOfFreelancers
+      ) {
+        endNumber =
+          this.state.freelancerList.freelancerList.totalAmountOfFreelancers >
+          this.state.pageNumber  * this.state.amountOfItemsOnPage
+            ? ' - ' +
+              this.state.freelancerList.freelancerList.totalAmountOfFreelancers
+            : ' ';
+      } else {
+        endNumber =
+          ' - ' + this.state.pageNumber * this.state.amountOfItemsOnPage;
+      }
+      // this.state.freelancerList.freelancerList.totalAmountOfFreelancers
+      // ? this.state.freelancerList.freelancerList.totalAmountOfFreelancers
+      // : this.state.pageNumber * this.state.amountOfItemsOnPage +
 
-    //   .totalAmountOfFreelancers))
+      resultContent =
+        (this.state.pageNumber - 1) * this.state.amountOfItemsOnPage +
+        1 +
+        // ' - ' +
+        endNumber +
+        //this.state.freelancerList.freelancerList.totalAmountOfFreelancers;
+        // ? this.state.freelancerList.freelancerList.totalAmountOfFreelancers
+        // : this.state.pageNumber * this.state.amountOfItemsOnPage +
+        ' of ' +
+        this.state.freelancerList.freelancerList.totalAmountOfFreelancers +
+        ' results';
+    } else {
+      resultContent = ' 0 results';
+    }
+    console.log(this.state.freelancerList);
     return (
       <div>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -484,8 +518,8 @@ class UserListing extends PureComponent {
                           <div className="wt-userlistingholder wt-userlisting wt-haslayout">
                             <div className="wt-userlistingtitle">
                               <span>
-                                01 - 48 of 57143 results for
-                                <em>"Logo Design"</em>
+                                {resultContent}
+                                {/* <em>"Logo Design"</em> */}
                               </span>
                             </div>
                             <div className="wt-filterholder">

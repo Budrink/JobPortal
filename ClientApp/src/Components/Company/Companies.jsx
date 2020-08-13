@@ -108,7 +108,6 @@ class Companies extends Component {
 
   renderTable(companyList) {
     // if (companyList !== []) {
-    console.log(companyList);
     let content = companyList.map((company) => this.renderCompany({ company }));
     return <div className="row">{content}</div>;
   } // else return <div> Loading </div>;

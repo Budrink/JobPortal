@@ -1,5 +1,5 @@
 import { CountryData } from '../Data/Data';
-import { wait } from './wait';
+import { wait } from '../GetData/wait';
 import { companyPath, countryFlagsPath } from '../Data/GlobalValues';
 
 interface company {

@@ -2,7 +2,8 @@
 export const countryFlagsPath = '/images/flag/';
 export const userPhotoPath = '/images/user/userlisting/';
 export const companyPath = '/images/company/';
-export const companyDefaultImg = '/images/company/img-07.jpg';
+export const companyDefaultImgJpg = '/images/company/img-01.jpg';
+export const companyDefaultImgPng = '/images/company/img-01.png';
 export const categoryPath = '/images/categories/';
 export const globalCategoryPath = '/images/categories/';
 export const globalCategoryDefalutIconPath = '/images/categories/img-01.jpg';

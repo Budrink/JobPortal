@@ -11,5 +11,6 @@ export const createArrayForFilter = function (item: string, arr: string[]) {
       arr.push(item);
     }
   }
+  console.log(arr);
   return arr;
 };
