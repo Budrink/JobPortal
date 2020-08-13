@@ -16,9 +16,9 @@ class JobTypeForm extends Component {
   jobTypeList = [
     { iD: 'JT1', typeName: 'All Types' },
     { iD: 'JT2', typeName: 'Featured Jobs' },
-    { iD: 'JT3', typeName: ' Open Jobs' },
+    { iD: 'JT3', typeName: 'Open Jobs' },
     { iD: 'JT4', typeName: 'Fixed Jobs' },
-    { iD: 'JT5', typeName: '5Hourly Jobs' },
+    { iD: 'JT5', typeName: 'Hourly Jobs' },
   ];
 
   handleChange(event) {

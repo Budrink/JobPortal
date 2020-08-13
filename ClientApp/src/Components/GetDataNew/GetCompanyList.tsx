@@ -1,5 +1,10 @@
 import { CountryData } from '../Data/Data';
-import { companyPath, countryFlagsPath } from '../Data/GlobalValues';
+import {
+  companyPath,
+  companyDefaultImgJpg,
+  companyDefaultImgPng,
+} from '../Data/GlobalValues';
+
 import { http } from '../Data/Http';
 interface company {
   companyId: string;
@@ -23,8 +28,10 @@ export interface HttpResponse<RESB> extends Response {
 export const getCompanyList = async (
   pageNumber: number,
   amountOfItemsOnPage: number,
-  country: string,
-  stringFilter: string,
+  countryFilter?: string[],
+  stringFilter?: string,
+  numberFilter?: string[],
+  typeFilter?: string[],
 ): Promise<any> => {
   let companyList: CompanyProps = {
     totalAmountOfCompanies: 0,
@@ -33,10 +40,10 @@ export const getCompanyList = async (
   let requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amountOfItemsOnPage,
-    country: country,
-    searchString: stringFilter,
+    // country: country,
+    // searchString: stringFilter,
   };
-  console.log(requestBody);
+  // console.log(requestBody);
   let response: HttpResponse<any>;
 
   try {
@@ -48,27 +55,26 @@ export const getCompanyList = async (
 
     if (response.parsedBody !== null) {
       companyList = response.parsedBody;
-      // freelancerList.freelancers.map(
-      //   (freelancer) =>
-      //     (freelancer.userPhoto =
-      //       freelancer.userPhoto !== null
-      //         ? userPhotoPath + freelancer.userPhoto
-      //         : userDefaultIconPath),
-      // );
-      // freelancerList.freelancers.map(
-      //   (freelancer) =>
-      //     (freelancer.country.countryFlag =
-      //       freelancer.country.countryFlag !== null
-      //         ? countryFlagsPath + freelancer.country.countryFlag
-      //         : flagDefaultPath),
-      // );
-      console.log(companyList);
+      companyList.companies.map(
+        (company) =>
+          (company.companyImgJpg =
+            company.companyImgJpg !== null
+              ? companyPath + company.companyImgJpg
+              : companyDefaultImgJpg),
+      );
+      companyList.companies.map(
+        (company) =>
+          (company.companyImgPng =
+            company.companyImgPng !== null
+              ? companyPath + company.companyImgPng
+              : companyDefaultImgPng),
+      );
     }
   } catch (e) {
     console.log(e);
   }
 
-  return { companyList }; //, freelancerList.totalAmountOfFreelancers};
+  return companyList; //, freelancerList.totalAmountOfFreelancers};
 };
 
 // let companyList: CompanyProps = {

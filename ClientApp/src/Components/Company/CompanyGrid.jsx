@@ -42,7 +42,7 @@ class UserListing extends PureComponent {
       //   filter: [],
       loading: true,
       companyList: [],
-      totalAmountOfCompanies: 1,
+      totalAmountOfCompanies: 0,
       amountOfItemsOnPage: amountOfCompanyItemsInList,
       pageNumber: 1,
       filterCategoryStrings: [],
@@ -111,14 +111,16 @@ class UserListing extends PureComponent {
       this.state.pageNumber,
       this.state.amountOfItemsOnPage,
       this.locationFilter,
-      this.typeFilter,
-      this.numberFilter,
       this.stringFilter,
+      this.numberFilter,
+      this.typeFilter,
     );
     this.setState({ companyList: data.companies }, () => {});
     this.setState({ loading: false }, () => {});
-    this.setState({ totalAmountOfCompanies: data.totalAmountOfCompanies });
+    console.log(data);
+    this.setState({ totalAmountOfCompanies: data.totalAmount });
     this.createFilterString();
+    console.log(this.state.totalAmountOfCompanies);
   }
 
   handlePageChange(event) {
@@ -126,9 +128,10 @@ class UserListing extends PureComponent {
     const name = target.name;
     console.log('target ' + target.name);
     this.setState({ pageNumber: name });
+    console.log(this.state.amountOfItemsOnPage);
     this.populateData(
-      this.pageNumber,
-      this.amountOfItemsOnPage,
+      this.state.pageNumber,
+      this.state.amountOfItemsOnPage,
       this.locationFilter,
       this.typeFilter,
       this.numberFilter,
@@ -168,16 +171,16 @@ class UserListing extends PureComponent {
       pageNumber,
       amountOfItemsOnPage,
       locationFilter,
-      typeFilter,
-      numberFilter,
       stringFilter,
+      numberFilter,
+      typeFilter,
     );
-
+    console.log(data);
     this.setState({ companyList: data.companies }, () => {
       this.setState({ loading: false }, () => {});
-      this.setState({ totalAmountOfCompanies: data.totalAmountOfCompanies });
-      loadScripts1(this.instance, false);
+      this.setState({ totalAmountOfCompanies: data.totalAmount });
 
+      console.log(this.state.totalAmount);
       // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
     });
     // }
@@ -217,10 +220,12 @@ class UserListing extends PureComponent {
       typeFilter_,
       numberFilter_,
     );
+    loadScripts1(this.instance, false);
   }
 
   pagingCreate() {
     if (this.state.companyList !== undefined) {
+      console.log(this.state.companyList);
       return (
         <Paging
           linkName="CompanyGrid"
@@ -234,7 +239,8 @@ class UserListing extends PureComponent {
   }
 
   render() {
-    let paging = this.pagingCreate();
+    let paging =
+      this.state.loading !== true ? this.pagingCreate() : <div></div>;
 
     //   .totalAmountOfFreelancers))
     return (

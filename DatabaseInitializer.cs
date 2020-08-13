@@ -291,6 +291,7 @@ new GlobalCategory
 				{
 					CompanyName = "Ember Planner & Organizer",
 					CompanySize = CompanySize.Large,
+					NumberOfEmployees= numbers.Where(x=>x.Text== "500 - 999 Employees").First(),
 					VerifiedCompany = true,
 					Department = new Department
 					{
@@ -316,6 +317,7 @@ new GlobalCategory
 					VerifiedCompany = true,
 					CompanyName = "Firy Birds & Company",
 					CompanySize = CompanySize.Large,
+					NumberOfEmployees = numbers.Where(x => x.Text == "10 - 99 Employees").First(),
 					Department = new Department
 					{
 						Name = "Management"
@@ -340,6 +342,7 @@ new GlobalCategory
 				{
 					CompanyName = "VAV Creative Studio",
 					CompanySize = CompanySize.Medium,
+					NumberOfEmployees = numbers.Where(x => x.Text == "500 - 999 Employees").First(),
 					VerifiedCompany = true,
 					Department = new Department
 					{

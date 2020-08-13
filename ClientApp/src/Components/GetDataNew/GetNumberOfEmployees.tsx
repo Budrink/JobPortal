@@ -17,7 +17,6 @@ export const GetNumberOfEmployees = async (): Promise<any[]> => {
 
     if (response.parsedBody !== null) {
       numberOfEmployeesList = response.parsedBody;
-      console.log(numberOfEmployeesList);
     }
   } catch (e) {
     console.log(e);

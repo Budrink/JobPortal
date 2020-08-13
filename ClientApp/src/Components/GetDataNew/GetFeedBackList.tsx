@@ -4,7 +4,7 @@ import {
   flagDefaultPath,
   countryFlagsPath,
   companyPath,
-  companyDefaultImg,
+  companyDefaultImgPng,
 } from '../Data/GlobalValues';
 import { http } from '../Data/Http';
 export interface HttpResponse<RESB> extends Response {
@@ -51,7 +51,7 @@ export const GetFeedbackList = async (
           (feedback.contract.job.company.companyImgPng =
             feedback.contract.job.company.companyImgPng !== null
               ? companyPath + feedback.contract.job.company.companyImgPng
-              : companyDefaultImg),
+              : companyDefaultImgPng),
       );
     }
   } catch (e) {

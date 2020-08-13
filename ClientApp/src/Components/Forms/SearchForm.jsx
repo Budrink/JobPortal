@@ -39,7 +39,7 @@ class SearchForm extends Component {
               type="text"
               value={this.state.SearchCategory}
               onChange={this.handleChange}
-              placeholder="Search Category"
+              placeholder="Search  string"
             />
             <button
               className="wt-searchgbtn"

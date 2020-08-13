@@ -61,15 +61,14 @@ namespace JobPortal.Controllers
 	    public async Task<IActionResult> GetCompanyList([FromBody] CompanyListRequestDto request)
 	    {
 		    try
-		    {
-				var companies = await _companyRepository.Get(x=> (request.Country.IsNullOrEmpty() || x.User.Country.CountryName == request.Country) && 
-				                                           (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString)))
-					
-					.ToListAsync();
+		    {	var companies = await _companyRepository.Get(x=> (request.CountryFilter.IsNullOrEmpty() ||
+					 request.CountryFilter.Contains(x.User.Country.CountryName))&& 
+			 (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString))
+		&& (request.NumberOfEmplyees.IsNullOrEmpty() || request.NumberOfEmplyees.Contains(x.NumberOfEmployees.Text))).ToListAsync();
 				var count = companies.Count;
 				var result = new
 				{
-					TotalAmoutn = count,
+					TotalAmount = count,
 					PageNumber = request.PageNumber,
 					AmountOfItemsOnPage = request.AmountOfItemsOnPage,
 					companies = companies.Select(x => new
@@ -84,7 +83,7 @@ namespace JobPortal.Controllers
 								CountryFlag = x.User.Country.CountryFlag,
 								CountryName = x.User.Country.CountryName
 							},
-							VerifiedCompany = true,
+							VerifiedCompany = x.VerifiedCompany,
 							Saved = false
 						}).Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage)
 						.Take(request.AmountOfItemsOnPage).ToList()
