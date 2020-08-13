@@ -57,7 +57,58 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("list")]
+	    [HttpPost, Route("{companyId}/ongoingJobs")]
+	    public async Task<IActionResult> GetOngoingJobList([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).ToList();
+			    var count = jobs.Count;
+			    var result = jobs.Select(x => new
+			    {
+				    JobDetails = x.JobDetails,
+				    Company = new
+				    {
+					    CompanyId = x.Company.CompanyId,
+					    CompanyName = x.Company.CompanyName,
+					    VerifiedCompany = x.Company.VerifiedCompany,
+					    Country = x.Country,
+
+				    },
+				    Title = x.Title,
+				    JobStatus = x.JobStatus,
+				    Type = x.JobType,
+				    JobId = x.JobId,
+				    Duration = x.Duration.DurationText,
+				    Tax = x.Tax,
+				    qualification = x.CompetenceLevel,
+				    ProposalsCount = x.ProposalsCount,
+				    SkillsRequired = x.SkillsRequired.Select(s => new
+				    {
+					    Id = s.Id,
+					    Name = s.Name
+				    }).ToList(),
+				    Saved = false,
+				}).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
+			    return Ok(new
+			    {
+					TotalAmount = count,
+					pageNumber,
+					amountItemsOnPage,
+					Jobs = result
+			    });
+			}
+		    catch (Exception e)
+		    {
+			    Console.WriteLine(e);
+			    throw;
+		    }
+	    }
+
+
+
+		[HttpPost, Route("list")]
 	    public async Task<IActionResult> GetCompanyList([FromBody] CompanyListRequestDto request)
 	    {
 		    try
