@@ -19,11 +19,13 @@ namespace JobPortal.Controllers
     {
 	    private readonly IGenericRepository<Company> _companyRepository;
 	    private readonly UserManager<User> _userManager;
+	    private readonly IGenericRepository<SavedItem> _savedRepository;
 
-	    public CompanyController(IGenericRepository<Company> companyRepository, UserManager<User> userManager)
+	    public CompanyController(IGenericRepository<Company> companyRepository, UserManager<User> userManager, IGenericRepository<SavedItem> savedRepository)
 	    {
 		    _companyRepository = companyRepository;
 		    _userManager = userManager;
+		    _savedRepository = savedRepository;
 	    }
 
 
@@ -35,7 +37,7 @@ namespace JobPortal.Controllers
 			    var user = await _userManager.FindByIdAsync(companyId);
 			    return Ok(new
 			    {
-				    CompanyId = user.Company.CompanyId,
+				    CompanyId = user.Id,
 				    CompanyName = user.Company.CompanyName,
 				    CompanyImgJpg = user.Company.CompanyImgJpg,
 				    CompanyImgPng = user.Company.CompanyImgPng,
@@ -90,7 +92,7 @@ namespace JobPortal.Controllers
 				    JobDetails = x.JobDetails,
 				    Company = new
 				    {
-					    CompanyId = x.Company.CompanyId,
+					    CompanyId = x.Company.UserId,
 					    CompanyName = x.Company.CompanyName,
 					    VerifiedCompany = x.Company.VerifiedCompany,
 					    Country = x.Country,
@@ -125,6 +127,28 @@ namespace JobPortal.Controllers
 		    }
 		}
 
+	    [HttpPost, Route("{companyId}/followers")]
+	    public async Task<IActionResult> GetFollowers([FromRoute] string companyId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var followers = await _savedRepository.Get(x =>
+				    x.SavedItemType == SavedItemType.Company && x.SavedItemId == user.Id).Select(x=> x.User).ToListAsync();
+			    return Ok(followers.Select(x => new
+			    {
+				    Id = x.Id,
+				    UserName = x.NormalizedUserName,
+					UserPhoto = x.UserPhoto?.FileLink
+			    }));
+
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
 
 
 		[HttpPost, Route("list")]
@@ -143,7 +167,7 @@ namespace JobPortal.Controllers
 					AmountOfItemsOnPage = request.AmountOfItemsOnPage,
 					companies = companies.Select(x => new
 						{
-							CompanyId = x.CompanyId,
+							CompanyId = x.UserId,
 							x.CompanyName,
 							x.CompanyImgJpg,
 							x.CompanyImgPng,
