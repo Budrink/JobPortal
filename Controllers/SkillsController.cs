@@ -29,14 +29,19 @@ namespace JobPortal.Controllers
 	    }
 
 	    [HttpGet, Route("top")]
-		[ProducesResponseType(typeof(SkillResponseModel[]), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(SkillResponseModel), (int)HttpStatusCode.OK)]
 	    public async Task<IActionResult> GetTopList([FromQuery] int amountOfItems)
 	    {
 		    try
 		    {
 			    var skills = await _skillsRepository.DbSet().OrderByDescending(x => x.JobsWhereRequired.Count())
-				    .Take(amountOfItems).ToListAsync();
-			    return Ok(_mapper.Map<SkillResponseModel[]>(skills));
+				    .ToListAsync();
+				var result = new SkillResponseModel
+				{
+					Skills = _mapper.Map<SkillModel[]>(skills.Take(amountOfItems)),
+					TotalCount = skills.Count
+				};
+			    return Ok(result);
 		    }
 		    catch (Exception e)
 		    {
@@ -47,13 +52,13 @@ namespace JobPortal.Controllers
 
 		[HttpGet]
 		[Route("")]
-		[ProducesResponseType(typeof(SkillResponseModel[]), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(SkillModel[]), (int)HttpStatusCode.OK)]
 		public async Task<IActionResult> GetList()
 	    {
 		    try
 		    {
 			    var list = await _skillsRepository.Get();
-			    return Ok(_mapper.Map<SkillResponseModel[]>(list));
+			    return Ok(_mapper.Map<SkillModel[]>(list));
 		    }
 		    catch (Exception e)
 		    {
