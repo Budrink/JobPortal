@@ -19,7 +19,7 @@ namespace JobPortal.Models
 		public CompetenceLevel CompetenceLevel { get; set; }
 		public virtual Language Language { get; set; }
 		public virtual Country Country { get; set; }
-		public virtual IEnumerable<Skill> SkillsRequired { get; set; }
+		public virtual IEnumerable<JobSkill> SkillsRequired { get; set; }
 		public virtual IEnumerable<Attachment> Attachments { get; set; }
 		public virtual IEnumerable<Tag> Tags { get; set; }
 		public virtual Duration Duration { get; set; }

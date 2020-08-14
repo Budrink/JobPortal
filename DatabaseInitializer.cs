@@ -525,27 +525,39 @@ new GlobalCategory
 					Language = context.Set<Language>().Skip(3).First(),
 					Title = "SomeAnotherJobToDo",
 					Tax = decimal.FromOACurrency(15),
-				 SkillsRequired = new []
+					SkillsRequired = new []
 					{
-						new Skill
-						{
-							Name = ".NET"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = ".NET"
+							},
 						},
-						new Skill
-						{
-							Name = "Photoshop"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Photoshop"
+							},
 						},
-						new Skill
-						{
-							Name = "Design"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Design"
+							},
 						},
-						new Skill
-						{
-							Name = "Analysis"
-						}, new Skill
-						{
-							Name = "Another skill"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Analysis"
+							},
+						},
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Another skill"
+							},
 						}
+						
 					},
 					ProposalsCount = 3
 				},
@@ -564,25 +576,43 @@ new GlobalCategory
 					Tax = decimal.FromOACurrency(15),
 					SkillsRequired = new []
 					{
-						new Skill
-						{
-							Name = "PHP"
+						new JobSkill {
+							Skill	= new Skill
+							{
+								Name = "PHP"
+							},
 						},
-						new Skill
-						{
-							Name = "PHP Developer"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "PHP Developer"
+							},
 						},
-						new Skill
-						{
-							Name = "MySQL"
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "MySQL"
+							},
 						},
-						new Skill
-						{
-							Name = "Business"
-						}, new Skill
-						{
-							Name = "Collaboration"
-						}
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Business"
+							},
+						},
+						new JobSkill {
+							Skill = new Skill
+							{
+								Name = "Collaboration"
+							},
+						},
+						//new Skill
+						//{
+						//	Name = "Business"
+						//}, new Skill
+						//{
+						//	Name = "Collaboration"
+						//}
 					},
 					ProposalsCount = 3
 				}

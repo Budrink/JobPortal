@@ -56,27 +56,28 @@ namespace JobPortal.Controllers
 			try
 			{
 				var message = new Message
-			{
-	
-		SenderId = Guid.Parse(request.SenderId),
-		ReceiverId=Guid.Parse(request.ReceiverId),
-		Status= MessageStatus.New,
-		Date =DateTime.UtcNow,
-		Text = request.Text,
-		};
-     	 await _messageRepository.Create(message);
-        	var messageId = message.MessageId;
+				{
+		
+					SenderId = Guid.Parse(request.SenderId),
+					ReceiverId=Guid.Parse(request.ReceiverId),
+					Status= MessageStatus.New,
+					Date =DateTime.UtcNow,
+					Text = request.Text,
+				};
+				await _messageRepository.Create(message);
+		        var messageId = message.MessageId;
 				await _messageRepository.SaveChanges();
 				foreach (Attachment att in request.Attachments)
-			{
-				var messagAttachment = new MessageAttachment
 				{
-					MessageId = messageId,
-					AttachmentId = att.Id,
-				};
- 				await _messageAttachmentRepository.Create(messagAttachment);
+					var messagAttachment = new MessageAttachment
+					{
+						MessageId = messageId,
+						AttachmentId = att.Id,
+					};
+ 					await _messageAttachmentRepository.Create(messagAttachment);
 
-			}
+				}
+					
 				await _messageRepository.SaveChanges();
 				await _messageAttachmentRepository.SaveChanges();
 				return Ok(message);
@@ -85,7 +86,6 @@ namespace JobPortal.Controllers
 			{
 				return BadRequest(e.Message);
 			}
-
 
 		}
 	}

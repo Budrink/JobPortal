@@ -120,8 +120,8 @@ namespace JobPortal.Controllers
 					ProposalsCount = x.ProposalsCount,
 					SkillsRequired = x.SkillsRequired.Select(s => new
 					{
-						Id = s.Id,
-						Name = s.Name
+						Id = s.Skill.Id,
+						Name = s.Skill.Name
 					}).ToList(),
 					Saved = false,//savedJobsIds.Contains(x.JobId),
 				}).Skip((dto.PageNumber - 1) * dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
