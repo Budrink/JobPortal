@@ -130,6 +130,37 @@ namespace JobPortal.Controllers
 
 		}
 
+		[HttpPost, Route("saveditems")]
+		public async Task<IActionResult> GetSavedItems([FromBody] UserSavedItemRequestModel request)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(request.UserId);
+				var savedItems = user.SavedItems.Where(x=> x.SavedItemType == request.SavedItemType).ToList();
+				var totalCount = savedItems.Count;
+				var result = savedItems
+					.Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
+					.Select(x => new
+					{
+						SavedItemId = x.SavedItemId,
+						User = user,
+						SavedItemType = request.SavedItemType
+					});
+				return Ok(new
+				{
+					request.PageNumber,
+					request.AmountOfItemsOnPage,
+					totalCount,
+					SavedItems = result
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+
 		//[HttpPost]
 		//[Route("login")]
 		//public async IActionResult Login(string email, string password)
