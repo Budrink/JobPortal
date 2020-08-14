@@ -77,7 +77,7 @@ namespace JobPortal.Controllers
 				var jobsFiltered = _jobRepository.DbSet().Where(x =>
 					(dto.StringForSearching.IsNullOrEmpty() || x.Title.Contains(dto.StringForSearching)) &&
 					(dto.CompanyFilter.IsNullOrEmpty() ||
-					 dto.CompanyFilter.Contains(x.Company.CompanyId.ToString())) &&
+					 dto.CompanyFilter.Contains(x.Company.User.Id.ToString())) &&
 					//  (dto.CategoryFilter.IsNullOrEmpty() || dto.CategoryFilter.Select(i => Guid.Parse(i)).Contains(x.Category)) &&
 					(dto.LocationFilter.IsNullOrEmpty() ||
 					 dto.LocationFilter.Contains(x.Country.CountryName)) &&

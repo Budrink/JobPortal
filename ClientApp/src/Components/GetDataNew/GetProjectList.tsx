@@ -54,6 +54,7 @@ export const GetProjectList = async (
       }
     }
   }
+  // console.log(stringForSearching);
   requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
@@ -70,6 +71,7 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
+  console.log(requestBody);
   //console.log(statusFilter);
   try {
     response = await http({

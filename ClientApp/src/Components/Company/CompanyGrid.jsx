@@ -154,7 +154,7 @@ class UserListing extends PureComponent {
   handleLocationChange(target) {
     const name = target.name;
     this.locationFilter = createArrayForFilter(name, this.locationFilter);
-    console.log(this.locationFilter);
+    // console.log(this.locationFilter);
   }
 
   handleTypeChange(target) {
@@ -163,8 +163,10 @@ class UserListing extends PureComponent {
   }
 
   handleSearchStringChange(target) {
-    const name = target.name;
-    this.stringFilter = name;
+    console.log(target.value);
+    const value = target.value;
+    this.stringFilter = value;
+    console.log(this.stringFilter);
   }
   populateData = async (
     pageNumber,
@@ -312,9 +314,7 @@ class UserListing extends PureComponent {
 
                               <div className="wt-widgetcontent">
                                 <SearchForm
-                                  handleCategoryChange={
-                                    this.handleSearchStringChange
-                                  }
+                                  handleChange={this.handleSearchStringChange}
                                 />
                               </div>
                             </div>
