@@ -24,7 +24,7 @@ namespace JobPortal.Controllers
 		{
 			public int AmountOfCategories { get; set; }
 		}
-			[HttpPost]
+		[HttpPost]
 		[Route("")]
 		[ProducesResponseType(typeof(List<GlobalCategory>), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
