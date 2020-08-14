@@ -1,8 +1,7 @@
 import { JobData } from '../Data/Data';
 import { http } from '../Data/Http';
 import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
-import { type } from 'jquery';
-import { isNullOrUndefined } from 'util';
+
 export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }

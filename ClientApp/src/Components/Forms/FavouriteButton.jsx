@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SaveFreelancer, SaveJob, SaveCompany } from '../PostData/SaveItem';
+import { SaveFreelancer, SaveJob, SaveCompany } from '../PostDataNew/SaveItem';
 class FavouriteButton extends Component {
   constructor(props) {
     //: saved - noolean, type of Item - freelancer, company or job

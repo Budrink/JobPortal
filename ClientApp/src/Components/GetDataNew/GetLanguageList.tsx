@@ -4,8 +4,6 @@ export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
 export const GetLanguageList = async (): Promise<any[]> => {
-  // export const getlanguageList = (): languageData[] => {
-  //let languageList: Language[] = [];
   let languageList: any[] = [];
   let response: HttpResponse<any>;
   try {
@@ -14,7 +12,7 @@ export const GetLanguageList = async (): Promise<any[]> => {
       method: 'Get',
     });
 
-    // console.log(response.parsedBody);
+    console.log(localStorage.getItem('userId'));
 
     if (response.parsedBody !== null) {
       languageList = response.parsedBody;

@@ -64,13 +64,13 @@ namespace JobPortal.Controllers
 		    try
 		    {
 			    var user = await _userManager.FindByIdAsync(companyId);
-			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).Select(x=> new
+			    var projects = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).Select(x=> new
 			    {
 					JobId = x.JobId,
 					Title = x.Title,
 					Duration = x.Duration
 			    }).ToList();
-			    return Ok(jobs);
+			    return Ok(projects);
 		    }
 		    catch (Exception e)
 		    {
@@ -118,7 +118,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-
+		[HttpPost, Route("{companyId}/ongoingJobsListDetailed")]
 		private async Task<IActionResult> OngoingJobsListDetailed(string companyId, int pageNumber, int amountItemsOnPage, JobStatus status)
 	    {
 		    var user = await _userManager.FindByIdAsync(companyId);
@@ -154,7 +154,7 @@ namespace JobPortal.Controllers
 			    TotalAmount = count,
 			    pageNumber,
 			    amountItemsOnPage,
-			    Jobs = result
+				projects = result
 		    });
 	    }
 

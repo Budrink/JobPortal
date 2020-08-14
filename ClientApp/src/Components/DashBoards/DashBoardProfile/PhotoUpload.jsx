@@ -1,5 +1,5 @@
 import React from 'react';
-import { PostFiles } from '../../PostData/PostFiles';
+import { PostFiles } from '../../PostDataNew/PostFiles';
 import Modal from '../../Functions/Modal';
 export class PhotoUpload extends React.Component {
   constructor(props) {

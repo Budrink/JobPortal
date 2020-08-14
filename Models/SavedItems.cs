@@ -17,6 +17,8 @@ namespace JobPortal.Models
 	{
 		Job,
 		Company,
+		Freelancer,
 		Article
+
 	}
 }
