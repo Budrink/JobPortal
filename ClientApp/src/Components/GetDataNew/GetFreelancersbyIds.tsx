@@ -1,5 +1,5 @@
 import { FreelancerData } from '../Data/Data';
-import { wait } from './wait';
+import { wait } from '../GetData/wait';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 // import { GetFeedbackList } from '../GetDataNew/GetFeedBackList';
 // import { GetUserSkillList } from '../GetDataNew/GetUserSkillList';

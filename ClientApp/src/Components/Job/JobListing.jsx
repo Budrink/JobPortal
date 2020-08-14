@@ -64,6 +64,7 @@ class JobListing extends Component {
     this.handleLangChange = this.handleLangChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.ApplyFilters = this.ApplyFilters.bind(this);
   }
 
   categoryFilter;
@@ -304,16 +305,23 @@ class JobListing extends Component {
     // }
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.location.search !== nextProps.location.search) {
+      const searchParams = new URLSearchParams(nextProps.location.search);
+      this.ApplyFilters(searchParams);
+    }
+  }
   componentDidMount() {
-    // loadScripts1(this.instance, false);
-
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.ApplyFilters(searchParams);
+  }
+  ApplyFilters(searchParams) {
     this.createFilterString();
-    console.log(this.props.match.params);
     if (this.props.match.params.length !== 0) {
       // console.log(this.props.match.params);
       this.stringFilter = this.props.match.params.stringForSearching;
     } else this.stringFilter = '';
-    const searchParams = new URLSearchParams(this.props.location.search);
+
     let categoryFilter_ = (searchParams.get('category') || '').split(',');
     let locationFilter_ = (searchParams.get('location') || '').split(',');
     let projectTypeFilter_ = (searchParams.get('projectType') || '').split(',');
@@ -329,7 +337,7 @@ class JobListing extends Component {
     } else {
       this.setState({ pageNumber: pageNumber[0] });
     }
-    console.log(companyFilter_);
+
     this.categoryFilter =
       categoryFilter_.indexOf('') === 0
         ? categoryFilter_.shift()

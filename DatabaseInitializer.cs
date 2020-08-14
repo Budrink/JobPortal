@@ -47,9 +47,9 @@ namespace JobPortal
 				new GlobalCategory
 				{
 	  GlobalCategoryName ="Mobiles",
-      GlobalCategoryImg= "img-01.png",
-      Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
-    },
+	  GlobalCategoryImg= "img-01.png",
+	  Description="Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.|"
+	},
 new GlobalCategory
 				{
 	  GlobalCategoryName ="Digital Marketing",
@@ -213,12 +213,12 @@ new GlobalCategory
 				}
 			};
 
-		;
+			;
 			context.Set<FreelancerType>().AddRange(userTypes);
 			context.SaveChanges();
 
-				var craftedProjects  = new[]
-			{
+			var craftedProjects = new[]
+		{
 				new CraftedProject
 				{
 					Name = "themeforest",
@@ -291,7 +291,7 @@ new GlobalCategory
 				{
 					CompanyName = "Ember Planner & Organizer",
 					CompanySize = CompanySize.Large,
-					NumberOfEmployees= numbers.Where(x=>x.Text== "500 - 999 Employees").First(),
+					NumberOfEmployees = numbers.Where(x => x.Text == "500 - 999 Employees").First(),
 					VerifiedCompany = true,
 					Department = new Department
 					{
@@ -355,10 +355,10 @@ new GlobalCategory
 			result = userManager.CreateAsync(user3, "Wsxedc!2345").GetAwaiter().GetResult();
 			userManager.AddToRoleAsync(user3, "company").Wait();
 
-		
+
 			var awards = new[]
 		{
-				
+
 				new Award
 				{
 					Title = "Top PHP Excel Skills",
@@ -414,13 +414,13 @@ new GlobalCategory
 						}
 					},
 					CraftedProjects = craftedProjects,
-					Awards= awards
-					
+					Awards = awards
+
 				},
 				EmailConfirmed = true,
 				Email = "ivan@somedomain.com",
 				UserName = "ivan@somedomain.com",
-				
+
 			};
 
 			result = userManager.CreateAsync(freelancer1, "Wsxedc!2345").GetAwaiter().GetResult();
@@ -616,7 +616,7 @@ new GlobalCategory
 			context.Set<Contract>().AddRange(contracts);
 			context.SaveChanges();
 
-			
+
 
 
 			var userSkills = new[]
@@ -680,7 +680,7 @@ new GlobalCategory
 			context.Set<Feedback>().AddRange(feedbacks);
 			context.Set<Freelancer>().Find(freelancer1.Freelancer.FreelancerId).Feedbacks = feedbacks;
 
-			var follows = new []
+			var follows = new[]
 			{
 				new SavedItem
 				{
@@ -693,7 +693,8 @@ new GlobalCategory
 			context.Set<SavedItem>().AddRange(follows);
 
 			context.SaveChanges();
+
+
 		}
-		}
-	
+	}
 }

@@ -98,6 +98,7 @@ class JobSingle extends React.Component {
   }
 
   createSkills(job) {
+    console.log(job.skillsRequired);
     if (job.skillsRequired !== undefined) {
       return job.skillsRequired.map((skill) => (
         <Link to={`/JobListing?category=${skill.name}`} key={skill.id}>

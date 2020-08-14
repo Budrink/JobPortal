@@ -54,7 +54,6 @@ class CompanySingle extends React.Component {
   //We got the first time the first feedbacks
   populateData = async () => {
     const data = await GetCompany(this.iD);
-    console.log(data);
     const projectList = await GetProjectList(
       this.state.pageNumber,
       amountOfProjectItemsInList,
@@ -126,15 +125,12 @@ class CompanySingle extends React.Component {
   handlePageChange(event) {
     let target = event.target;
     const name = target.name;
-    console.log('target ' + target.name);
     this.setState({ pageNumber: name });
     this.populateData();
   }
 
   pagingCreate() {
     if (this.state.projectList !== undefined) {
-      // console.log(JSON.stringify(this.state.projectList.totalAmountOfProjects));
-      // console.log(this.state.projectList.totalAmountOfProjects);
       return (
         <Paging
           linkName="/CompanySingle"

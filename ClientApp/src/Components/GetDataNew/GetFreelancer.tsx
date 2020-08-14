@@ -23,7 +23,6 @@ export const GetFreelancer = async (
   amountofFeedBaacksOnPage?: number,
 ): Promise<any> => {
   let freelancer: FreelancerData;
-
   let response: HttpResponse<any>;
   try {
     response = await http({

@@ -49,7 +49,7 @@ class ProjectList extends Component {
   renderTagList(data) {
     if (data) {
       return data.map((skill) => (
-        <Link to={`/JobListing?category=$[{skill.name}]`} key={skill.id}>
+        <Link to={`/JobListing?category=${skill.name}`} key={skill.id}>
           {skill.name}
         </Link>
       ));

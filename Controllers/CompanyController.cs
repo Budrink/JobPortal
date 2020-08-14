@@ -139,8 +139,8 @@ namespace JobPortal.Controllers
 			    {
 				    Id = x.Id,
 				    UserName = x.NormalizedUserName,
-					UserPhoto = x.UserPhoto?.FileLink
-			    }));
+					UserPhoto = x.UserPhoto?.FileLink,
+				}));
 
 		    }
 		    catch (Exception e)

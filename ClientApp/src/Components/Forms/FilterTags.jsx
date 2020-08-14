@@ -35,7 +35,7 @@ class FilterTags extends Component {
   renderTag(data, i) {
     return (
       <li className="alert alert-dismissable fade in" key={'' + i + 1}>
-        <a href="/">
+        <a href="">
           <i
             className="fa fa-times close"
             data-dismiss="alert"

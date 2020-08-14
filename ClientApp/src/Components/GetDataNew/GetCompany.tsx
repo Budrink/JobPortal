@@ -1,7 +1,10 @@
 import { CountryData } from '../Data/Data';
 import { http } from '../Data/Http';
-import { companyPath, countryFlagsPath } from '../Data/GlobalValues';
-import { defaultMaxListeners } from 'stream';
+import {
+  companyPath,
+  companyDefaultImgJpg,
+  companyDefaultImgPng,
+} from '../Data/GlobalValues';
 
 interface company {
   companyId: string;
@@ -32,16 +35,16 @@ const GetCompany = async (companyId: string): Promise<any> => {
 
     if (response.parsedBody !== null) {
       company = response.parsedBody;
-      // freelancer.userPhoto =
-      //   freelancer.userPhoto !== null
-      //     ? userPhotoPath + freelancer.userPhoto
-      //     : userDefaultIconPath;
-      // freelancer.country.countryFlag =
-      //   freelancer.country.countryFlag !== null
-      //     ? countryFlagsPath + freelancer.country.countryFlag
-      //     : flagDefaultPath;
 
-      // }
+      company.companyImgJpg =
+        company.companyImgJpg !== null
+          ? companyPath + company.companyImgJpg
+          : companyDefaultImgJpg;
+
+      company.companyImgPng =
+        company.companyImgPng !== null
+          ? companyPath + company.companyImgPng
+          : companyDefaultImgPng;
 
       return company;
     }

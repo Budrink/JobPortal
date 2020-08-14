@@ -78,7 +78,7 @@ namespace JobPortal.Controllers
 					(dto.StringForSearching.IsNullOrEmpty() || x.Title.Contains(dto.StringForSearching)) &&
 					(dto.CompanyFilter.IsNullOrEmpty() ||
 					 dto.CompanyFilter.Contains(x.Company.User.Id.ToString())) &&
-					//  (dto.CategoryFilter.IsNullOrEmpty() || dto.CategoryFilter.Select(i => Guid.Parse(i)).Contains(x.Category)) &&
+				//  (dto.CategoryFilter.IsNullOrEmpty() || dto.CategoryFilter.Select(i => Guid.Parse(i)).Contains(x.Category)) &&
 					(dto.LocationFilter.IsNullOrEmpty() ||
 					 dto.LocationFilter.Contains(x.Country.CountryName)) &&
 					(dto.LangFilter.IsNullOrEmpty() ||

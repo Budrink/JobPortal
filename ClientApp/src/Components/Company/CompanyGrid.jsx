@@ -27,6 +27,7 @@ import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
 import SearchForm from '../Forms/SearchForm';
+import { strict } from 'assert';
 
 // import { RouteComponentProps } from 'react-router-dom';
 // import { getTopCategoryList } from '../GetData/GetTopCategoryList';
@@ -162,10 +163,9 @@ class UserListing extends PureComponent {
     this.typeFilter = createArrayForFilter(name, this.typeFilter);
   }
 
-  handleSearchStringChange(target) {
-    console.log(target.value);
-    const value = target.value;
-    this.stringFilter = value;
+  handleSearchStringChange(str) {
+    console.log(str);
+    this.stringFilter = str;
     console.log(this.stringFilter);
   }
   populateData = async (
@@ -314,7 +314,7 @@ class UserListing extends PureComponent {
 
                               <div className="wt-widgetcontent">
                                 <SearchForm
-                                  handleChange={this.handleSearchStringChange}
+                                  handleSubmit={this.handleSearchStringChange}
                                 />
                               </div>
                             </div>

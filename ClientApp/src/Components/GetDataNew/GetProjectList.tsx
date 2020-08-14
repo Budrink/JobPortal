@@ -71,7 +71,6 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
-  console.log(requestBody);
   //console.log(statusFilter);
   try {
     response = await http({
@@ -79,7 +78,7 @@ export const GetProjectList = async (
       method: 'Post',
       body: requestBody,
     });
-    console.log(response);
+
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
       // console.log(projectList);

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-// import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
-import { reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { GetFollowerList } from '../GetData/GetFollowerList';
+import { GetFollowerList } from '../GetDataNew/GetFollowerList';
 
 class FollowersForm extends Component {
   constructor(props) {
@@ -12,47 +10,13 @@ class FollowersForm extends Component {
     this.state = {
       followerList: [],
       loading: true,
-      // Searchfollower: '',
-      // CheckedCategories: [],
     };
-
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
-  // fullfollowerList = [];
-
-  // handleChange(event) {
-  //   //  console.log(event.target.value);
-  //   const target = event.target;
-  //   if (target.name === 'Searchfollower') {
-  //     this.setState({ Searchfollower: event.target.value });
-  //   } else {
-  //     // const value = target.checked;
-  //     // const name = target.name;
-  //     this.props.handlefollowerChange(target);
-  //     // this.setState({ [name]: value });
-  //     // console.log(JSON.stringify(this.state));
-  //     // this.props.onChangefollower({ [name]: value });
-  //   }
-  // }
-
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   // // if (this.state.Searchfollower !== '') {
-  //   let cats;
-  //   if (this.fullfollowerList !== []) {
-  //     cats = this.fullfollowerList.filter(
-  //       (cat) => cat.followerName.search(this.state.Searchfollower) !== -1,
-  //     );
-  //   } else cats = [];
-  //   this.setState({ followerList: cats });
-  //   // }
-  // }
 
   renderFollower(data) {
     return (
-      <li key={data.userId}>
-        <Link to={`/UserSingle/:${data.userId}`}>
+      <li key={data.id}>
+        <Link to={`/UserSingle/${data.id}`}>
           <span>
             <img src={data.userPhoto} alt={data.userName} />
           </span>
@@ -93,8 +57,5 @@ class FollowersForm extends Component {
     );
   }
 }
-FollowersForm = reduxForm({
-  form: 'FollowersForm',
-})(FollowersForm);
 
 export default FollowersForm;
