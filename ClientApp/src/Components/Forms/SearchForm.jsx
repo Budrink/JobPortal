@@ -14,11 +14,21 @@ class SearchForm extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log(event.target.value);
     this.props.handleSubmit(event.target);
+  }
+
+  handleChange(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    let value = e.target.value;
+    this.setState({ SearchString: this.setState.SearchString + value });
+    console.log(this.state.SearchString);
   }
 
   render() {
@@ -31,15 +41,22 @@ class SearchForm extends Component {
       >
         <fieldset>
           <div className="form-group">
-            <Field
-              name="SearchCategory"
-              id="Search_Category"
+            <field
+              name="SearchString"
               className="form-control"
               component="input"
               type="text"
-              value={this.state.SearchCategory}
+              value={this.state.SearchString}
               onChange={this.handleChange}
               placeholder="Search  string"
+            />
+            <field
+              name="searchString"
+              component="input"
+              className="form-control"
+              type="text"
+              placeholder="I’m looking for"
+              onChange={this.handleChange}
             />
             <button
               className="wt-searchgbtn"
@@ -54,9 +71,5 @@ class SearchForm extends Component {
     );
   }
 }
-
-SearchForm = reduxForm({
-  form: 'SearchForm',
-})(SearchForm);
 
 export default SearchForm;

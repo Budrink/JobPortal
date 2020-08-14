@@ -54,6 +54,7 @@ export const GetProjectList = async (
       }
     }
   }
+  // console.log(stringForSearching);
   requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
@@ -70,14 +71,15 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
-  console.log(statusFilter);
+  console.log(requestBody);
+  //console.log(statusFilter);
   try {
     response = await http({
       path: `Job/List`,
       method: 'Post',
       body: requestBody,
     });
-
+    console.log(response);
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
       // console.log(projectList);

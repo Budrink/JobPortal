@@ -86,7 +86,7 @@ class Companies extends Component {
                 </Link>
               </li>
               <li>
-                <Link to={`/CompanySingle/:${data.company.companyId}`}>
+                <Link to={`/CompanySingle/${data.company.companyId}`}>
                   <span>Full Profile</span>
                 </Link>
               </li>

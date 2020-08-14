@@ -22,9 +22,6 @@ export const GetFreelancer = async (
   pageNumber?: number,
   amountofFeedBaacksOnPage?: number,
 ): Promise<any> => {
-  // const feedBackList = (userId: string, amountofFeedBaacksOnPage: number) => {
-  //   return GetFeedbackList(userId, amountofFeedBaacksOnPage, 1);
-  // };
   let freelancer: FreelancerData;
 
   let response: HttpResponse<any>;

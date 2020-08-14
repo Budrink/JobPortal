@@ -40,12 +40,22 @@ export const getCompanyList = async (
   let requestBody = {
     pageNumber: parseInt(pageNumber),
     amountOfItemsOnPage: amountOfItemsOnPage,
-    countryFilter: countryFilter,
+    countryFilter:
+      countryFilter === undefined
+        ? []
+        : countryFilter.length === 0
+        ? []
+        : countryFilter,
     searchString: stringFilter,
-    numberOfEmployees: numberFilter,
-    jobTypeFilter: typeFilter,
+    numberOfEmployees:
+      numberFilter === undefined
+        ? []
+        : numberFilter.length === 0
+        ? []
+        : numberFilter,
+    // jobTypeFilter: typeFilter,
   };
-  console.log(requestBody);
+
   let response: HttpResponse<any>;
 
   try {

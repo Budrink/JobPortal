@@ -308,7 +308,7 @@ class JobListing extends Component {
     // loadScripts1(this.instance, false);
 
     this.createFilterString();
-
+    console.log(this.props.match.params);
     if (this.props.match.params.length !== 0) {
       // console.log(this.props.match.params);
       this.stringFilter = this.props.match.params.stringForSearching;
@@ -329,7 +329,7 @@ class JobListing extends Component {
     } else {
       this.setState({ pageNumber: pageNumber[0] });
     }
-
+    console.log(companyFilter_);
     this.categoryFilter =
       categoryFilter_.indexOf('') === 0
         ? categoryFilter_.shift()
@@ -371,7 +371,16 @@ class JobListing extends Component {
       statusFilter_,
     );
   }
-
+  componentWillReceiveProps(nextProps) {
+    // new URLSearchParams(this.props.location.search)
+    //   nextProps.match.params.skillFilter !==
+    //     this.props.match.params.skillFilter
+    // );
+    if (this.props.location.search !== nextProps.location.search) {
+      const searchParams = new URLSearchParams(nextProps.location.search);
+      this.ApplyFilters(searchParams);
+    }
+  }
   pagingCreate() {
     if (this.state.projectList.projectList !== undefined) {
       return (
@@ -577,6 +586,7 @@ class JobListing extends Component {
                             </div>
                             <div className="wt-filterholder">
                               <FilterTags
+                                Listing="JobListing"
                                 filterCategoryStrings={
                                   this.state.filterCategoryStrings
                                 }

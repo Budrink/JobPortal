@@ -53,22 +53,22 @@ class CompanySingle extends React.Component {
 
   //We got the first time the first feedbacks
   populateData = async () => {
-    const data = await GetCompany(this.iD, 1);
-    // this.setState({ feedbackList: data.userFeedbacks }, () => {});
-
-    // this.setState({ craftedProjectList: data.craftedProjects }, () => {});
-
+    const data = await GetCompany(this.iD);
+    console.log(data);
     const projectList = await GetProjectList(
       this.state.pageNumber,
       amountOfProjectItemsInList,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      this.iD,
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [this.iD],
+      '',
+      [''],
     );
+
     this.setState({ company: data }, () => {});
 
     this.setState({ projectList: projectList }, () => {});
