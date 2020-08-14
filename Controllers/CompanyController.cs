@@ -84,48 +84,79 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
-			    var user = await _userManager.FindByIdAsync(companyId);
-			    var jobs = user.Company.Jobs.Where(x => x.JobStatus == JobStatus.Open).ToList();
-			    var count = jobs.Count;
-			    var result = jobs.Select(x => new
-			    {
-				    JobDetails = x.JobDetails,
-				    Company = new
-				    {
-					    CompanyId = x.Company.UserId,
-					    CompanyName = x.Company.CompanyName,
-					    VerifiedCompany = x.Company.VerifiedCompany,
-					    Country = x.Country,
-
-				    },
-				    Title = x.Title,
-				    JobStatus = x.JobStatus,
-				    Type = x.JobType,
-				    JobId = x.JobId,
-				    Duration = x.Duration.DurationText,
-				    Tax = x.Tax,
-				    qualification = x.CompetenceLevel,
-				    ProposalsCount = x.ProposalsCount,
-				    SkillsRequired = x.SkillsRequired.Select(s => new
-				    {
-					    Id = s.Skill.Id,
-					    Name = s.Skill.Name
-				    }).ToList(),
-				    Saved = false,
-				}).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
-			    return Ok(new
-			    {
-					TotalAmount = count,
-					pageNumber,
-					amountItemsOnPage,
-					Jobs = result
-			    });
-			}
+			    return await OngoingJobsListDetailed(companyId, pageNumber, amountItemsOnPage, JobStatus.Open);
+		    }
 		    catch (Exception e)
 		    {
 				return BadRequest(e.Message);
 		    }
 		}
+
+	    [HttpPost, Route("{companyId}/completedJobsDetailed")]
+	    public async Task<IActionResult> GetComplitedJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+	    {
+		    try
+		    {
+			    return await OngoingJobsListDetailed(companyId, pageNumber, amountItemsOnPage, JobStatus.Closed);
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
+	    [HttpPost, Route("{companyId}/cancelledJobsDetailed")]
+	    public async Task<IActionResult> GetCancelledJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
+	    {
+		    try
+		    {
+			    return await OngoingJobsListDetailed(companyId, pageNumber, amountItemsOnPage, JobStatus.Cancelled);
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
+
+		private async Task<IActionResult> OngoingJobsListDetailed(string companyId, int pageNumber, int amountItemsOnPage, JobStatus status)
+	    {
+		    var user = await _userManager.FindByIdAsync(companyId);
+		    var jobs = user.Company.Jobs.Where(x => x.JobStatus == status).ToList();
+		    var count = jobs.Count;
+		    var result = jobs.Select(x => new
+		    {
+			    JobDetails = x.JobDetails,
+			    Company = new
+			    {
+				    CompanyId = x.Company.UserId,
+				    CompanyName = x.Company.CompanyName,
+				    VerifiedCompany = x.Company.VerifiedCompany,
+				    Country = x.Country,
+			    },
+			    Title = x.Title,
+			    JobStatus = x.JobStatus,
+			    Type = x.JobType,
+			    JobId = x.JobId,
+			    Duration = x.Duration.DurationText,
+			    Tax = x.Tax,
+			    qualification = x.CompetenceLevel,
+			    ProposalsCount = x.ProposalsCount,
+			    SkillsRequired = x.SkillsRequired.Select(s => new
+			    {
+				    Id = s.Skill.Id,
+				    Name = s.Skill.Name
+			    }).ToList(),
+			    Saved = false,
+		    }).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
+		    return Ok(new
+		    {
+			    TotalAmount = count,
+			    pageNumber,
+			    amountItemsOnPage,
+			    Jobs = result
+		    });
+	    }
 
 	    [HttpPost, Route("{companyId}/followers")]
 	    public async Task<IActionResult> GetFollowers([FromRoute] string companyId)
