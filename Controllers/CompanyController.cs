@@ -123,8 +123,10 @@ namespace JobPortal.Controllers
 	    {
 		    var user = await _userManager.FindByIdAsync(companyId);
 		    var jobs = user.Company.Jobs.Where(x => x.JobStatus == status).ToList();
-		    var count = jobs.Count;
-		    var result = jobs.Select(x => new
+		    var jobsCancelledCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Cancelled);
+		    var jobsFinishedCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Closed);
+		    var jobsOngoingCount = user.Company.Jobs.Count(x => x.JobStatus = JobStatus.Open);
+			var result = jobs.Select(x => new
 		    {
 			    JobDetails = x.JobDetails,
 			    Company = new
@@ -151,7 +153,9 @@ namespace JobPortal.Controllers
 		    }).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
 		    return Ok(new
 		    {
-			    TotalAmount = count,
+			    AmountOngoing = jobsOngoingCount,
+				AmountCancelled = jobsCancelledCount,
+				AmountCompleted = jobsFinishedCount,
 			    pageNumber,
 			    amountItemsOnPage,
 			    Jobs = result
