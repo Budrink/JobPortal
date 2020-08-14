@@ -679,6 +679,19 @@ new GlobalCategory
 			//freelancer1.Freelancer.Feedbacks = feedbacks;
 			context.Set<Feedback>().AddRange(feedbacks);
 			context.Set<Freelancer>().Find(freelancer1.Freelancer.FreelancerId).Feedbacks = feedbacks;
+
+			var follows = new []
+			{
+				new SavedItem
+				{
+					SavedItemType = SavedItemType.Company,
+					SavedItemId = user1.Company.UserId,
+					User = freelancer1
+				}
+			};
+
+			context.Set<SavedItem>().AddRange(follows);
+
 			context.SaveChanges();
 		}
 		}

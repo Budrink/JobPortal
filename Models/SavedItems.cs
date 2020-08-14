@@ -10,6 +10,7 @@ namespace JobPortal.Models
 		public Guid Id { get; set; }
 		public Guid SavedItemId { get; set; }
 		public SavedItemType SavedItemType { get; set; }
+		public virtual User User { get; set; }
 	}
 
 	public enum SavedItemType

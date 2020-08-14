@@ -19,11 +19,13 @@ namespace JobPortal.Controllers
     {
 	    private readonly IGenericRepository<Company> _companyRepository;
 	    private readonly UserManager<User> _userManager;
+	    private readonly IGenericRepository<SavedItem> _savedRepository;
 
-	    public CompanyController(IGenericRepository<Company> companyRepository, UserManager<User> userManager)
+	    public CompanyController(IGenericRepository<Company> companyRepository, UserManager<User> userManager, IGenericRepository<SavedItem> savedRepository)
 	    {
 		    _companyRepository = companyRepository;
 		    _userManager = userManager;
+		    _savedRepository = savedRepository;
 	    }
 
 
@@ -124,6 +126,28 @@ namespace JobPortal.Controllers
 				return BadRequest(e.Message);
 		    }
 		}
+
+	    [HttpPost, Route("{companyId}/followers")]
+	    public async Task<IActionResult> GetFollowers([FromRoute] string companyId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(companyId);
+			    var followers = await _savedRepository.Get(x =>
+				    x.SavedItemType == SavedItemType.Company && x.SavedItemId == user.Id).Select(x=> x.User).ToListAsync();
+			    return Ok(followers.Select(x => new
+			    {
+				    Id = x.Id,
+				    UserName = x.NormalizedUserName,
+					UserPhoto = x.UserPhoto?.FileLink
+			    }));
+
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
 
 
 
