@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace JobPortal.Dto
 {
 	public class SkillResponseModel
 	{
-		public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string Img { get; set; }
-		public string SliderImg { get; set; }
+		public int TotalCount { get; set; }
+		public SkillModel[] Skills { get; set; }
 	}
 }
