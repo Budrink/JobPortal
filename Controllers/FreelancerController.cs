@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Castle.Core.Internal;
 using JobPortal.Dto;
 using JobPortal.Models;
@@ -33,11 +34,12 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<Education> _educationRepository;
 		private readonly IGenericRepository<HourRate> _rateRepository;
 		private readonly IGenericRepository<Language> _languageRepository;
+		private readonly IMapper _mapper;
 	
 		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository, IGenericRepository<Award> awardRepository,
 			IGenericRepository<Project> projectRepository, IGenericRepository<UserSkill> userSkillRepository, IGenericRepository<UserLanguage> userLanguageRepository,
 			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository, IGenericRepository<HourRate> rateRepository,
-			IGenericRepository<Language> languageRepository)
+			IGenericRepository<Language> languageRepository, IMapper mapper)
 	    {
 		    _freelancerRepository = freelancerRepository;
 		    _proposalRepository = proposalRepository;
@@ -52,7 +54,8 @@ namespace JobPortal.Controllers
 			_educationRepository = educationRepository;
 			_rateRepository = rateRepository;
 			_languageRepository = languageRepository;
-				}
+			_mapper = mapper;
+	    }
 
 	    [HttpGet]
 	    [Route("proposalList")]
@@ -364,14 +367,39 @@ namespace JobPortal.Controllers
 			}
 	    }
 
+	    [HttpGet, Route("{userId}/accountsettings")]
+	    public async Task<IActionResult> GetAccountSettings([FromRoute] string userId)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByIdAsync(userId);
 
-		[HttpPost]
-		[Route("accountsettings")]
-		public async Task<IActionResult> AccountSettings([FromBody] AccountSettingsDto request)
+				if (user == null) return NotFound($"User not found with id {userId}")
+
+			    var accountSettings = _mapper.Map<AccountSettingsDto>(user.Freelancer);
+
+			    var result = new
+			    {
+				    UserId = user.Id,
+				    accountSettings
+			    };
+			    return Ok(result);
+
+		    }
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+	    }
+
+
+	    [HttpPost]
+		[Route("{userId}/accountsettings")]
+		public async Task<IActionResult> AccountSettings([FromRoute] string userId, [FromBody] AccountSettingsDto request)
 		{
 			try
 			{
-				var user = await _userManager.FindByIdAsync(request.UserId);
+				var user = await _userManager.FindByIdAsync(userId);
 				var freelancer = user.Freelancer;
 	
 				freelancer.PublicProfile = request.publicProfile;

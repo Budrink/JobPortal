@@ -4,7 +4,6 @@ namespace JobPortal.Dto
 {
 	public class AccountSettingsDto
 	{
-		public string UserId { get; set; }
 		public bool publicProfile { get; set; }
 		public bool SharePhoto { get; set; }
 		public bool ShowFeedback { get; set; }

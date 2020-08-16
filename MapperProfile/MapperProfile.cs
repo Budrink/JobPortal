@@ -9,6 +9,7 @@ namespace JobPortal.MapperProfile
 		public MapperProfile()
 		{
 			CreateMap<ContractHireFreelancerViewModel, Contract>().ReverseMap();
+			CreateMap<AccountSettingsDto, Freelancer>().ReverseMap();
 			CreateMap<Skill, SkillModel>();
 		}
 	}
