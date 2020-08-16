@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +19,16 @@ namespace JobPortal.Controllers
     {
 	    private readonly IGenericRepository<Message> _messageRepository;
 		private readonly IGenericRepository<MessageAttachment> _messageAttachmentRepository;
+		private readonly UserManager<User> _userManager;
+		private readonly IGenericRepository<User> _userRepository;
 
-		public MessagesController(IGenericRepository<Message> messageRepository, IGenericRepository<MessageAttachment> messageAttachmentRepository)
+		public MessagesController(IGenericRepository<Message> messageRepository, IGenericRepository<MessageAttachment> messageAttachmentRepository, UserManager<User> userManager, IGenericRepository<User> userRepository)
 	    {
 		    _messageRepository = messageRepository;
 			_messageAttachmentRepository = messageAttachmentRepository;
-
-		}
+			_userManager = userManager;
+			_userRepository = userRepository;
+	    }
 
 	    [HttpGet]
 	    [Route("{userId}")]
@@ -41,7 +46,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	public class MessageDTO
+		public class MessageDTO
 		{
 	    	public string SenderId { get; set; }
 			public string ReceiverId { get; set; }
@@ -87,6 +92,39 @@ namespace JobPortal.Controllers
 				return BadRequest(e.Message);
 			}
 
+		}
+
+		[HttpGet,Route("correspondentsList/{userId}")]
+		public async Task<IActionResult> GetCorrespondentsList([FromRoute] string userId)
+		{
+			try
+			{
+				var user = await _userManager.FindByIdAsync(userId);
+				if (user == null) return NotFound($"user not found with id {userId}");
+
+				var correspondentsIdList = _messageRepository.Get(x => x.SenderId == user.Id).Select(x=> x.ReceiverId)
+					.ToList();
+				correspondentsIdList.AddRange(_messageRepository.Get(x=> x.ReceiverId == user.Id).Select(x=> x.SenderId).ToList());
+
+				var users = await _userRepository.Get(x => correspondentsIdList.Contains(x.Id)).ToListAsync();
+
+				var result = users.Select(x => new
+				{
+					UserId = x.Id,
+					UserPhoto = x.UserPhoto.FileLink,
+					x.FirstName,
+					x.LastName,
+					UserRates = x.Freelancer?.Rates,
+					FeedbacksCount = x.Freelancer?.Feedbacks.Count(),
+					Title = x.Freelancer?.Title,
+					NewMessages = false
+				});
+				return Ok(result);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
 		}
 	}
 }
