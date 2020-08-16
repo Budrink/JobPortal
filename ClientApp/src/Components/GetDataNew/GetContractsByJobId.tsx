@@ -1,19 +1,58 @@
-import { wait } from './wait';
+import { http } from '../Data/Http';
+import { CountryData, Attachment, Message } from '../Data/Data';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
-import { countryFlagsPath } from '../Data/GlobalValues';
+// import { countryFlagsPath } from '../Data/GlobalValues';
 
-//List of freelancers buy the list of their iDs
-// export const GetContractsByJobId = async (jobId: string[]) => {
-//   //Функция для получения списка с сервера
-//   //   await fetch('http://localhost:17525/api/user')
-//   //     .then((res) => res.json())
-//   //     .then((body) => {
-//   //       countryList = body;
-//   //     })
-//   //     .catch((err) => {
-//   //       console.error(err);
-//   //     });
-//   await wait(500);
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+interface Contract {
+  contractId: string;
+  type: string; // 'hourly', 'fixed';
+  status: string; // 'inProgress', 'finished', 'canceled'
+  beginDate?: string;
+  endDate?: string;
+  rate?: number;
+  attachments?: Attachment[];
+  coverLetter?: string;
+  terms: string; // 'beginner',
+  messages?: Message[];
+  userId: string;
+  userPhoto: string;
+  userName: string;
+  userRates: string;
+  plusMember: boolean;
+  feedbacksCount: number;
+  title: string;
+  hourRates: string;
+  country: CountryData;
+}
+export const GetContractsByJobId = async (jobId: string[]) => {
+  let contractList: Contract[];
+  contractList = [];
+  let response: HttpResponse<any>;
+
+  try {
+    response = await http({
+      path: `Job/${jobId}/contracts`,
+      method: 'Get',
+    });
+
+    if (response.parsedBody !== null) {
+      contractList = response.parsedBody;
+      // console.log(projectList);
+      contractList.map(
+        (contract) =>
+          (contract.userPhoto = contract.userPhoto
+            ? userPhotoPath + contract.userPhoto
+            : userDefaultIconPath),
+      );
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  return contractList;
+};
 
 //   let contractList = [
 //     {
