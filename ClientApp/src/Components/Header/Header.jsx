@@ -41,7 +41,6 @@ class Header extends Component {
     this.props.Logout();
   }
   componentDidMount() {
-    // loadScripts1(this.instance, false);
     ///check refreshToken!!!!
     if (localStorage.getItem('login') === 'true') {
       this.setState({ loginVisible: false });
@@ -56,6 +55,7 @@ class Header extends Component {
         this.setState({ typeOfUser: '' });
       }
     }
+    loadScripts1(this.instance, false);
   }
   createSideContext() {
     if (this.state.loginVisible) {

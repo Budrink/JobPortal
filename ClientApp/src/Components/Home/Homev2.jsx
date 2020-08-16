@@ -17,11 +17,10 @@ export default class Homev2 extends Component {
     if (localStorage.getItem('login') === 'true') {
       this.props.history.push('/home');
     }
-    loadScripts1(this.instance, false);
+    //    loadScripts1(this.instance, false);
   }
   LoginSuccessfull() {
     this.props.history.push('/home');
-    //    loadScripts1(this.instance, false);
   }
   Logout() {
     //    this.props.history.push('/');

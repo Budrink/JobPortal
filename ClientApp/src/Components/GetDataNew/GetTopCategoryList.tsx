@@ -1,27 +1,39 @@
 import { TopCategoryData } from '../Data/Data';
-import { wait } from './wait';
+import { http } from '../Data/Http';
 import {
   categorySliderPath,
   categorySliderDefalutIconPath,
+  amountOfTopcategories,
 } from '../Data/GlobalValues';
-// interface Props {
-//   cat0: TopCategoryData;
-//   cat1: TopCategoryData;
-//   cat2: TopCategoryData;
-//   cat3: TopCategoryData;
-//   cat4: TopCategoryData;
-//   cat5: TopCategoryData;
-// }
-// export const getTopCategoryList = async (): Promise<Props> => {
-export const getTopCategoryList = async (): Promise<TopCategoryData[]> => {
+
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+export const getTopCategoryList = async (): Promise<any> => {
   let categoryList: TopCategoryData[] = [];
 
-  categoryList.map(
-    (cat) =>
-      (cat.topCategory.sliderImg = cat.topCategory.sliderImg
-        ? categorySliderPath + cat.topCategory.sliderImg
-        : categorySliderDefalutIconPath),
-  );
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `Skills/top?amountOfItems=${amountOfTopcategories}`,
+      method: 'Get',
+    });
+
+    // console.log(response);
+    if (response.parsedBody !== null) {
+      categoryList = response.parsedBody;
+      categoryList.map(
+        (cat) =>
+          (cat.topCategory.sliderImg = cat.topCategory.sliderImg
+            ? categorySliderPath + cat.topCategory.sliderImg
+            : categorySliderDefalutIconPath),
+      );
+    }
+    // console.log(skillList);
+  } catch (e) {
+    console.log(e);
+  }
+
   return categoryList;
 };
 

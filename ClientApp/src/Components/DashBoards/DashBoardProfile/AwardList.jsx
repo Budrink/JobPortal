@@ -152,7 +152,7 @@ class AwardList extends Component {
     ) : null;
 
     return (
-      <li key={data.iD} className="wt-accordioninnertitle">
+      <li key={data.id} className="wt-accordioninnertitle">
         <div>
           <div
             className="wt-projecttitle collapsed"

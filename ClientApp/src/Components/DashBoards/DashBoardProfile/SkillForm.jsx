@@ -183,7 +183,7 @@ class SkillForm extends Component {
       );
     }
     return (
-      <li key={data.skill.skill.iD}>
+      <li key={data.skill.skill.id}>
         <div className="wt-dragdroptool">
           <button className="lnr lnr-menu" />
         </div>

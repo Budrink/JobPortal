@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-//import loadScripts1 from '../Functions/LoadScripts';
+import loadScripts1 from '../Functions/LoadScripts';
 class Footer extends Component {
   componentDidMount() {
-    //   loadScripts1(this.instance, false);
+    loadScripts1(this.instance, false);
   }
   render() {
     return (

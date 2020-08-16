@@ -17,7 +17,7 @@ export const loadTinyMCE = function (Element) {
 };
 
 export const loadScripts1 = function (Element) {
-  // console.log(Element);
+  console.log(Element);
   loadScript('/js/vendor/jquery-3.3.1.js', Element);
   loadScript('/js/vendor/jquery-library.js', Element);
   loadScript('/js/vendor/bootstrap.min.js', Element);
@@ -37,7 +37,7 @@ export const loadScripts1 = function (Element) {
 export default loadScripts1;
 
 export const loadScripts = function (Element) {
-  console.log('script');
+  console.log(Element);
   loadScript('/js/vendor/jquery-3.3.1.js', Element);
   loadScript('/js/vendor/jquery-library.js', Element);
   loadScript('/js/vendor/bootstrap.min.js', Element);

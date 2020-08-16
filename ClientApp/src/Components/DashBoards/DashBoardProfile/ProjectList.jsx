@@ -31,7 +31,7 @@ class ProjectList extends Component {
   ShowRedactor(data, event) {
     event.preventDefault();
     let project = this.state.projectRedactor.map((prt) =>
-      prt.project.iD !== data.project.iD
+      prt.project.id !== data.project.id
         ? prt
         : { project: prt.project, visible: !prt.visible },
     );
@@ -48,7 +48,7 @@ class ProjectList extends Component {
   DeleteItem(data, event) {
     event.preventDefault();
     let project = this.state.projectRedactor.filter(
-      (prt) => prt.project.iD !== data.project.iD,
+      (prt) => prt.project.id !== data.project.id,
     );
     this.setState({ projectRedactor: project });
     const projectList = this.state.projectRedactor.map((prt) => prt.project);
@@ -60,11 +60,11 @@ class ProjectList extends Component {
     const value = input.value;
     const name = input.name;
     let oldExp = this.state.projectRedactor.filter(
-      (prt) => prt.project.iD === data.project.iD,
+      (prt) => prt.project.id === data.project.id,
     )[0].project;
     oldExp[name] = value;
     const newproject = this.state.projectRedactor.map((prt) => {
-      if (prt.project.iD === data.project.iD) {
+      if (prt.project.d === data.project.id) {
         return {
           project: oldExp,
           visible: prt.visible,
@@ -94,15 +94,15 @@ class ProjectList extends Component {
     // loadScripts1(this.instance, false);
   }
   createEmptyItem() {
-    let iD;
+    let id;
     if (this.state.projectRedactor === undefined) {
-      iD = '1';
+      id = '1';
     } else {
-      iD = 'new' + this.state.projectRedactor.length;
+      id = 'new' + this.state.projectRedactor.length;
     }
     let NewPrt = {
       project: {
-        iD: iD,
+        id: id,
         title: '',
         description: '',
         companyName: '',
@@ -152,7 +152,7 @@ class ProjectList extends Component {
     ) : null;
 
     return (
-      <li key={data.iD} className="wt-accordioninnertitle">
+      <li key={data.id} className="wt-accordioninnertitle">
         <div>
           {/* <div className="wt-accordioninnertitle"> */}
           <div

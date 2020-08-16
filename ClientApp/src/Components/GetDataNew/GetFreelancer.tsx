@@ -58,6 +58,8 @@ export const GetFreelancer = async (
                 : awardDefalutIconPath),
         );
         // );
+        freelancer.gender =
+          freelancer.gender !== undefined ? freelancer.gender : 'male';
         var dateFormat = require('dateformat');
         freelancer.awards.map(
           (award) =>
