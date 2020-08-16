@@ -12,11 +12,11 @@ namespace JobPortal.Models
 		public Guid MessageId { get; set; }
 		public Guid SenderId { get; set; }
 		public Guid ReceiverId { get; set; }
+		public Guid ContractId { get; set; }
 		public MessageStatus Status { get; set; }
 		public DateTime Date { get; set; }
 		public string Text { get; set; }
 		public virtual IEnumerable<MessageAttachment> Attachments { get; set; }
-  
 	}
 
 	public enum MessageStatus

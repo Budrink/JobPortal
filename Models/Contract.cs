@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,8 @@ namespace JobPortal.Models
 		public DateTime  BeginDate { get; set; }
 		public DateTime? EndDate { get; set; }
 		public Decimal Tax { get; set; }
+		public virtual IEnumerable<Attachment> Attachments { get; set; }
+		public virtual IEnumerable<Message> Messages { get; set; }
 	
 
 	}

@@ -22,6 +22,7 @@ namespace JobPortal.Models
 		public virtual IEnumerable<JobSkill> SkillsRequired { get; set; }
 		public virtual IEnumerable<Attachment> Attachments { get; set; }
 		public virtual IEnumerable<Tag> Tags { get; set; }
+		public virtual IEnumerable<Contract> Contracts { get; set; }
 		public virtual Duration Duration { get; set; }
 		public int ProposalsCount { get; set; }
 		public virtual IEnumerable<User> HiredFreelancers { get; set; }
