@@ -142,6 +142,56 @@ namespace JobPortal.Controllers
 
 
 		[HttpGet]
+		[Route("{jobId}/contracts")]
+		public async Task<IActionResult> GetContractsByJobId([FromRoute] string jobId)
+		{
+			try
+			{
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job == null) return NotFound($"Job not found with id {jobId}");
+
+				var contracts = job.Contracts;
+				var result = contracts.Select(x => new
+				{
+					x.ContractId,
+					Type = x.Job.JobType,
+					x.BeginDate,
+					x.EndDate,
+					x.Status,
+					Rate = x.Tax,
+					CoverLetter = x.JobProposal.CoverLetter,
+					Attacments = x.Attachments.ToList(),
+					Messages = x.Messages.Select(m=> new
+					{
+						m.MessageId,
+						m.Text,
+						m.Status,
+						m.Date,
+						m.SenderId
+					}),
+					x.Freelancer.UserId,
+					PlusMember = false,
+					UserPhoto = x.Freelancer.User.UserPhoto.FileLink,
+					x.Freelancer.User.UserName,
+					x.Freelancer.Rates,
+					FeedbacksCount = x.Freelancer.Feedbacks.Count(),
+					x.Freelancer.Title,
+					Country = new
+					{
+						x.Freelancer.User.Country.CountryId,
+						x.Freelancer.User.Country.CountryFlag,
+						x.Freelancer.User.Country.CountryName
+					}
+				});
+				return Ok(result);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+		[HttpGet]
 		[Route("{jobId}")]
 		public async Task<IActionResult> GetJobById([FromRoute] string jobId)
 		{
