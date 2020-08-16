@@ -125,7 +125,7 @@ namespace JobPortal.Controllers
 		    var jobs = user.Company.Jobs.Where(x => x.JobStatus == status).ToList();
 		    var jobsCancelledCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Cancelled);
 		    var jobsFinishedCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Closed);
-		    var jobsOngoingCount = user.Company.Jobs.Count(x => x.JobStatus = JobStatus.Open);
+		    var jobsOngoingCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Open);
 			var result = jobs.Select(x => new
 		    {
 			    JobDetails = x.JobDetails,
