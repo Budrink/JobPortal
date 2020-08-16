@@ -1,7 +1,7 @@
 /** @jsx jsx */ import { jsx } from '@emotion/core';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getTopCategoryList } from '../../GetData/GetTopCategoryList';
+import { getTopCategoryList } from '../../GetDataNew/GetTopCategoryList';
 import { string } from 'prop-types';
 import '../../../css/owl.carousel.min.css';
 class CategorySlider extends Component {

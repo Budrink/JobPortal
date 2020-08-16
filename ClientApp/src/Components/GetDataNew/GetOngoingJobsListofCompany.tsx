@@ -1,5 +1,6 @@
 import { http } from '../Data/Http';
 import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
+import { JobData } from '../Data/Data';
 
 ///Переписать для БД
 
@@ -8,7 +9,11 @@ export interface HttpResponse<RESB> extends Response {
 }
 
 export const GetOngoingJobsListofCompany = async (companyId: string) => {
-  let projectList;
+  // let projects: JobData[];
+
+  let projectList: {
+    projects: JobData[];
+  };
   projectList = {
     projects: [],
   };

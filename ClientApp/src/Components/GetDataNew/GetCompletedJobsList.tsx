@@ -37,7 +37,7 @@ export const GetCompletedJobsList = async (
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
-      console.log(projectList);
+      // console.log(projectList);
       projectList.projects.map(
         (pr) =>
           (pr.company.country.countryFlag =

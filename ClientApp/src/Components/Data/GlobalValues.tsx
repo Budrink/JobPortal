@@ -1,4 +1,4 @@
-//иконки с флагами стран
+export const amountOfTopcategories = 5;
 export const countryFlagsPath = '/images/flag/';
 export const userPhotoPath = '/images/user/userlisting/';
 export const companyPath = '/images/company/';

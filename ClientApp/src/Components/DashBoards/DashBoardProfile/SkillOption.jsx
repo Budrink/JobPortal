@@ -23,7 +23,7 @@ class SkillOption extends Component {
   renderTable(skills) {
     if (skills !== []) {
       let table = skills.map((skill) => (
-        <option value={skill.iD} key={skill.iD}>
+        <option value={skill.id} key={skill.id}>
           {skill.name}
         </option>
       ));

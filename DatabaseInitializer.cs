@@ -391,6 +391,7 @@ new GlobalCategory
 				FirstName = "Ivan",
 				LastName = "Petrov",
 				JoinDate = joinDate,
+				Gender = "male",
 				Freelancer = new Freelancer
 				{
 					Description = "SomeFreelancerDescription loremipsum ibaruri dfne eterbndkf s",

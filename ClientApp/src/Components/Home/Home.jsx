@@ -25,20 +25,11 @@ class Home extends Component {
   }
 
   LoginSuccessfull() {
-    // this.forceUpdate();
     this.props.history.push('/');
-
-    //   loadScripts1(this.instance, false);
   }
 
   componentDidMount() {
-    // console.log('home');
-    // if (localStorage.getItem('login') !== 'true') {
-    //   console.log(true);
-    //   this.props.history.push('/');
-    // }
-    loadScripts1(this.instance, false);
-    // loadScripts1(document.body);
+    // loadScripts1(this.instance, false);
   }
   handleSubmit = (values) => {};
 
@@ -46,7 +37,7 @@ class Home extends Component {
     let content;
     if (this.state.reset === true) {
       content = (
-        <div className="wt-login" ref={(el) => (this.instance = el)}>
+        <div className="wt-login">
           <title>Home</title>
           <link rel="apple-touch-icon" href="apple-touch-icon.png" />
           <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
@@ -66,7 +57,7 @@ class Home extends Component {
     } else {
       content = null;
     }
-    return <div>{content}</div>;
+    return <div ref={(el) => (this.instance = el)}> {content} </div>;
   }
 }
 

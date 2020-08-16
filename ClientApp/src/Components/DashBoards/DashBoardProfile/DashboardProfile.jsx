@@ -49,7 +49,6 @@ class DashboardProfile extends React.Component {
     // this.handleProjectChange = this.handleProjectChange.bind(this);
   }
 
-  iD = this.props.match.params.userId;
   handleChange = (event) => {
     const input = event.target;
     const value = input.type === 'checkbox' ? input.checked : input.value;
@@ -104,8 +103,9 @@ class DashboardProfile extends React.Component {
     // this.setState({ showError: true });
   };
 
-  populateData = async (iD) => {
-    const data = await GetFreelancer(iD, 1, 0);
+  populateData = async (id) => {
+    console.log(id);
+    const data = await GetFreelancer(id, 1, 0);
     this.setState({ freelancer: data }, () => {});
     this.setState({ loading: false }, () => {});
     console.log(this.state.freelancer);
@@ -113,7 +113,8 @@ class DashboardProfile extends React.Component {
     // console.log(JSON.stringify(this.state.freelancer));
   };
   async componentDidMount() {
-    await this.populateData();
+    const id = this.props.match.params.userId;
+    await this.populateData(id);
 
     //   loadScripts1(this.instance, false);
   }
