@@ -102,11 +102,17 @@ namespace JobPortal.Controllers
 				var user = await _userManager.FindByIdAsync(userId);
 				if (user == null) return NotFound($"user not found with id {userId}");
 
-				var correspondentsIdList = _messageRepository.Get(x => x.SenderId == user.Id).Select(x=> x.ReceiverId)
-					.ToList();
-				correspondentsIdList.AddRange(_messageRepository.Get(x=> x.ReceiverId == user.Id).Select(x=> x.SenderId).ToList());
+				var sendMessagesList = _messageRepository.Get(x => x.SenderId == user.Id)
+					.GroupBy(x=> x.ReceiverId)
+					.ToDictionary(x => x.Key, x=> x.ToList());
+					
+				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).GroupBy(x => x.SenderId)
+					.ToDictionary(x => x.Key, x => x.ToList());
 
-				var users = await _userRepository.Get(x => correspondentsIdList.Contains(x.Id)).ToListAsync();
+
+
+
+				var users = await _userRepository.Get(x => sendMessagesList.Keys.Concat(receivedMessagesList.Keys).Contains(x.Id)).ToListAsync();
 
 				var result = users.Select(x => new
 				{
@@ -117,7 +123,7 @@ namespace JobPortal.Controllers
 					UserRates = x.Freelancer?.Rates,
 					FeedbacksCount = x.Freelancer?.Feedbacks.Count(),
 					Title = x.Freelancer?.Title,
-					NewMessages = false
+					NewMessages = receivedMessagesList.ContainsKey(x.Id) && receivedMessagesList[x.Id].Any(m=> m.Status == MessageStatus.New)
 				});
 				return Ok(result);
 			}
