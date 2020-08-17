@@ -35,6 +35,41 @@ namespace JobPortal.Controllers
 		}
 
 
+		[HttpGet, Route("job/{jobId}/detailed")]
+		public async Task<IActionResult> GetProposal([FromRoute] string jobId)
+		{
+			try
+			{
+				var proposals = await _proposalRepository.Get(x => x.Job.JobId.ToString() == jobId).ToListAsync();
+				var result = proposals.Select(x => new
+				{
+					Id = x.ProposalId,
+					JobId = x.Job.JobId,
+					Freelancer = new
+					{
+						x.Freelancer.UserId,
+						UserPhoto = x.Freelancer.User.UserPhoto.FileLink,
+						UserRates = x.Freelancer.Rates,
+						x.Freelancer.User.FirstName,
+						x.Freelancer.User.LastName,
+						FeedbacksCount = x.Freelancer.Feedbacks.Count(),
+						PlusMember = true
+					},
+					x.Terms,
+					x.CoverLetter,
+					x.ProposalDate,
+					x.ProposalStatus,
+					x.Attachments,
+				});
+				return Ok(result);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+
 		[HttpGet]
 		[Route("job/{jobId}")]
 		[ProducesResponseType(typeof(List<ProposalDto>), (int)HttpStatusCode.OK)]

@@ -58,7 +58,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/ongoingJobs")]
+	    [HttpGet, Route("{companyId}/ongoingJobs")]
 	    public async Task<IActionResult> GetOngoingJobsList([FromRoute] string companyId)
 	    {
 		    try
@@ -79,7 +79,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/ongoingJobsDetailed")]
+	    [HttpGet, Route("{companyId}/ongoingJobsDetailed")]
 	    public async Task<IActionResult> GetOngoingJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -92,7 +92,7 @@ namespace JobPortal.Controllers
 		    }
 		}
 
-	    [HttpPost, Route("{companyId}/completedJobsDetailed")]
+	    [HttpGet, Route("{companyId}/completedJobsDetailed")]
 	    public async Task<IActionResult> GetComplitedJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -105,7 +105,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/cancelledJobsDetailed")]
+	    [HttpGet, Route("{companyId}/cancelledJobsDetailed")]
 	    public async Task<IActionResult> GetCancelledJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -118,7 +118,6 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-		[HttpPost, Route("{companyId}/ongoingJobsListDetailed")]
 		private async Task<IActionResult> OngoingJobsListDetailed(string companyId, int pageNumber, int amountItemsOnPage, JobStatus status)
 	    {
 		    var user = await _userManager.FindByIdAsync(companyId);
