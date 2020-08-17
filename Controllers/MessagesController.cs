@@ -135,11 +135,11 @@ namespace JobPortal.Controllers
 				var user = await _userManager.FindByIdAsync(userId);
 				if (user == null) return NotFound($"user not found with id {userId}");
 
-				var sendMessagesList = _messageRepository.Get(x => x.SenderId == user.Id)
+				var sendMessagesList = _messageRepository.Get(x => x.SenderId == user.Id).ToList()
 					.GroupBy(x=> x.ReceiverId)
 					.ToDictionary(x => x.Key, x=> x.ToList());
 					
-				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).GroupBy(x => x.SenderId)
+				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).GroupBy(x => x.SenderId).ToList()
 					.ToDictionary(x => x.Key, x => x.ToList());
 
 
