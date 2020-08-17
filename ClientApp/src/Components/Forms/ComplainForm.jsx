@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { reduxForm } from 'redux-form';
-import { getComplainReasons } from '../GetData/GetComplainReasons';
+import { getComplainReasons } from '../GetDataNew/GetComplainReasons';
 
 class ComplainForm extends Component {
   constructor(props) {

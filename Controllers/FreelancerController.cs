@@ -374,7 +374,7 @@ namespace JobPortal.Controllers
 		    {
 			    var user = await _userManager.FindByIdAsync(userId);
 
-				if (user == null) return NotFound($"User not found with id {userId}")
+				if (user == null) return NotFound($"User not found with id {userId}");
 
 			    var accountSettings = _mapper.Map<AccountSettingsDto>(user.Freelancer);
 

@@ -13,28 +13,32 @@ export interface HttpResponse<RESB> extends Response {
   parsedBody?: RESB;
 }
 
-export const GetFreelancerAccountSettings = async (
-  userId: string,
-): Promise<FreelancerAccountSettings> => {
+export const GetFreelancerAccountSettings = async (): Promise<
+  FreelancerAccountSettings
+> => {
   let settings: FreelancerAccountSettings;
   settings = {
-    userId: userId,
+    userId: '',
     userName: '',
     password: '',
     email: '',
     accountSettings: undefined,
   };
-
+  if (localStorage.getItem('login') !== 'true') {
+    return settings;
+  }
+  const userId = localStorage.getItem('userId');
+  console.log(userId);
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Countries`,
+      path: `Freelancer/${userId}/accountsettings`,
       method: 'Get',
     });
     //  console.log(response);
     if (response.parsedBody !== null) {
       settings = response.parsedBody;
-      //   console.log(countryList);
+      console.log(settings);
     }
   } catch (e) {
     console.log(e);
@@ -50,7 +54,7 @@ export const GetFreelancerAccountSettings = async (
   //   return countryList;
   // };
 
-  return Settings;
+  return settings;
 };
 
 // let Settings: FreelancerAccountSettings = {

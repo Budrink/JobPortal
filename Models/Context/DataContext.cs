@@ -50,6 +50,10 @@ namespace JobPortal.Models.Context
 			builder.Entity<NumberOfEmployees>();
 			builder.Entity<JobSkill>().HasOne(x => x.Job).WithMany(x => x.SkillsRequired);
 			builder.Entity<JobSkill>().HasOne(x => x.Skill).WithMany(x => x.JobsWhereRequired);
+			builder.Entity<ComplainReason>();
+			builder.Entity<ArticleTag>();
+			builder.Entity<Article>();
+
 		}
 	}
 }
