@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
@@ -53,6 +54,38 @@ namespace JobPortal.Controllers
 			public string Text { get; set; }
 			public IEnumerable<Attachment> Attachments { get; set; }
 		}
+
+
+		[HttpPost, Route("getmessages")]
+		public async Task<IActionResult> GetMessages([FromBody] MessageRequestDto request)
+		{
+			try
+			{
+				var messages = await _messageRepository.Get(x =>
+					(x.ReceiverId.ToString() == request.UserId && x.SenderId.ToString() == request.CorrespondentId) ||
+					(x.SenderId.ToString() == request.UserId && x.ReceiverId.ToString() == request.CorrespondentId))
+					.Skip(request.PageNumber*(request.AmountOfItemsOnPage-1))
+					.Take(request.AmountOfItemsOnPage)
+					.Select(x=> new
+					{
+						x.MessageId,
+						x.SenderId,
+						x.ReceiverId,
+						x.Status,
+						x.Date,
+						x.Text,
+						x.Attachments
+					}).ToListAsync();
+				return Ok(messages);
+
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+
 
 		[HttpPost]
 		[Route("sendmail")]
