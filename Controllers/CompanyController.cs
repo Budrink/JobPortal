@@ -152,9 +152,9 @@ namespace JobPortal.Controllers
 		    }).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
 		    return Ok(new
 		    {
-			    AmountOngoing = jobsOngoingCount,
-				AmountCancelled = jobsCancelledCount,
-				AmountCompleted = jobsFinishedCount,
+			    AmountOngoingProjects = jobsOngoingCount,
+				AmountCancelledProjects = jobsCancelledCount,
+				AmountCompletedProjects = jobsFinishedCount,
 			    pageNumber,
 			    amountItemsOnPage,
 				projects = result

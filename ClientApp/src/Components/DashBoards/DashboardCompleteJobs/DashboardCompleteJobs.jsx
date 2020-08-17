@@ -55,18 +55,18 @@ class DashboardCompleteJobs extends React.Component {
 
     const data = await GetCompletedJobsList(
       this.companyId,
-      this.pageNumber,
-      this.amountOfItemsOnPage,
+      this.state.pageNumber,
+      this.state.amountOfItemsOnPage,
     );
-
+    console.log(data);
     this.setState({ projectList: data }, () => {
       this.setState({ loading: false }, () => {});
       loadScripts(this.instance, false);
     });
+    console.log(this.state.projectList);
   };
-
-  componentDidMount() {
-    this.populateData();
+  async componentDidMount() {
+    await this.populateData();
   }
 
   pagingCreate() {
@@ -86,6 +86,7 @@ class DashboardCompleteJobs extends React.Component {
   }
 
   render() {
+    console.log(this.state.projectList.amountOngoingProjects);
     let paging = this.pagingCreate();
     let context = !this.state.loading ? (
       <div className="wt-login">
@@ -109,7 +110,7 @@ class DashboardCompleteJobs extends React.Component {
                       </div>
                       <div className="wt-dashboardboxcontent wt-canceljobholder">
                         <div className="wt-tabscontenttitle">
-                          <h2>Cancel Jobs</h2>
+                          <h2>Completed Jobs</h2>
                         </div>
                         <JobList
                           projectList={this.state.projectList}
@@ -123,13 +124,13 @@ class DashboardCompleteJobs extends React.Component {
                   </div>
                   <RightPanel
                     amountOngoingProjects={
-                      this.state.projectList.projectList.amountOngoingProjects
+                      this.state.projectList.amountOngoingProjects
                     }
                     amountCompletedProjects={
-                      this.state.projectList.projectList.amountCompletedProjects
+                      this.state.projectList.amountCompletedProjects
                     }
                     amountCancelledProjects={
-                      this.state.projectList.projectList.amountCancelledProjects
+                      this.state.projectList.amountCancelledProjects
                     }
                   />
                 </div>

@@ -51,12 +51,13 @@ class DashboardOngoingJobs extends React.Component {
   }
 
   populateData = async () => {
-    // if (this.state.freelancerList.length === 0) {
-
+    console.log(this.state.companyId);
+    console.log(this.state.pageNumber);
+    console.log(this.state.amountOfItemsOnPage);
     const data = await GetOngoingJobsList(
-      this.companyId,
-      this.pageNumber,
-      this.amountOfItemsOnPage,
+      this.state.companyId,
+      this.state.pageNumber,
+      this.state.amountOfItemsOnPage,
     );
 
     this.setState({ projectList: data }, () => {

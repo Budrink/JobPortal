@@ -97,14 +97,14 @@ class SideBar extends Component {
               <a href="javascript.html">
                 <span>Insights</span>
               </a>
-              <ul className="sub-menu children">
+              {/* <ul className="sub-menu children">
                 <li>
                   <a href="dashboard-insights.html">Insights</a>
                 </li>
                 <li>
                   <a href="dashboard-insightsuser.html">Insights User</a>
                 </li>
-              </ul>
+              </ul> */}
             </li>
             <li>
               <Link to={`/DashboardProfile/${this.state.userId}`}>

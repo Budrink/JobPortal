@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PostFeedback } from '../../PostData/PostFeedback';
-import { SendMail } from '../../PostData/SendMail';
+import { SendMail } from '../../PostDataNew/SendMail';
 import { DeleteJob } from '../../PostData/PostData';
 import Modal from './modal';
 import MessageList from '../MessageList';

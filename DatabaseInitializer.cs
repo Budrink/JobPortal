@@ -725,6 +725,70 @@ new GlobalCategory
 
 			context.SaveChanges();
 
+			var reasons = new[]
+			{
+				new ComplainReason
+				{
+					Text="Reason 1"
+				},
+					new ComplainReason
+				{
+					Text="Reason 2"
+				},
+						new ComplainReason
+				{
+					Text="Reason 3"
+				},
+							new ComplainReason
+				{
+					Text="Reason 4"
+				},
+								new ComplainReason
+				{
+					Text="Reason 5"
+				},
+									new ComplainReason
+				{
+					Text="Reason 6"
+				},
+			};
+			context.Set<ComplainReason>().AddRange(reasons);
+	context.SaveChanges();
+
+			var articletags = new[]
+			{
+				new ArticleTag
+				{
+					TagName="Electronics"
+				},
+				new ArticleTag
+				{
+					TagName="DIY"
+				},
+					new ArticleTag
+				{
+					TagName="Business"
+				},
+					new ArticleTag
+				{
+					TagName="Superism"
+				},
+					new ArticleTag
+				{
+					TagName="Development"
+				},
+					new ArticleTag
+				{
+					TagName="Collaboration"
+				},
+					new ArticleTag
+				{
+					TagName="Decent"
+				}
+ 			};
+			context.Set <ArticleTag>().AddRange(articletags);
+
+			context.SaveChanges();
 
 		}
 	}

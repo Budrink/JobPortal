@@ -1,6 +1,6 @@
 import React from 'react';
-import { GetMessages } from '../../GetData/GetMessages';
-import { SendMail } from '../../PostData/SendMail';
+import { GetMessages } from '../../GetDataNew/GetMessages';
+import { SendMail } from '../../PostDataNew/SendMail';
 import { loadScripts } from '../../Functions/LoadScripts';
 class Messages extends React.Component {
   constructor(props) {
