@@ -3,16 +3,6 @@ import { wait } from './wait';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 
 // export const GetProposals = async (jobId: string) => {
-//   //Функция для получения списка с севрера
-//   //   await fetch('http://localhost:17525/api/countries')
-//   //     .then((res) => res.json())
-//   //     .then((body) => {
-//   //       countryList = body;
-//   //     })
-//   //     .catch((err) => {
-//   //       console.error(err);
-//   //     });
-//   await wait(500);
 
 //   const proposalList = {
 //     totalAmountOfProposals: 5,
