@@ -28,7 +28,7 @@ namespace JobPortal.Models
 
 		public string Text { get; set; }
 
-		public IEnumerable<string> Tags { get; set; }
+		public virtual  IEnumerable<ArticleTag> Tags { get; set; }
 
 	}
 }

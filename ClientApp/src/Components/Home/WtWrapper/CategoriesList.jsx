@@ -15,8 +15,8 @@ class CategoriesList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.populateData(this.props.amountOfItems);
+  async componentDidMount() {
+    await this.populateData(this.props.amountOfItems);
   }
 
   async populateData(amountOfItems) {

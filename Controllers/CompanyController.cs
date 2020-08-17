@@ -79,7 +79,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/ongoingJobsDetailed")]
+	    [HttpGet, Route("{companyId}/ongoingJobsDetailed")]
 	    public async Task<IActionResult> GetOngoingJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -92,7 +92,7 @@ namespace JobPortal.Controllers
 		    }
 		}
 
-	    [HttpPost, Route("{companyId}/completedJobsDetailed")]
+	    [HttpGet, Route("{companyId}/completedJobsDetailed")]
 	    public async Task<IActionResult> GetComplitedJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -105,7 +105,7 @@ namespace JobPortal.Controllers
 		    }
 	    }
 
-	    [HttpPost, Route("{companyId}/cancelledJobsDetailed")]
+	    [HttpGet, Route("{companyId}/cancelledJobsDetailed")]
 	    public async Task<IActionResult> GetCancelledJobsListDetailed([FromRoute] string companyId, [FromQuery] int pageNumber, [FromQuery] int amountItemsOnPage)
 	    {
 		    try
@@ -153,9 +153,9 @@ namespace JobPortal.Controllers
 		    }).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
 		    return Ok(new
 		    {
-			    AmountOngoing = jobsOngoingCount,
-				AmountCancelled = jobsCancelledCount,
-				AmountCompleted = jobsFinishedCount,
+			    AmountOngoingProjects = jobsOngoingCount,
+				AmountCancelledProjects = jobsCancelledCount,
+				AmountCompletedProjects = jobsFinishedCount,
 			    pageNumber,
 			    amountItemsOnPage,
 				projects = result

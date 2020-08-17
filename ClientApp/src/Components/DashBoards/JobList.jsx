@@ -200,7 +200,7 @@ class JobList extends Component {
   renderTable(cats) {
     // console.log(JSON.stringify(cats));
     if (cats !== []) {
-      return cats.projectList.projects.map((project) => (
+      return cats.projects.map((project) => (
         <div className="form-group" key={project.jobId}>
           {this.renderProject({ project })}
         </div>

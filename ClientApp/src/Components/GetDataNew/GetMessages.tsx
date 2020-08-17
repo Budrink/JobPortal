@@ -13,7 +13,7 @@ export const GetMessages = async (
   pageNumber: number,
   amountOfMessagesOnPage: number,
 ): Promise<any> => {
-  let messageList: messages[];
+  let messageList: Message[];
   messageList = [];
 
   // if (localStorage.getItem('login') !== 'true') {

@@ -28,10 +28,12 @@ export const GetOngoingJobsList = async (
     projects: [],
   };
   let response: HttpResponse<any>;
-
+  console.log(companyId);
+  console.log(pageNumber);
+  console.log(amounOfItemsOnPage);
   try {
     response = await http({
-      path: `Job/${companyId}/ongoingJobsListDetailed?pageNumber=${pageNumber} amountItemsOnPage=${amounOfItemsOnPage} `,
+      path: `Company/${companyId}/ongoingJobsListDetailed?pageNumber=${pageNumber} amountItemsOnPage=${amounOfItemsOnPage} `,
       method: 'Post',
     });
 
