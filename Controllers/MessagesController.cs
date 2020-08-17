@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
@@ -54,6 +55,38 @@ namespace JobPortal.Controllers
 			public IEnumerable<Attachment> Attachments { get; set; }
 		}
 
+
+		[HttpPost, Route("getmessages")]
+		public async Task<IActionResult> GetMessages([FromBody] MessageRequestDto request)
+		{
+			try
+			{
+				var messages = await _messageRepository.Get(x =>
+					(x.ReceiverId.ToString() == request.UserId && x.SenderId.ToString() == request.CorrespondentId) ||
+					(x.SenderId.ToString() == request.UserId && x.ReceiverId.ToString() == request.CorrespondentId))
+					.Skip(request.PageNumber*(request.AmountOfItemsOnPage-1))
+					.Take(request.AmountOfItemsOnPage)
+					.Select(x=> new
+					{
+						x.MessageId,
+						x.SenderId,
+						x.ReceiverId,
+						x.Status,
+						x.Date,
+						x.Text,
+						x.Attachments
+					}).ToListAsync();
+				return Ok(messages);
+
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+
+
 		[HttpPost]
 		[Route("sendmail")]
 		public async Task<IActionResult> SendMail([FromBody] MessageDTO request)
@@ -102,11 +135,17 @@ namespace JobPortal.Controllers
 				var user = await _userManager.FindByIdAsync(userId);
 				if (user == null) return NotFound($"user not found with id {userId}");
 
-				var correspondentsIdList = _messageRepository.Get(x => x.SenderId == user.Id).Select(x=> x.ReceiverId)
-					.ToList();
-				correspondentsIdList.AddRange(_messageRepository.Get(x=> x.ReceiverId == user.Id).Select(x=> x.SenderId).ToList());
+				var sendMessagesList = _messageRepository.Get(x => x.SenderId == user.Id)
+					.GroupBy(x=> x.ReceiverId)
+					.ToDictionary(x => x.Key, x=> x.ToList());
+					
+				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).GroupBy(x => x.SenderId)
+					.ToDictionary(x => x.Key, x => x.ToList());
 
-				var users = await _userRepository.Get(x => correspondentsIdList.Contains(x.Id)).ToListAsync();
+
+
+
+				var users = await _userRepository.Get(x => sendMessagesList.Keys.Concat(receivedMessagesList.Keys).Contains(x.Id)).ToListAsync();
 
 				var result = users.Select(x => new
 				{
@@ -117,7 +156,7 @@ namespace JobPortal.Controllers
 					UserRates = x.Freelancer?.Rates,
 					FeedbacksCount = x.Freelancer?.Feedbacks.Count(),
 					Title = x.Freelancer?.Title,
-					NewMessages = false
+					NewMessages = receivedMessagesList.ContainsKey(x.Id) && receivedMessagesList[x.Id].Any(m=> m.Status == MessageStatus.New)
 				});
 				return Ok(result);
 			}
