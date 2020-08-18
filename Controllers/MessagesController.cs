@@ -143,8 +143,6 @@ namespace JobPortal.Controllers
 					.ToDictionary(x => x.Key, x => x.ToList());
 
 
-
-
 				var users = await _userRepository.Get(x => sendMessagesList.Keys.Concat(receivedMessagesList.Keys).Contains(x.Id)).ToListAsync();
 
 				var result = users.Select(x => new
