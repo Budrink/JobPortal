@@ -86,7 +86,6 @@ class DashboardCompleteJobs extends React.Component {
   }
 
   render() {
-    console.log(this.state.projectList.amountOngoingProjects);
     let paging = this.pagingCreate();
     let context = !this.state.loading ? (
       <div className="wt-login">

@@ -50,11 +50,22 @@ class DashboardManageJobs extends React.Component {
 
   populateData = async () => {
     // if (this.state.freelancerList.length === 0) {
+    if (localStorage.getItem('userId') === undefined) {
+      return;
+    }
 
     const data = await GetProjectList(
-      this.companyId,
-      this.pageNumber,
-      this.amountOfItemsOnPage,
+      this.state.pageNumber,
+      this.state.amountOfItemsOnPage,
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [localStorage.getItem('userId')],
+      '',
+      [],
     );
     this.setState({ projectList: data }, () => {
       this.setState({ loading: false }, () => {});
@@ -108,7 +119,7 @@ class DashboardManageJobs extends React.Component {
                           <h2>Posted Jobs</h2>
                         </div>
                         <JobList
-                          projectList={this.state.projectList}
+                          projectList={this.state.projectList.projectList}
                           loading={this.state.loading}
                           populateData={this.populateData}
                           type="manage"

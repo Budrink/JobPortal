@@ -139,7 +139,7 @@ namespace JobPortal.Controllers
 					.GroupBy(x=> x.ReceiverId)
 					.ToDictionary(x => x.Key, x=> x.ToList());
 					
-				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).GroupBy(x => x.SenderId).ToList()
+				var receivedMessagesList = _messageRepository.Get(x=> x.ReceiverId == user.Id).ToList().GroupBy(x => x.SenderId)
 					.ToDictionary(x => x.Key, x => x.ToList());
 
 

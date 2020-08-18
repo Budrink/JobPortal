@@ -31,8 +31,8 @@ export const GetGanceledJobsList = async (
 
   try {
     response = await http({
-      path: `Job/${companyId}/cancelledJobsDetailed?pageNumber=${pageNumber} amountItemsOnPage=${amounOfItemsOnPage} `,
-      method: 'Post',
+      path: `Company/${companyId}/cancelledJobsDetailed?pageNumber=${pageNumber}&amountItemsOnPage=${amounOfItemsOnPage} `,
+      method: 'Get',
     });
 
     if (response.parsedBody !== null) {

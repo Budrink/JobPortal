@@ -198,7 +198,7 @@ class JobList extends Component {
   //   this.populateData();
   // }
   renderTable(cats) {
-    // console.log(JSON.stringify(cats));
+    console.log(cats);
     if (cats !== []) {
       return cats.projects.map((project) => (
         <div className="form-group" key={project.jobId}>
