@@ -36,14 +36,14 @@ export const GetCorrespondentList = async (): Promise<any> => {
     return correspondentList;
   }
   const userId = localStorage.getItem('userId');
-  console.log(userId);
+  // console.log(userId);
   let response: HttpResponse<any>;
   try {
     response = await http({
       path: `Messages/correspondentsList/${userId}`,
       method: 'Get',
     });
-    console.log(response);
+    // console.log(response);
     if (response.parsedBody !== null) {
       correspondentList = response.parsedBody;
       console.log(correspondentList);
@@ -52,12 +52,14 @@ export const GetCorrespondentList = async (): Promise<any> => {
     console.log(e);
   }
 
-  correspondentList.correspondents.map(
-    (corr) =>
-      (corr.userPhoto = corr.userPhoto
-        ? userPhotoPath + corr.userPhoto
-        : userDefaultIconPath),
-  );
+  if (correspondentList.correspondents !== undefined) {
+    correspondentList.correspondents.map(
+      (corr) =>
+        (corr.userPhoto = corr.userPhoto
+          ? userPhotoPath + corr.userPhoto
+          : userDefaultIconPath),
+    );
+  }
   return correspondentList;
 };
 // totalAmountOfCorrespondents: 45,

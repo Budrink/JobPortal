@@ -28,6 +28,8 @@ export const GetMessages = async (
     amountOfMessagesOnPage: amountOfMessagesOnPage,
   };
   let response: HttpResponse<any>;
+  console.log(requestBody);
+
   try {
     response = await http({
       path: `Messages/getmessages`,

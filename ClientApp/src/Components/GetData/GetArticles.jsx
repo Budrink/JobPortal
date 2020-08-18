@@ -12,8 +12,6 @@ export const GetArticles = async (
   category,
   stringFilter,
 ) => {
-  await wait(500);
-
   let articleList = {
     totalAmountOfArticles: 100,
     articles: [

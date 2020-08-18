@@ -18,7 +18,7 @@ interface ProjectsProps {
 
 export const GetProjectList = async (
   pageNumber: number,
-  amounOfItemsOnPage: number,
+  amountOfItemsOnPage: number,
   categoryFilter: string[],
   projectTypeFilter: string[],
   locationFilter: string[],
@@ -29,6 +29,7 @@ export const GetProjectList = async (
   stringForSearching: string,
   statusFilter: string[], // ongoing, cancel, completed
 ) => {
+  console.log(pageNumber);
   let projectList: ProjectsProps;
   projectList = { totalAmountOfProjects: 0, projects: [] };
   let response: HttpResponse<any>;
@@ -36,31 +37,33 @@ export const GetProjectList = async (
   let minPrice = '';
   let maxPrice = '';
   let typeFilter = '';
-  if (arrayTypeFilter.length > 0) {
-    if (arrayTypeFilter[0].substring(0, 1) === '0') {
-      typeFilter = '0';
-      let startPos = arrayTypeFilter[0].indexOf(' ' + 1);
-      let endPos = arrayTypeFilter[0].indexOf('$');
-      minPrice = arrayTypeFilter[0].substring(startPos, endPos);
-      startPos = endPos + 2;
-      endPos = arrayTypeFilter[0].lastIndexOf('$');
-      maxPrice = arrayTypeFilter[0].substring(startPos, endPos);
-    } else {
-      if (arrayTypeFilter[0].substring(0, 1) === '1') {
-        typeFilter = '1';
+  if (arrayTypeFilter !== undefined) {
+    if (arrayTypeFilter.length > 0) {
+      if (arrayTypeFilter[0].substring(0, 1) === '0') {
+        typeFilter = '0';
+        let startPos = arrayTypeFilter[0].indexOf(' ' + 1);
+        let endPos = arrayTypeFilter[0].indexOf('$');
+        minPrice = arrayTypeFilter[0].substring(startPos, endPos);
+        startPos = endPos + 2;
+        endPos = arrayTypeFilter[0].lastIndexOf('$');
+        maxPrice = arrayTypeFilter[0].substring(startPos, endPos);
       } else {
-        typeFilter = '';
+        if (arrayTypeFilter[0].substring(0, 1) === '1') {
+          typeFilter = '1';
+        } else {
+          typeFilter = '';
+        }
       }
     }
   }
   // console.log(stringForSearching);
   requestBody = {
     pageNumber: pageNumber,
-    amountOfItemsOnPage: amounOfItemsOnPage,
+    amountOfItemsOnPage: amountOfItemsOnPage,
     categoryFilter: categoryFilter,
     projectTypeFilter: projectTypeFilter,
     locationFilter: locationFilter,
-    typeFilter: typeFilter,
+    typeFilter: undefined ? '' : typeFilter,
     minPrice: minPrice,
     maxPrice: maxPrice,
     projectLength: projectLengthFilter,
@@ -70,7 +73,7 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
-  //console.log(statusFilter);
+  console.log(requestBody);
   try {
     response = await http({
       path: `Job/List`,
@@ -80,7 +83,7 @@ export const GetProjectList = async (
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
-      // console.log(projectList);
+      console.log(projectList);
       projectList.projects.map(
         (pr) =>
           (pr.company.country.countryFlag =

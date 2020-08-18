@@ -2,17 +2,6 @@ import { wait } from './wait';
 
 // export const getTopCategoryList = async (): Promise<Props> => {
 export const GetPopularArticleCategoryList = async () => {
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-
   let categoryList = [
     {
       categoryId: 'TC1',

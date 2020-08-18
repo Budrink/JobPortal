@@ -33,8 +33,8 @@ export const GetOngoingJobsList = async (
   console.log(amounOfItemsOnPage);
   try {
     response = await http({
-      path: `Company/${companyId}/ongoingJobsListDetailed?pageNumber=${pageNumber} amountItemsOnPage=${amounOfItemsOnPage} `,
-      method: 'Post',
+      path: `Company/${companyId}/ongoingJobsListDetailed?pageNumber=${pageNumber}&amountItemsOnPage=${amounOfItemsOnPage} `,
+      method: 'Get',
     });
 
     if (response.parsedBody !== null) {

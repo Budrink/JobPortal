@@ -51,11 +51,8 @@ class DashboardOngoingJobs extends React.Component {
   }
 
   populateData = async () => {
-    console.log(this.state.companyId);
-    console.log(this.state.pageNumber);
-    console.log(this.state.amountOfItemsOnPage);
     const data = await GetOngoingJobsList(
-      this.state.companyId,
+      this.companyId,
       this.state.pageNumber,
       this.state.amountOfItemsOnPage,
     );
@@ -71,13 +68,11 @@ class DashboardOngoingJobs extends React.Component {
   }
 
   pagingCreate() {
-    if (this.state.projectList.projectList !== undefined) {
+    if (this.state.projectList !== undefined) {
       return (
         <Paging
           linkName="DashboardOngoingJobs"
-          totalAmountOfItems={
-            this.state.projectList.projectList.amountOngoingProjects
-          }
+          totalAmountOfItems={this.state.projectList.amountOngoingProjects}
           amountOfItemsOnPage={this.state.amountOfItemsOnPage}
           pageNumber={this.state.pageNumber}
           onClick={this.handlePageChange}
@@ -110,7 +105,7 @@ class DashboardOngoingJobs extends React.Component {
                       </div>
                       <div className="wt-dashboardboxcontent wt-canceljobholder">
                         <div className="wt-tabscontenttitle">
-                          <h2>Posted Jobs</h2>
+                          <h2>Ongoing Jobs</h2>
                         </div>
                         <JobList
                           projectList={this.state.projectList}
@@ -124,13 +119,13 @@ class DashboardOngoingJobs extends React.Component {
                   </div>
                   <RightPanel
                     amountOngoingProjects={
-                      this.state.projectList.projectList.amountOngoingProjects
+                      this.state.projectList.amountOngoingProjects
                     }
                     amountCompletedProjects={
-                      this.state.projectList.projectList.amountCompletedProjects
+                      this.state.projectList.amountCompletedProjects
                     }
                     amountCancelledProjects={
-                      this.state.projectList.projectList.amountCancelledProjects
+                      this.state.projectList.amountCancelledProjects
                     }
                   />
                 </div>

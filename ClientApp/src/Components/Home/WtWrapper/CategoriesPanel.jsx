@@ -20,8 +20,8 @@ class CategoriesPanel extends Component {
     });
   }
 
-  async componentDidMount() {
-    await this.PopulateData();
+  componentDidMount() {
+    this.PopulateData();
   }
 
   renderCategory(data) {

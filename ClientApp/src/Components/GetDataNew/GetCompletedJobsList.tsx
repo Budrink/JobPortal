@@ -28,13 +28,11 @@ export const GetCompletedJobsList = async (
     projects: [],
   };
   let response: HttpResponse<any>;
-  console.log(companyId);
-  console.log(pageNumber);
-  console.log(amounOfItemsOnPage);
+
   try {
     response = await http({
       path: `Company/${companyId}/completedJobsDetailed?pageNumber=${pageNumber}&amountItemsOnPage=${amounOfItemsOnPage}`,
-      method: 'Post',
+      method: 'Get',
     });
 
     if (response.parsedBody !== null) {

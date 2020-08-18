@@ -74,8 +74,10 @@ class DashboardMessages extends React.Component {
     const data = await GetCorrespondentList(localStorage.getItem('userId'));
 
     if (data !== undefined) {
-      if (data.correspondents.length > 0) {
-        this.setState({ selectedCorrespondent: data.correspondents[0] });
+      if (data.correspondents !== undefined) {
+        if (data.correspondents.length > 0) {
+          this.setState({ selectedCorrespondent: data.correspondents[0] });
+        }
       }
     }
     this.setState({ correspondentlist: data.correspondents }, () => {
@@ -129,27 +131,31 @@ class DashboardMessages extends React.Component {
   }
 
   renderCorrespondentsList() {
-    if (this.state.className === '') {
+    if (this.state.correspondentlist !== undefined) {
+      if (this.state.className === '') {
+        return (
+          <div>
+            {this.state.correspondentlist.map((corr) =>
+              this.renderCorrespondent(corr),
+            )}
+          </div>
+        );
+      }
       return (
-        <div>
+        <div className="wt-dashboardscrollbar">
           {this.state.correspondentlist.map((corr) =>
             this.renderCorrespondent(corr),
           )}
         </div>
       );
     }
-    return (
-      <div className="wt-dashboardscrollbar">
-        {this.state.correspondentlist.map((corr) =>
-          this.renderCorrespondent(corr),
-        )}
-      </div>
-    );
   }
 
   renderSelectedCorrespondent() {
     const corr = this.state.selectedCorrespondent;
+    if (corr === undefined) return null;
     const feateredContent = this.CreateFeaturedContent(corr.plusMember);
+
     return (
       <div className="wt-dashboardbox wt-messagebox">
         {feateredContent}
@@ -183,13 +189,22 @@ class DashboardMessages extends React.Component {
     );
   }
   render() {
-    let correspondents = !this.state.loading
-      ? this.renderCorrespondentsList()
-      : null;
-    let selectCorr = !this.state.loading
-      ? this.renderSelectedCorrespondent()
-      : null;
-    let content = !this.state.loading ? (
+    let correspondents;
+    let selectCorr;
+    let content;
+    if (this.state.correspondentlist === undefined) {
+      correspondents = null;
+      selectCorr = null;
+      content = null;
+    } else {
+      correspondents = !this.state.loading
+        ? this.renderCorrespondentsList()
+        : null;
+      selectCorr = !this.state.loading
+        ? this.renderSelectedCorrespondent()
+        : null;
+    }
+    content = !this.state.loading ? (
       <div className="wt-login">
         <title>Messages</title>
 
@@ -235,10 +250,14 @@ class DashboardMessages extends React.Component {
                           <li>
                             <Messages
                               correspondentId={
-                                this.state.selectedCorrespondent.userId
+                                this.state.selectedCorrespondent !== undefined
+                                  ? this.state.selectedCorrespondent.userId
+                                  : undefined
                               }
                               correspondentPhoto={
-                                this.state.selectedCorrespondent.userPhoto
+                                this.state.selectedCorrespondent !== undefined
+                                  ? this.state.selectedCorrespondent.userPhoto
+                                  : null
                               }
                             />
                           </li>
@@ -265,6 +284,7 @@ class DashboardMessages extends React.Component {
     ) : (
       <div>Loading ...</div>
     );
+
     return <div ref={(el) => (this.instance = el)}>{content}</div>;
   }
 }
