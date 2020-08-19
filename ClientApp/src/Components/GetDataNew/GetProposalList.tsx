@@ -23,7 +23,7 @@ export const GetProposalList = async (jobId: string): Promise<any> => {
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Job/${jobId}/proposals`,
+      path: `Proposal/jobb/${jobId}`,
       method: 'Get',
     });
 

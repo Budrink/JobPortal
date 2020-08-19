@@ -1,88 +1,97 @@
-import { countryFlagsPath } from '../Data/GlobalValues';
-import { wait } from '../GetData/wait';
+import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
 import { http } from '../Data/Http';
-import { JobData, CompanyData, CountryData } from '../Data/Data';
 
-// export interface HttpResponse<RESB> extends Response {
-//   parsedBody?: RESB;
-// }
-// interface company {
-//   companyId: string;
-//   companyName: string;
-//   companyImgJpg?: string;
-//   companyImgPng?: string;
-//   companyCountry: CountryData;
-//   verifiedCompany?: boolean;
-//   companyDescription?: string;
-//   numberOfEmployers?: number;
-//   department?: string;
-//   saved?: boolean;
-// }
-// interface CompanyProps {
-//   totalAmountOfCompanies: number;
-//   companies: company[];
-//   savedItems: [];
-// }
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
 
-// export const GetProposals = async (jobId: string)
-// : Promise<any> => {
+interface proposal {
+  iD: string;
+  proposalStatus: string;
+  freelancer: {
+    userId: string;
+    firstName: string;
+    lastName: string;
+    userPhoto: string;
+    userRates: string;
+    feedbacksCount: number;
+    plusMember: boolean;
+  };
+  terms: string;
+  coverLetter: string;
+  attachments: [];
+}
+interface proposalList {
+  totalAmountOfProposals: number;
+  job?: {
+    jobId: string;
+    title: string;
+    qualification: string;
+    company: {
+      verifiedCompany: boolean;
+      companyId: string;
+      companyName: string;
+      country: {
+        countryId: string;
+        countryFlag: string;
+        countryName: string;
+      };
+      amountOngoingProjects: number;
+      amountCompletedProjects: number;
+      amountCancelledProjects: number;
+    };
+    type: string;
+    duration: string;
+  };
+  proposals: proposal[];
+}
 
-//   const proposalList = {
-//     totalAmountOfProposals: 5,
-//   };
-//   return proposalList;
-// };
+export const GetProposals = async (jobId: string): Promise<any> => {
+  let proposalList: proposalList;
+  proposalList = {
+    totalAmountOfProposals: 0,
+    proposals: [],
+    job: undefined,
+  };
 
-//   let requestBody = {
-//     pageNumber: pageNumber,
-//     amountOfItemsOnPage: amounOfItemsOnPage,
-//     userId: id,
-//     savedItemtype: '1',
-//     // 1
-//   };
-//   let response: HttpResponse<any>;
-//   try {
-//     response = await http({
-//       path: `user/saveditems`,
-//       method: 'Post',
-//       body: requestBody,
-//     });
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `Job/${jobId}/proposals`,
+      method: 'Get',
+    });
 
-//     if (response.parsedBody !== null) {
-//       companyList = response.parsedBody;
-//       if (companyList.savedItems !== undefined) {
-//         companyList.companies = companyList.savedItems;
-//         companyList.companies.map(
-//           (company) =>
-//             (company.companyImgPng =
-//               company.companyImgPng !== null
-//                 ? companyPath + company.companyImgPng
-//                 : companyDefaultImgPng),
-//         );
-//       }
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
+    if (response.parsedBody !== null) {
+      proposalList = response.parsedBody;
+      if (proposalList !== undefined) {
+        if (proposalList.proposals !== undefined) {
+          if (proposalList.proposals.length > 0) {
+            proposalList.proposals.map(
+              (pr) =>
+                (pr.freelancer.userPhoto = pr.freelancer.userPhoto
+                  ? userPhotoPath + pr.freelancer.userPhoto
+                  : userDefaultIconPath),
+            );
+          }
+        }
+        if (proposalList.job?.company !== undefined) {
+          if (proposalList.job.company.country !== undefined) {
+            proposalList.job.company.country.countryFlag = proposalList.job
+              .company.country.countryFlag
+              ? countryFlagsPath + proposalList.job.company.country.countryFlag
+              : flagDefaultPath;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
 
-//   return companyList;
-// };
+  return proposalList;
+};
 
-// jobId: string;
-// title: string;
-// qualification: string;
-// company: CompanyData;
-// type: string; //'fixed' or 'hourly'
-// duration?: string;
-// jobDetails: string;
-// skillsRequired?: Skill[];
-// Attachments?: Attachment[];
-// proposalsCount?: number;
-// proposals?: Proposal[];
-// status?: string; // canceled, ongoing, completed
-// hiredFreelancers?: string[]; //List of userId
-// }
 //   const proposalList = {
 //     totalAmountOfProposals: 5,
 //     job: {
