@@ -30,6 +30,42 @@ namespace JobPortal.Controllers
 	    }
 
 
+	    [HttpGet, Route("{articleId}")]
+	    public async Task<IActionResult> GetArticle([FromRoute] string articleId)
+	    {
+		    try
+		    {
+			    var article = await _articleRepository.FindById(Guid.Parse(articleId));
+			    var result = new
+			    {
+				    article.ArticleId,
+				    article.Title,
+				    article.Date,
+				    article.ArticleImg,
+				    Author = new
+				    {
+					    article.Author.Id,
+					    article.Author.FirstName,
+					    article.Author.LastName,
+					    article.Author.UserName,
+					    Since = article.Author.JoinDate,
+					    UserPhoto = article.Author.UserPhoto.FileLink,
+					    Description = article.Author.Freelancer == null
+						    ? article.Author.Company.Description
+						    : article.Author.Freelancer.Description
+				    },
+				    article.Category,
+				    Tags = article.Tags.Select(x => x.TagName).ToList(),
+					article.Text
+			    };
+			    return Ok(result);
+		    }
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 	    [HttpPost, Route("list")]
 	    public async Task<IActionResult> GetArticles([FromBody] ArticleRequestDto request)
 	    {
@@ -67,9 +103,31 @@ namespace JobPortal.Controllers
 			}
 		}
 
+	    [HttpGet, Route("popularCategoryList")]
+	    public async Task<IActionResult> GetPopularCategoryList([FromQuery] int amount = 10)
+	    {
+		    try
+		    {
+			    var categories = (await _articleRepository.DbSet().GroupBy(x => x.Category).ToListAsync())
+				    .ToDictionary(x => x.Key, x => x.ToList())
+				    .OrderBy(x => x.Value.Count).Take(amount).ToList();
+			    var result = categories.Select(x => new
+			    {
+				    CategoryId = x.Key.GlobalCategoryId,
+				    CategoryName = x.Key.GlobalCategoryName,
+				    ItemsAmount = x.Value.Count
+			    }).ToList();
+			    return Ok(result);
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
 
-		[HttpGet, Route("popularCategoryList")]
-		public async Task<IActionResult> GetPopularCategoryList([FromRoute] int amount = 10)
+
+		[HttpGet, Route("popularTagsList")]
+		public async Task<IActionResult> GetPopularTagList([FromQuery] int amount = 10)
 		{
 			try
 			{
@@ -81,7 +139,7 @@ namespace JobPortal.Controllers
 				{
 					CategoryId = x.TagId,
 					CategoryName = x.Value,
-					ItemsAmount = categoryIds[x.TagId].Count
+					//ItemsAmount = categoryIds[x.TagId].Count
 				});
 				return Ok(result);
 			}
