@@ -191,6 +191,61 @@ namespace JobPortal.Controllers
 			}
 		}
 
+		[HttpGet, Route("{jobId}/proposals")]
+		public async Task<IActionResult> GetProposalsList([FromRoute] string jobId)
+		{
+			try
+			{
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job == null) return NotFound($"Job not found with id {jobId}");
+				var proposals = job.Proposals.ToList();
+				var result = new
+				{
+					TotalAmountOfProposals = proposals.Count,
+					Job = new
+					{
+						job.JobId,
+						job.Title,
+						Qualification = job.CompetenceLevel,
+						Company = new
+						{
+							job.Company.UserId,
+							job.Company.CompanyName,
+							job.Company.User.Country,
+							AmountOngoingProjects = job.Company.Jobs.Count(x => x.JobStatus == JobStatus.Open),
+							AmountCompletedProjects = job.Company.Jobs.Count(x => x.JobStatus == JobStatus.Closed),
+							AmountCancelledProjects = job.Company.Jobs.Count(x => x.JobStatus == JobStatus.Cancelled),
+						},
+						Type = job.JobType,
+						job.Duration,
+						Proposals = proposals.Select(x => new
+						{
+							x.ProposalId,
+							x.ProposalStatus,
+							Freelancer = new
+							{
+								x.Freelancer.UserId,
+								x.Freelancer.User.FirstName,
+								x.Freelancer.User.LastName,
+								UserPhoto = x.Freelancer.User.UserPhoto.FileLink,
+								UserRates = x.Freelancer.Rates,
+								FeedbacksCount = x.Freelancer.Feedbacks.Count(),
+								x.Freelancer.User.PlusMember
+							},
+							x.Terms,
+							x.CoverLetter,
+							x.Attachments
+						})
+					}
+				};
+				return Ok(result);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 		[HttpGet]
 		[Route("{jobId}")]
 		public async Task<IActionResult> GetJobById([FromRoute] string jobId)

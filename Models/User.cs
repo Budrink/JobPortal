@@ -9,6 +9,7 @@ namespace JobPortal.Models
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Gender { get; set; }
+		public bool PlusMember { get; set; } = false;
 		public virtual Attachment UserPhoto { get; set; }
 		public DateTime JoinDate { get; set; }
 		public virtual Company Company { get; set; }
