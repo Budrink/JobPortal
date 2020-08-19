@@ -17,6 +17,7 @@ namespace JobPortal.Controllers
 		public Guid JobId { get; set; }
 		public Guid UserId { get; set; }
 		public string UserPhoto { get; set; }
+		public JobType Type { get; set; }
 		public string Terms { get; set; }
 		public string CoverLetter { get; set; }
 		public DateTime ProposalDate { get; set; }
@@ -83,6 +84,7 @@ namespace JobPortal.Controllers
 						Id = x.ProposalId, JobId = x.Job.JobId, UserId = x.Freelancer.User.Id,
 						UserPhoto = x.Freelancer.User.UserPhoto.FileLink,
 						Terms = x.Terms,
+						Type = x.Job.JobType,
 						CoverLetter = x.CoverLetter,
 						ProposalDate = x.ProposalDate,
 						ProposalStatus = x.ProposalStatus,
