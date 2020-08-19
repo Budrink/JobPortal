@@ -94,31 +94,6 @@ namespace JobPortal.Controllers
 				return NotFound(e.Message);
 			}
 		}
-
-		[HttpPost, Route("job/{jobId}/detailed")]
-		public async Task<IActionResult> GetProposalListDetailed([FromRoute] string jobId)
-		{
-			try
-			{
-				var proposalList = await _proposalRepository.Get(x => x.Job.JobId.ToString() == jobId).Select(x=> new
-				{
-
-				}).ToListAsync();
-				var result = proposalList.Select(x=> new
-				{
-
-				})
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-
-
-
-
+		
 	}
 }
