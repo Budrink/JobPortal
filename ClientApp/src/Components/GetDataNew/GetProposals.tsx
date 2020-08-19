@@ -1,8 +1,96 @@
-import { countryFlagsPath } from '../Data/GlobalValues';
-import { wait } from './wait';
+import { countryFlagsPath, flagDefaultPath } from '../Data/GlobalValues';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
+import { http } from '../Data/Http';
 
-// export const GetProposals = async (jobId: string) => {
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+
+interface proposal {
+  iD: string;
+  proposalStatus: string;
+  freelancer: {
+    userId: string;
+    firstName: string;
+    lastName: string;
+    userPhoto: string;
+    userRates: string;
+    feedbacksCount: number;
+    plusMember: boolean;
+  };
+  terms: string;
+  coverLetter: string;
+  attachments: [];
+}
+interface proposalList {
+  totalAmountOfProposals: number;
+  job?: {
+    jobId: string;
+    title: string;
+    qualification: string;
+    company: {
+      verifiedCompany: boolean;
+      companyId: string;
+      companyName: string;
+      country: {
+        countryId: string;
+        countryFlag: string;
+        countryName: string;
+      };
+      amountOngoingProjects: number;
+      amountCompletedProjects: number;
+      amountCancelledProjects: number;
+    };
+    type: string;
+    duration: string;
+  };
+  proposals: proposal[];
+}
+
+export const GetProposals = async (jobId: string): Promise<any> => {
+  let proposalList: proposalList;
+  proposalList = {
+    totalAmountOfProposals: 0,
+    proposals: [],
+    job: undefined,
+  };
+
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `Job/${jobId}/proposals`,
+      method: 'Get',
+    });
+
+    if (response.parsedBody !== null) {
+      proposalList = response.parsedBody;
+      if (proposalList !== undefined) {
+        if (proposalList.proposals !== undefined) {
+          if (proposalList.proposals.length > 0) {
+            proposalList.proposals.map(
+              (pr) =>
+                (pr.freelancer.userPhoto = pr.freelancer.userPhoto
+                  ? userPhotoPath + pr.freelancer.userPhoto
+                  : userDefaultIconPath),
+            );
+          }
+        }
+        if (proposalList.job?.company !== undefined) {
+          if (proposalList.job.company.country !== undefined) {
+            proposalList.job.company.country.countryFlag = proposalList.job
+              .company.country.countryFlag
+              ? countryFlagsPath + proposalList.job.company.country.countryFlag
+              : flagDefaultPath;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  return proposalList;
+};
 
 //   const proposalList = {
 //     totalAmountOfProposals: 5,
