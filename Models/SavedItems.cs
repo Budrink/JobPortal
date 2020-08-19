@@ -19,6 +19,5 @@ namespace JobPortal.Models
 		Company,
 		Freelancer,
 		Article
-
 	}
 }

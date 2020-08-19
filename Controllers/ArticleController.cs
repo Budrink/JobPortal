@@ -20,13 +20,15 @@ namespace JobPortal.Controllers
 	    private readonly IGenericRepository<Article> _articleRepository;
 	    private readonly IGenericRepository<ArticleTag> _articleTagRepository;
 	    private readonly IGenericRepository<Tag> _tagRepository;
+	    private readonly IGenericRepository<SavedItem> _itemsRepository;
 
 
-	    public ArticleController(IGenericRepository<Article> articleRepository, IGenericRepository<ArticleTag> articleTagRepository, IGenericRepository<Tag> tagRepository)
+	    public ArticleController(IGenericRepository<Article> articleRepository, IGenericRepository<ArticleTag> articleTagRepository, IGenericRepository<Tag> tagRepository, IGenericRepository<SavedItem> itemsRepository)
 	    {
 		    _articleRepository = articleRepository;
 		    _articleTagRepository = articleTagRepository;
 		    _tagRepository = tagRepository;
+		    _itemsRepository = itemsRepository;
 	    }
 
 
@@ -122,6 +124,32 @@ namespace JobPortal.Controllers
 		    catch (Exception e)
 		    {
 			    return BadRequest(e.Message);
+		    }
+	    }
+
+	    [HttpGet, Route("popularArticlesList")]
+	    public async Task<IActionResult> GetPopularArticlesList([FromQuery] int amount = 10)
+	    {
+		    try
+		    {
+			    var articlesIds = await _itemsRepository.DbSet().Where(x => x.SavedItemType == SavedItemType.Article)
+				    .GroupBy(x => x.SavedItemId)
+				    .OrderBy(x => x.Count()).Take(amount)
+				    .Select(x=> x.Key).ToListAsync();
+			    var articles = await _articleRepository.Get(x => articlesIds.Contains(x.ArticleId)).ToListAsync();
+			    var result = articles.Select(x => new
+			    {
+				    x.ArticleId,
+				    ArticleName = x.Title,
+				    x.Date,
+				    x.ArticleImg
+			    });
+			    return Ok(result);
+		    }
+		    catch (Exception e)
+		    {
+			    Console.WriteLine(e);
+			    throw;
 		    }
 	    }
 
