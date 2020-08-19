@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GetProposalList } from '../GetData/GetProposalList';
+import { GetProposalList } from '../GetDataNew/GetProposalList';
 import { Link } from 'react-router-dom';
 class ProposalsList extends Component {
   constructor(props) {

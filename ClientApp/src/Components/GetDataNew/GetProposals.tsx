@@ -1,9 +1,88 @@
 import { countryFlagsPath } from '../Data/GlobalValues';
-import { wait } from './wait';
+import { wait } from '../GetData/wait';
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
+import { http } from '../Data/Http';
+import { JobData, CompanyData, CountryData } from '../Data/Data';
 
-// export const GetProposals = async (jobId: string) => {
+// export interface HttpResponse<RESB> extends Response {
+//   parsedBody?: RESB;
+// }
+// interface company {
+//   companyId: string;
+//   companyName: string;
+//   companyImgJpg?: string;
+//   companyImgPng?: string;
+//   companyCountry: CountryData;
+//   verifiedCompany?: boolean;
+//   companyDescription?: string;
+//   numberOfEmployers?: number;
+//   department?: string;
+//   saved?: boolean;
+// }
+// interface CompanyProps {
+//   totalAmountOfCompanies: number;
+//   companies: company[];
+//   savedItems: [];
+// }
 
+// export const GetProposals = async (jobId: string)
+// : Promise<any> => {
+
+//   const proposalList = {
+//     totalAmountOfProposals: 5,
+//   };
+//   return proposalList;
+// };
+
+//   let requestBody = {
+//     pageNumber: pageNumber,
+//     amountOfItemsOnPage: amounOfItemsOnPage,
+//     userId: id,
+//     savedItemtype: '1',
+//     // 1
+//   };
+//   let response: HttpResponse<any>;
+//   try {
+//     response = await http({
+//       path: `user/saveditems`,
+//       method: 'Post',
+//       body: requestBody,
+//     });
+
+//     if (response.parsedBody !== null) {
+//       companyList = response.parsedBody;
+//       if (companyList.savedItems !== undefined) {
+//         companyList.companies = companyList.savedItems;
+//         companyList.companies.map(
+//           (company) =>
+//             (company.companyImgPng =
+//               company.companyImgPng !== null
+//                 ? companyPath + company.companyImgPng
+//                 : companyDefaultImgPng),
+//         );
+//       }
+//     }
+//   } catch (e) {
+//     console.log(e);
+//   }
+
+//   return companyList;
+// };
+
+// jobId: string;
+// title: string;
+// qualification: string;
+// company: CompanyData;
+// type: string; //'fixed' or 'hourly'
+// duration?: string;
+// jobDetails: string;
+// skillsRequired?: Skill[];
+// Attachments?: Attachment[];
+// proposalsCount?: number;
+// proposals?: Proposal[];
+// status?: string; // canceled, ongoing, completed
+// hiredFreelancers?: string[]; //List of userId
+// }
 //   const proposalList = {
 //     totalAmountOfProposals: 5,
 //     job: {

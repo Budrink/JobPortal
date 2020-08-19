@@ -1,23 +1,52 @@
 import { userPhotoPath, userDefaultIconPath } from '../Data/GlobalValues';
-import { wait } from './wait';
+import { http } from '../Data/Http';
 
-///Переписать для БД
+interface proposal {
+  iD: string;
+  jobId: string;
+  userId: string;
+  userPhoto: string;
+  terms: string;
+  type: string;
+  coverLetter: string;
+  proposalDate: string;
+  proposalStatus: string;
+}
 
-// export const GetProposalList = async (jobId: string) => {
-//   await wait(500);
-//   const proposalList = [
-//     {
-//       iD: '1',
-//       jobId: 'gy3yV2Vm5u',
-//       userId: '1',
-//       userPhoto: 'img-10.png',
-//       terms: ' dsfgasA',
-//       type: ' Per Hour',
-//       coverLetter: 'SDFSDFS RTBDdfdfb dfgdfgbdfb',
-//       proposalDate: '07-05-2020',
-//       proposalStatus: 'wait',
-//     },
-//     {
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+export const GetProposalList = async (jobId: string): Promise<any> => {
+  let proposalList: proposal[];
+  proposalList = [];
+
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `Proposal/Job/${jobId}`,
+      method: 'Get',
+    });
+
+    if (response.parsedBody !== null) {
+      proposalList = response.parsedBody;
+      if (proposalList !== undefined) {
+        if (proposalList.length > 0)
+          proposalList.map(
+            (pr) =>
+              (pr.userPhoto = pr.userPhoto
+                ? userPhotoPath + pr.userPhoto
+                : userDefaultIconPath),
+          );
+      }
+    }
+    return { proposalList };
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+//  {
 //       iD: '2',
 //       jobId: 'gy3yV2Vm5u',
 //       userId: '2',
@@ -60,10 +89,10 @@ import { wait } from './wait';
 //       coverLetter: 'SDFSDFS RTBDdfdfb dfgdfgbdfb',
 //       proposalDate: '07-05-2020',
 //       proposalStatus: 'wait',
-//     },
+//    },
 //   ];
 
-//   proposalList.map(
+//  proposalList.map(
 //     (fr) =>
 //       (fr.userPhoto = fr.userPhoto
 //         ? userPhotoPath + fr.userPhoto
