@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
+using JobPortal.Dto;
 using JobPortal.Models;
 using JobPortal.Repository;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +28,44 @@ namespace JobPortal.Controllers
 		    _articleTagRepository = articleTagRepository;
 		    _tagRepository = tagRepository;
 	    }
+
+
+	    [HttpPost, Route("list")]
+	    public async Task<IActionResult> GetArticles([FromBody] ArticleRequestDto request)
+	    {
+		    try
+		    {
+			    var articles = await _articleRepository.Get(x =>
+					    (request.Category.IsNullOrEmpty() ||
+					     x.Tags.Select(x => x.TagName).Contains(request.Category)) &&
+					    (request.StringFilter.IsNullOrEmpty() || x.Title.Contains(request.StringFilter)))
+				    .Skip(request.AmountOfItemsOnPage * (request.Page - 1)).Take(request.AmountOfItemsOnPage)
+				    .ToListAsync();
+			    var result = new
+			    {
+				    TotalAmountOfArticles = articles.Count,
+				    Articles = articles.Select(x => new
+				    {
+					    x.ArticleId,
+					    x.ArticleImg,
+					    x.Title,
+					    x.Date,
+					    Author = new
+					    {
+						    x.Author.Id,
+						    x.Author.FirstName,
+						    x.Author.LastName
+					    },
+					    Tags = x.Tags.Select(x => x.TagName)
+				    })
+			    };
+			    return Ok(result);
+		    }
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
 
 		[HttpGet, Route("popularCategoryList")]

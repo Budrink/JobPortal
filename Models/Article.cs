@@ -21,9 +21,7 @@ namespace JobPortal.Models
 		public string Title { get; set; }
 
 		public DateTime Date { get; set; }
-
-		[ForeignKey("User")]
-		public Guid Author { get; set; }
+		public virtual User Author { get; set; }
 		public virtual GlobalCategory Category { get; set; }
 
 		public string Text { get; set; }

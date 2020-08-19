@@ -85,7 +85,7 @@ namespace JobPortal.Controllers
 						Terms = x.Terms,
 						CoverLetter = x.CoverLetter,
 						ProposalDate = x.ProposalDate,
-						ProposalStatus = x.ProposalStatus
+						ProposalStatus = x.ProposalStatus,
 					}).ToListAsync();
 				return Ok(proposalList);
 			}
@@ -95,8 +95,27 @@ namespace JobPortal.Controllers
 			}
 		}
 
-		//[HttpPost]
-	//	[Route()]
+		[HttpPost, Route("job/{jobId}/detailed")]
+		public async Task<IActionResult> GetProposalListDetailed([FromRoute] string jobId)
+		{
+			try
+			{
+				var proposalList = await _proposalRepository.Get(x => x.Job.JobId.ToString() == jobId).Select(x=> new
+				{
+
+				}).ToListAsync();
+				var result = proposalList.Select(x=> new
+				{
+
+				})
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
 
 
 
