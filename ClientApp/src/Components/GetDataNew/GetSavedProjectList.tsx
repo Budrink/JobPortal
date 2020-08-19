@@ -14,6 +14,7 @@ interface extendedJob extends JobData {
 interface ProjectsProps {
   totalAmountOfProjects: number;
   projects: extendedJob[];
+  savedItems: [];
 }
 
 //iD- iD of user who asked for saved freelancers
@@ -21,24 +22,16 @@ export const GetSavedProjectList = async (
   id: string,
   pageNumber: number,
   amounOfItemsOnPage: number,
-) => {
+): Promise<any> => {
   let projectList: ProjectsProps;
-  projectList = { totalAmountOfProjects: 0, projects: [] };
+  projectList = { totalAmountOfProjects: 0, projects: [], savedItems: [] };
   let response: HttpResponse<any>;
   let requestBody;
-
-  console.log(localStorage.getItem('login'));
-  if (
-    localStorage.getItem('login') !== 'true' ||
-    localStorage.getItem('userId') === undefined
-  ) {
-    return [];
-  }
 
   requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
-    id: localStorage.getItem('userId'),
+    userId: id,
     SavedItemType: '0',
   };
   try {
@@ -50,19 +43,20 @@ export const GetSavedProjectList = async (
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
-      // console.log(projectList);
-      projectList.projects.map(
-        (pr) =>
-          (pr.company.country.countryFlag =
-            pr.company.country.countryFlag !== null
-              ? countryFlagsPath + pr.company.country.countryFlag
-              : flagDefaultPath),
-      );
+      if (projectList.savedItems !== undefined) {
+        projectList.projects = projectList.savedItems;
+        projectList.projects.map(
+          (pr) =>
+            (pr.company.country.countryFlag =
+              pr.company.country.countryFlag !== null
+                ? countryFlagsPath + pr.company.country.countryFlag
+                : flagDefaultPath),
+        );
+      }
     }
   } catch (e) {
     console.log(e);
   }
-
   return { projectList };
 };
 // const projectList = {

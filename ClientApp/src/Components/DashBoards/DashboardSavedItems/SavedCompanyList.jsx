@@ -47,7 +47,7 @@ class SavedCompanyList extends React.Component {
       return (
         <Paging
           linkName="SavedCompanyList"
-          totalAmountOfItems={this.state.companyList.totalAmountOfCompanies}
+          totalAmountOfItems={this.state.companyList.totalCount}
           amountOfItemsOnPage={this.state.amountOfItemsOnPage}
           pageNumber={this.state.pageNumber}
           onClick={this.handlePageChange}

@@ -44,9 +44,7 @@ class SavedJobList extends React.Component {
       return (
         <Paging
           linkName="SavedJobList"
-          totalAmountOfItems={
-            this.state.projectList.projectList.totalAmountOfProjects
-          }
+          totalAmountOfItems={this.state.projectList.projectList.totalCount}
           amountOfItemsOnPage={this.state.amountOfItemsOnPage}
           pageNumber={this.state.pageNumber}
           onClick={this.handlePageChange}

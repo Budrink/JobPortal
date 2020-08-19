@@ -36,13 +36,23 @@ class DashboardSavedItems extends React.Component {
       loading: true,
       projectList: [],
       freelancerList: [],
-      jobList: [],
+      companyList: [],
       amountOfItemsOnPage: amountOfProjectItemsInList,
       pageNumber: 1,
     };
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
+    this.Logout = this.Logout.bind(this);
   }
   companyId = this.props.match.params.userId;
+  Logout() {
+    this.props.history.push('/');
+  }
+
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
+
   handlePageChange(event) {
     let target = event.target;
     const name = target.name;
@@ -52,14 +62,18 @@ class DashboardSavedItems extends React.Component {
 
   populateData = async () => {
     const userId = localStorage.getItem('userId');
-    let data = await GetSavedFreelancers(userId);
+    let data = await GetSavedFreelancers(userId, 1, amountOfProjectItemsInList);
     this.setState({ freelancerList: data });
-    data = await GetSavedProjectList(userId);
-    this.setState({ jobList: data });
-    data = await GetSavedCompanyList(userId);
+    data = await GetSavedProjectList(userId, 1, amountOfProjectItemsInList);
+    this.setState({ projectList: data.projectList });
+    data = await GetSavedCompanyList(userId, 1, amountOfProjectItemsInList);
     this.setState({ companyList: data }, () => {
       this.setState({ loading: false }, () => {});
+
       loadScripts(this.instance, false);
+
+      // console.log(this.state.freelancerList);
+      // console.log(this.state.projectList);
     });
   };
 
@@ -76,7 +90,7 @@ class DashboardSavedItems extends React.Component {
           {/* Content Wrapper Start */}
           <div className="wt-contentwrapper">
             {/* Header Start */}
-            <Header1 />
+            <Header1 Login={this.LoginSuccessfull} Logout={this.Logout} />
             <div id="wt-main" className="wt-main wt-haslayout">
               <LeftMenu />
               {/*Register Form Start*/}
@@ -137,10 +151,10 @@ class DashboardSavedItems extends React.Component {
                       <div className="wt-proposalsr">
                         <div className="wt-proposalsrcontent">
                           <figure>
-                            <img src="/images/save-1.png" alt="image" />
+                            <img src="/images/save-1.png" alt="img" />
                           </figure>
                           <div className="wt-title">
-                            <h3>{this.state.jobList.totalAmountOfProjects}</h3>
+                            <h3>{this.state.projectList.totalCount}</h3>
                             <span>Jobs you saved</span>
                           </div>
                         </div>
@@ -148,12 +162,10 @@ class DashboardSavedItems extends React.Component {
                       <div className="wt-proposalsr">
                         <div className="wt-proposalsrcontent wt-componyfolow">
                           <figure>
-                            <img src="/images/save-2.png" alt="image" />
+                            <img src="/images/save-2.png" alt="img" />
                           </figure>
                           <div className="wt-title">
-                            <h3>
-                              {this.state.companyList.totalAmountOfCompanies}
-                            </h3>
+                            <h3>{this.state.companyList.totalCount}</h3>
                             <span>Companies you followed</span>
                           </div>
                         </div>
@@ -161,15 +173,10 @@ class DashboardSavedItems extends React.Component {
                       <div className="wt-proposalsr">
                         <div className="wt-proposalsrcontent  wt-freelancelike">
                           <figure>
-                            <img src="/images/save-3.png" alt="image" />
+                            <img src="/images/save-3.png" alt="img" />
                           </figure>
                           <div className="wt-title">
-                            <h3>
-                              {
-                                this.state.freelancerList
-                                  .totalAmountOfFreelancers
-                              }
-                            </h3>
+                            <h3>{this.state.freelancerList.totalCount}</h3>
                             <span>Freelancers you liked</span>
                           </div>
                         </div>

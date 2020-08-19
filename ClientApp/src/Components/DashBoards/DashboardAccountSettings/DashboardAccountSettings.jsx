@@ -52,8 +52,17 @@ class DashboardAccountSettigns extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
+    this.Logout = this.Logout.bind(this);
   }
 
+  Logout() {
+    this.props.history.push('/');
+  }
+
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
   iD = this.props.match.params.userId;
   handleChange = (event) => {
     const input = event.target;
@@ -110,7 +119,7 @@ class DashboardAccountSettigns extends React.Component {
             {/* Content Wrapper Start */}
             <div className="wt-contentwrapper">
               {/* Header Start */}
-              <Header1 />
+              <Header1 Login={this.LoginSuccessfull} Logout={this.Logout} />
               {/*Header End*/}
               {/*Main Start*/}
               <main className="wt-main wt-haslayout" id="wt-main">

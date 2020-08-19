@@ -21,30 +21,25 @@ interface company {
 interface CompanyProps {
   totalAmountOfCompanies: number;
   companies: company[];
+  savedItems: [];
 }
 
 //iD- iD of user who asked for saved companies
 export const GetSavedCompanyList = async (
-  iD: string,
+  id: string,
   pageNumber: number,
   amounOfItemsOnPage: number,
 ): Promise<any> => {
   let companyList: CompanyProps = {
     totalAmountOfCompanies: 0,
     companies: [],
+    savedItems: [],
   };
-  console.log(localStorage.getItem('login'));
-  if (
-    localStorage.getItem('login') !== 'true' ||
-    localStorage.getItem('userId') === undefined
-  ) {
-    return [];
-  }
 
   let requestBody = {
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
-    userId: localStorage.getItem('userId'),
+    userId: id,
     savedItemtype: '1',
     // 1
   };
@@ -56,18 +51,19 @@ export const GetSavedCompanyList = async (
       body: requestBody,
     });
 
-    console.log(response.parsedBody);
-
     if (response.parsedBody !== null) {
       companyList = response.parsedBody;
+      if (companyList.savedItems !== undefined) {
+        companyList.companies = companyList.savedItems;
+        companyList.companies.map(
+          (company) =>
+            (company.companyImgPng =
+              company.companyImgPng !== null
+                ? companyPath + company.companyImgPng
+                : companyDefaultImgPng),
+        );
+      }
     }
-    companyList.companies.map(
-      (company) =>
-        (company.companyImgPng =
-          company.companyImgPng !== null
-            ? companyPath + company.companyImgPng
-            : companyDefaultImgPng),
-    );
   } catch (e) {
     console.log(e);
   }

@@ -36,12 +36,17 @@ class Messages extends React.Component {
   }
 
   populateData = async () => {
-    const data = await GetMessages(this.props.correspondentId);
+    if (localStorage.getItem('login') === 'true') {
+      const userId = localStorage.getItem('userId');
+      let data = [];
+      console.log(this.props.correspondentId);
+      if (this.props.correspondentId !== undefined)
+        data = await GetMessages(userId, this.props.correspondentId, 0, 0);
 
-    this.setState({ messagelist: data }, () => {
-      this.setState({ loading: false });
-    });
-
+      this.setState({ messagelist: data }, () => {
+        this.setState({ loading: false });
+      });
+    }
     // loadScripts(this.instance, false);
   };
 
@@ -104,11 +109,9 @@ class Messages extends React.Component {
 
   render() {
     let messages = !this.state.loading ? this.renderMessages() : null;
-    let content = !this.state.loading ? (
-      <div className="wt-chatarea">
-        <div className="wt-messages wt-verticalscrollbar wt-dashboardscrollbar">
-          {messages}
-        </div>
+    let replyContent;
+    if (this.props.correspondentId !== undefined) {
+      replyContent = (
         <div className="wt-replaybox">
           <div className="form-group">
             <textarea
@@ -127,6 +130,15 @@ class Messages extends React.Component {
             </button>
           </div>
         </div>
+      );
+    } else replyContent = null;
+
+    let content = !this.state.loading ? (
+      <div className="wt-chatarea">
+        <div className="wt-messages wt-verticalscrollbar wt-dashboardscrollbar">
+          {messages}
+        </div>
+        {replyContent}
       </div>
     ) : (
       <div>Loading ...</div>
