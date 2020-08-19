@@ -30,6 +30,42 @@ namespace JobPortal.Controllers
 	    }
 
 
+	    [HttpGet, Route("{articleId}")]
+	    public async Task<IActionResult> GetArticle([FromRoute] string articleId)
+	    {
+		    try
+		    {
+			    var article = await _articleRepository.FindById(Guid.Parse(articleId));
+			    var result = new
+			    {
+				    article.ArticleId,
+				    article.Title,
+				    article.Date,
+				    article.ArticleImg,
+				    Author = new
+				    {
+					    article.Author.Id,
+					    article.Author.FirstName,
+					    article.Author.LastName,
+					    article.Author.UserName,
+					    Since = article.Author.JoinDate,
+					    UserPhoto = article.Author.UserPhoto.FileLink,
+					    Description = article.Author.Freelancer == null
+						    ? article.Author.Company.Description
+						    : article.Author.Freelancer.Description
+				    },
+				    article.Category,
+				    Tags = article.Tags.Select(x => x.TagName).ToList(),
+					article.Text
+			    };
+			    return Ok(result);
+		    }
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 	    [HttpPost, Route("list")]
 	    public async Task<IActionResult> GetArticles([FromBody] ArticleRequestDto request)
 	    {
