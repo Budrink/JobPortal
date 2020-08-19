@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GetFreelancersbyIds } from '../GetDataNew/GetFreelancersbyIds';
+import { GetFreelancersbyIds } from '../GetData/GetFreelancersbyIds';
 class HiredFreelancersList extends Component {
   constructor(props) {
     super(props);

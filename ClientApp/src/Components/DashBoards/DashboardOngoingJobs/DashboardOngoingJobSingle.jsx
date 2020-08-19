@@ -23,7 +23,7 @@ import { amountOfProjectItemsInList } from '../../Data/GlobalValues';
 import Header1 from '../../Header/Header1';
 import { loadScripts2 } from '../../Functions/LoadScripts';
 import HiredFreelancersList from './HiredFreelancers';
-import { GetContractsByJobId } from '../../GetDataNew/GetContractsByJobId';
+import { GetContractsByJobId } from '../../GetData/GetContractsByJobId';
 // import Paging from '../../Forms/Paging';
 import LeftMenu from '../../Header/LeftMenu';
 

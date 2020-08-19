@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
-import { GetFollowerList } from '../GetDataNew/GetFollowerList';
+import { GetFollowerList } from '../GetData/GetFollowerList';
 
 class FollowersForm extends Component {
   constructor(props) {

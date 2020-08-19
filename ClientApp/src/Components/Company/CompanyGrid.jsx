@@ -22,7 +22,7 @@ import JobTypeForm from '../Forms/JobTypeForm';
 import loadScripts1 from '../Functions/LoadScripts';
 import Companies from './Companies';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { getCompanyList } from '../GetDataNew/GetCompanyList';
+import { getCompanyList } from '../GetData/GetCompanyList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';

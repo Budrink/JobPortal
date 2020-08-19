@@ -25,7 +25,7 @@ import UserTypeForm from '../Forms/User/UserTypeForm';
 import { loadScripts } from '../Functions/LoadScripts';
 import ProjectList from './ProjectList';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { GetProjectList } from '../GetDataNew/GetProjectList';
+import { GetProjectList } from '../GetData/GetProjectList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';

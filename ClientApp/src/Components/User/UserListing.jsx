@@ -26,7 +26,7 @@ import CategoriesSlider from '../Forms/Category/CategoriesSlider';
 import loadScripts1 from '../Functions/LoadScripts';
 import FreelancerList from '../Forms/User/FreelancerList';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
-import { getFreelancerList } from '../GetDataNew/GetFreelancerList';
+import { getFreelancerList } from '../GetData/GetFreelancerList';
 import FilterTags from '../Forms/FilterTags';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';

@@ -18,7 +18,7 @@ import '../../../css/responsive.css';
 import '../../../css/display.css';
 import loadScripts1 from '../../Functions/LoadScripts';
 import Header1 from '../../Header/Header1';
-import { GetFreelancerAccountSettings } from '../../GetDataNew/GetFreelancerAccountSettings';
+import { GetFreelancerAccountSettings } from '../../GetData/GetFreelancerAccountSettings';
 import DeleteAccountForm from './DeleteAccountForm';
 import LanguageList from '../LanguageList';
 import CurrencyList from '../CurrencyList';

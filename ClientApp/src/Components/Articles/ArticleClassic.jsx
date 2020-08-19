@@ -21,7 +21,7 @@ import { GetPopularArticleList } from '../GetData/GetPopularArticleList';
 import { GetPopularArticleTags } from '../GetData/GetPopularArticleTags';
 import Header1 from '../Header/Header1';
 import loadScripts1 from '../Functions/LoadScripts';
-import { GetArticles } from '../GetDataNew/GetArticles';
+import { GetArticles } from '../GetData/GetArticles';
 import Footer from '../Footer/Footer';
 import Paging from '../Forms/Paging';
 

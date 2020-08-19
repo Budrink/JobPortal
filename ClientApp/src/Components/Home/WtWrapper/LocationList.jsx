@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetCountryList } from '../../GetDataNew/GetCountryList';
+import { GetCountryList } from '../../GetData/GetCountryList';
 
 class LocationList extends Component {
   constructor(props) {

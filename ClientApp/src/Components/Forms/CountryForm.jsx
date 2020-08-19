@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js';
 import { Field, reduxForm } from 'redux-form';
-import { GetCountryList } from '../GetDataNew/GetCountryList';
+import { GetCountryList } from '../GetData/GetCountryList';
 
 class CountryForm extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetSkillList } from '../../GetDataNew/GetSkillList';
+import { GetSkillList } from '../../GetData/GetSkillList';
 
 class SkillinUSAList extends Component {
   constructor(props) {

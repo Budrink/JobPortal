@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { amountOfProjectItemsInList } from '../../Data/GlobalValues';
 import Paging from '../../Forms/Paging';
-import { GetSavedProjectList } from '../../GetDataNew/GetSavedProjectList';
+import { GetSavedProjectList } from '../../GetData/GetSavedProjectList';
 import FavouriteButton from '../../Forms/FavouriteButton';
 
 class SavedJobList extends React.Component {

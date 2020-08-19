@@ -19,7 +19,7 @@ import '../../../css/responsive.css';
 import '../../../css/display.css';
 import loadScripts1 from '../../Functions/LoadScripts';
 import Header1 from '../../Header/Header1';
-import { GetFreelancer } from '../../GetDataNew/GetFreelancer';
+import { GetFreelancer } from '../../GetData/GetFreelancer';
 import ExperienceList from './ExperienceList';
 import EducationList from './EducationList';
 import CountryOption from './CountryOption';

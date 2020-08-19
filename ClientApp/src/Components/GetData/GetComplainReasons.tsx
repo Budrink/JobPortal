@@ -1,5 +1,5 @@
 import { ComplainReasons } from '../Data/Data';
-import { wait } from '../GetData/wait';
+import { wait } from './wait';
 
 // export const getComplainReasons = async (): Promise<ComplainReasons[]> => {
 //   // export const getCategoryList = (): CategoryData[] => {

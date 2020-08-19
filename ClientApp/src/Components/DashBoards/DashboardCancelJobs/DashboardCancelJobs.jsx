@@ -23,7 +23,7 @@ import { amountOfProjectItemsInList } from '../../Data/GlobalValues';
 import Header1 from '../../Header/Header1';
 import { loadScripts } from '../../Functions/LoadScripts';
 import JobList from '../JobList';
-import { GetGanceledJobsList } from '../../GetDataNew/GetCanceledJobsList.tsx';
+import { GetGanceledJobsList } from '../../GetData/GetCanceledJobsList.tsx';
 import Paging from '../../Forms/Paging';
 import LeftMenu from '../../Header/LeftMenu';
 import RightPanel from '../RightPanel';
