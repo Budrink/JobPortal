@@ -23,7 +23,7 @@ export const GetProposalList = async (jobId: string): Promise<any> => {
   let response: HttpResponse<any>;
   try {
     response = await http({
-      path: `Proposal/Job/${jobId}`,
+      path: `Job/${jobId}/proposals`,
       method: 'Get',
     });
 
@@ -39,11 +39,10 @@ export const GetProposalList = async (jobId: string): Promise<any> => {
           );
       }
     }
-    return { proposalList };
   } catch (e) {
     console.log(e);
-    return null;
   }
+  return proposalList;
 };
 
 //  {
