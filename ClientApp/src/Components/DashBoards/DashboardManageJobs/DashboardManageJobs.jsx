@@ -22,7 +22,7 @@ import { amountOfProjectItemsInList } from '../../Data/GlobalValues';
 import Header1 from '../../Header/Header1';
 import { loadScripts } from '../../Functions/LoadScripts';
 import JobList from '../JobList';
-import { GetProjectList } from '../../GetDataNew/GetProjectList.tsx';
+import { GetProjectList } from '../../GetData/GetProjectList.tsx';
 import Paging from '../../Forms/Paging';
 import LeftMenu from '../../Header/LeftMenu';
 import RightPanel from '../RightPanel';

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { amountOfFreelancersItemsInList } from '../../Data/GlobalValues';
 import Paging from '../../Forms/Paging';
 // import { GetSavedFreelancers } from '../../GetData/GetSavedFreelancers';
-import { GetSavedFreelancers } from '../../GetDataNew/GetSavedFreelancers';
+import { GetSavedFreelancers } from '../../GetData/GetSavedFreelancers';
 // import { GetSavedProjectList } from '../../GetData/GetSavedProjectList';
 import FavouriteButton from '../../Forms/FavouriteButton';
 

@@ -22,7 +22,7 @@ import { amountOfProposalsInList } from '../../Data/GlobalValues';
 import Header1 from '../../Header/Header1';
 import { loadScripts } from '../../Functions/LoadScripts';
 import LeftMenu from '../../Header/LeftMenu';
-import { GetProposals } from '../../GetDataNew/GetProposals';
+import { GetProposals } from '../../GetData/GetProposals';
 import Paging from '../../Forms/Paging';
 import { HireFreelancer } from '../../PostData/HireFreelancer';
 import Modal from '../../Functions/Modal';

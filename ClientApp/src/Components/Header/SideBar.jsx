@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { GetFreelancer } from '../GetDataNew/GetFreelancer';
-import GetCompany from '../GetDataNew/GetCompany';
+import { GetFreelancer } from '../GetData/GetFreelancer';
+import GetCompany from '../GetData/GetCompany';
 import { userDefaultIconPath } from '../Data/GlobalValues';
 
 class SideBar extends Component {

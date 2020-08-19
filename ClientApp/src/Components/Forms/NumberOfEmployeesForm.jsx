@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GetNumberOfEmployees } from '../GetDataNew/GetNumberOfEmployees';
+import { GetNumberOfEmployees } from '../GetData/GetNumberOfEmployees';
 
 // Not using an ES6 transpiler
 

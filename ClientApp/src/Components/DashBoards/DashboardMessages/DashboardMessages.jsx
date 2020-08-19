@@ -21,7 +21,7 @@ import '../../../css/dbresponsive.css';
 import Header1 from '../../Header/Header1';
 import { loadScripts } from '../../Functions/LoadScripts';
 import LeftMenu from '../../Header/LeftMenu';
-import { GetCorrespondentList } from '../../GetDataNew/GetCorrespondentList';
+import { GetCorrespondentList } from '../../GetData/GetCorrespondentList';
 import Messages from './Messages';
 class DashboardMessages extends React.Component {
   constructor(props) {

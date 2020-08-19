@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GetCountryList } from '../../GetDataNew/GetCountryList';
+import { GetCountryList } from '../../GetData/GetCountryList';
 
 class CountryOption extends Component {
   constructor(props) {

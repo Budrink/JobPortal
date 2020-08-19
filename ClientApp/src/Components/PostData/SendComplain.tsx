@@ -18,7 +18,6 @@ export const SendComplain = async (
   //       console.error(err);
   //     });
   await wait(500);
- 
-  
+
   return true;
 };

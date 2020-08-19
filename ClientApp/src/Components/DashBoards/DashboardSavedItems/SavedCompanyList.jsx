@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { amountOfCompanyItemsInList } from '../../Data/GlobalValues';
 import Paging from '../../Forms/Paging';
 // import { GetSavedFreelancers } from '../../GetData/GetSavedFreelancers';
-import { GetSavedCompanyList } from '../../GetDataNew/GetSavedCompanyList';
+import { GetSavedCompanyList } from '../../GetData/GetSavedCompanyList';
 // import { GetSavedProjectList } from '../../GetData/GetSavedProjectList';
 import FavouriteButton from '../../Forms/FavouriteButton';
 

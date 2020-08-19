@@ -18,7 +18,7 @@ import '../../css/responsive.css';
 import { amountOfArticleItemsInList } from '../Data/GlobalValues';
 import Header1 from '../Header/Header1';
 import loadScripts1 from '../Functions/LoadScripts';
-import { GetArticles } from '../GetDataNew/GetArticles';
+import { GetArticles } from '../GetData/GetArticles';
 import Footer from '../Footer/Footer';
 import Paging2 from '../Forms/Paging2';
 // import { RouteComponentProps } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GetOngoingJobsListofCompany } from '../GetDataNew/GetOngoingJobsListofCompany';
+import { GetOngoingJobsListofCompany } from '../GetData/GetOngoingJobsListofCompany';
 import { SendOffer } from '../PostData/SendOffer';
 import Modal from '../Functions/Modal';
 
