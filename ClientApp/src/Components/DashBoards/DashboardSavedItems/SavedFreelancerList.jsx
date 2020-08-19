@@ -47,9 +47,7 @@ class SavedFreelancerList extends React.Component {
       return (
         <Paging
           linkName="SavedFreelancerList"
-          totalAmountOfItems={
-            this.state.freelancerList.totalAmountOfFreelancers
-          }
+          totalAmountOfItems={this.state.freelancerList.totalCount}
           amountOfItemsOnPage={this.state.amountOfItemsOnPage}
           pageNumber={this.state.pageNumber}
           onClick={this.handlePageChange}

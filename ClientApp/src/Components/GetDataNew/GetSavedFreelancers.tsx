@@ -12,6 +12,7 @@ interface ExtendedFreelancer extends FreelancerData {
 interface FreelancersProps {
   totalAmountOfFreelancers: number;
   freelancers: ExtendedFreelancer[];
+  savedItems: [];
 }
 export const GetSavedFreelancers = async (
   id: string,
@@ -21,20 +22,21 @@ export const GetSavedFreelancers = async (
   let freelancerList: FreelancersProps = {
     totalAmountOfFreelancers: 0,
     freelancers: [],
+    savedItems: [],
   };
-  console.log(localStorage.getItem('login'));
-  if (
-    localStorage.getItem('login') !== 'true' ||
-    localStorage.getItem('userId') === undefined
-  ) {
-    return [];
-  }
+  // console.log(localStorage.getItem('login'));
+  // if (
+  //   localStorage.getItem('login') !== 'true' ||
+  //   localStorage.getItem('userId') === undefined
+  // ) {
+  //   return [];
+  // }
 
   let requestBody = {
+    userId: id,
+    savedItemtype: '2',
     pageNumber: pageNumber,
     amountOfItemsOnPage: amounOfItemsOnPage,
-    userId: localStorage.getItem('userId'),
-    savedItemtype: '2',
     // 1
   };
   let response: HttpResponse<any>;
@@ -45,25 +47,26 @@ export const GetSavedFreelancers = async (
       body: requestBody,
     });
 
-    console.log(response.parsedBody);
-
     if (response.parsedBody !== null) {
       freelancerList = response.parsedBody;
     }
-    freelancerList.freelancers.map(
-      (freelancer) =>
-        (freelancer.userPhoto =
-          freelancer.userPhoto !== null
-            ? userPhotoPath + freelancer.userPhoto
-            : userDefaultIconPath),
-    );
-    freelancerList.freelancers.map(
-      (freelancer) =>
-        (freelancer.country.countryFlag =
-          freelancer.country.countryFlag !== null
-            ? countryFlagsPath + freelancer.country.countryFlag
-            : flagDefaultPath),
-    );
+    if (freelancerList.savedItems !== undefined) {
+      freelancerList.freelancers = freelancerList.savedItems;
+      freelancerList.freelancers.map(
+        (freelancer) =>
+          (freelancer.userPhoto =
+            freelancer.userPhoto !== null
+              ? userPhotoPath + freelancer.userPhoto
+              : userDefaultIconPath),
+      );
+      freelancerList.freelancers.map(
+        (freelancer) =>
+          (freelancer.country.countryFlag =
+            freelancer.country.countryFlag !== null
+              ? countryFlagsPath + freelancer.country.countryFlag
+              : flagDefaultPath),
+      );
+    }
   } catch (e) {
     console.log(e);
   }

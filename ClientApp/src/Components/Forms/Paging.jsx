@@ -130,19 +130,20 @@ class Paging extends Component {
   }
 
   lastPageSimbol() {
-    if (this.state.lastPage !== this.amountOfPages)
-      return (
-        <li>
-          <button
-            onClick={this.handlePageChange}
-            name={this.amountOfPages}
-            value={this.amountOfPages}
-          >
-            {this.amountOfPages}
-          </button>
-        </li>
-      );
-    else return null;
+    if (this.state.lastPage > 1) {
+      if (this.state.lastPage !== this.amountOfPages)
+        return (
+          <li>
+            <button
+              onClick={this.handlePageChange}
+              name={this.amountOfPages}
+              value={this.amountOfPages}
+            >
+              {this.amountOfPages}
+            </button>
+          </li>
+        );
+    } else return null;
   }
   lastPoints() {
     if (this.state.lastPage < this.amountOfPages - 1)
