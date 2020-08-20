@@ -252,7 +252,7 @@ namespace JobPortal.Controllers
 			{
 				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var sender = await _userManager.FindByIdAsync(request.UserId);
-				var reason = await _complainReasonRepository.Get(x => x.Text == request.Text).FirstOrDefaultAsync();
+				var reason = await _complainReasonRepository.FindById(Guid.Parse(request.Reason));
 				var complain = new Complain
 				{
 					Reason = reason,
