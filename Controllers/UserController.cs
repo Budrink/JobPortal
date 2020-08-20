@@ -240,5 +240,27 @@ namespace JobPortal.Controllers
 
 		}
 
+		[HttpDelete, Route("delete")]
+		[Authorize]
+		public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountDto request)
+		{
+			try
+			{
+				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var confirm = await _userManager.CheckPasswordAsync(user, request.Password);
+				if (confirm && request.TermsCondition)
+				{
+					await _userManager.DeleteAsync(user);
+					return Ok(true);
+				}
+
+				return Unauthorized("Wrong password, or terms of condition declined");
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 	}
 }
