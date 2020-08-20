@@ -53,6 +53,7 @@ namespace JobPortal.Models.Context
 			builder.Entity<ComplainReason>();
 			builder.Entity<ArticleTag>();
 			builder.Entity<Article>();
+			builder.Entity<Complain>();
 
 		}
 	}
