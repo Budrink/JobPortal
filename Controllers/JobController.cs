@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobPortal.Controllers
 {
@@ -29,6 +30,7 @@ namespace JobPortal.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly IGenericRepository<Company> _companyRepository;
 		private readonly IGenericRepository<Offer> _offerRepository;
+		private readonly IGenericRepository<Feedback> _feedbackRepository;
 
 		public JobController(IGenericRepository<Job> jobRepository, IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<Company> companyRepository, IGenericRepository<Offer> offerRepository, UserManager<User> userManager)
 		{
@@ -37,6 +39,33 @@ namespace JobPortal.Controllers
 			_freelancerRepository = freelancerRepository;
 			_companyRepository = companyRepository;
 			_offerRepository = offerRepository;
+		}
+
+
+		[HttpPost, Route("{jobId}/feedback"),Authorize(Roles = "freelancer")]
+		public async Task<IActionResult> PostJobFeedback([FromRoute] string jobId, [FromBody] JobFeedbackDto request)
+		{
+			try
+			{
+				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				var contract = user.Freelancer.Contracts.First(x => x.Job.JobId == job.JobId);
+
+				var feedback = new Feedback
+				{
+					Freelancer = user.Freelancer,
+					Contract = contract,
+					Mark = request.Rating,
+					Text = request.Text
+				};
+				await _feedbackRepository.Create(feedback);
+				await _feedbackRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
 		}
 
 		[HttpPost]
@@ -334,6 +363,23 @@ namespace JobPortal.Controllers
 			}
 		}
 
+		[HttpDelete, Route("{jobId}"), Authorize(Roles = "company")]
+		public async Task<IActionResult> DeleteJob([FromRoute] string jobId)
+		{
+			try
+			{
+				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
+				_jobRepository.Remove(job);
+				await _jobRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
 	}
 }
