@@ -49,6 +49,7 @@ namespace JobPortal.Controllers
 			{
 				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+
 				var contract = user.Freelancer.Contracts.First(x => x.Job.JobId == job.JobId);
 
 				var feedback = new Feedback
@@ -283,7 +284,6 @@ namespace JobPortal.Controllers
 			{
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
 
-
 				var result = new
 				{
 					JobId = job.JobId,
@@ -363,6 +363,47 @@ namespace JobPortal.Controllers
 			}
 		}
 
+
+
+
+		[HttpPost, Route("{jobId}/repost"), Authorize(Roles = "company")]
+		public async Task<IActionResult> RepostJob([FromRoute] string jobId)
+		{
+			try
+			{
+				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
+				job.JobStatus = JobStatus.Open;
+				_jobRepository.Update(job);
+				await _jobRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+		[HttpPost, Route("{jobId}/complete"), Authorize(Roles = "company")]
+		public async Task<IActionResult> CompleteJob([FromRoute] string jobId)
+		{
+			try
+			{
+				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
+				job.JobStatus = JobStatus.Closed;
+				_jobRepository.Update(job);
+				await _jobRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
 		[HttpDelete, Route("{jobId}"), Authorize(Roles = "company")]
 		public async Task<IActionResult> DeleteJob([FromRoute] string jobId)
 		{
@@ -371,7 +412,8 @@ namespace JobPortal.Controllers
 				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
 				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
-				_jobRepository.Remove(job);
+				job.JobStatus = JobStatus.Cancelled;
+				_jobRepository.Update(job);
 				await _jobRepository.SaveChanges();
 				return Ok(true);
 			}
