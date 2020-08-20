@@ -19,8 +19,10 @@ export const SaveFreelancer = async (
       method: 'POST',
       body: requestBody,
     });
-    // let r = response.parsedBody;
-    return true;
+    let r = response.parsedBody;
+    //  if( r=true)
+    // return true;
+    return r;
   } catch (error) {
     window.alert(error);
     return false;
