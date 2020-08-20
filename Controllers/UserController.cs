@@ -11,6 +11,7 @@ using JobPortal.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,16 +30,20 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<Country> _countryRepository;
 		private readonly IGenericRepository<Freelancer> _freelancerRepository;
 		private readonly IGenericRepository<Company> _companyRepository;
+		private readonly IGenericRepository<Complain> _complainRepository;
+		private readonly IGenericRepository<ComplainReason> _complainReasonRepository;
 
 		public UserController(UserManager<User> userManager, IGenericRepository<Country> countryRepository,
 			RoleManager<IdentityRole<Guid>> roleManager, IGenericRepository<Freelancer> freelancerRepository,
-			IGenericRepository<Company> companyRepository)
+			IGenericRepository<Company> companyRepository, IGenericRepository<Complain> complainRepository, IGenericRepository<ComplainReason> complainReasonRepository)
 		{
 			_userManager = userManager;
 			_countryRepository = countryRepository;
 			_roleManager = roleManager;
 			_freelancerRepository = freelancerRepository;
 			_companyRepository = companyRepository;
+			_complainRepository = complainRepository;
+			_complainReasonRepository = complainReasonRepository;
 		}
 
 		[HttpGet]
@@ -238,6 +243,31 @@ namespace JobPortal.Controllers
 
 			return Ok(user);
 
+		}
+
+		[HttpPost, Route("complain/{userId}"),Authorize]
+		public async Task<IActionResult> SendComplain([FromBody] ComplainRequestDto request)
+		{
+			try
+			{
+				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var sender = await _userManager.FindByIdAsync(request.UserId);
+				var reason = await _complainReasonRepository.Get(x => x.Text == request.Text).FirstOrDefaultAsync();
+				var complain = new Complain
+				{
+					Reason = reason,
+					Sender = sender,
+					Text = request.Text,
+					User = user
+				};
+				await _complainRepository.Create(complain);
+				await _complainRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
 		}
 
 		[HttpDelete, Route("delete")]
