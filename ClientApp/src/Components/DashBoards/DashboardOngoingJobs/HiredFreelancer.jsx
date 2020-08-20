@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PostFeedback } from '../../PostData/PostFeedback';
 import { SendMail } from '../../PostDataNew/SendMail';
-import { DeleteJob } from '../../PostData/PostData';
+import { DeleteJob } from '../../PostDataNew/PostData';
 import Modal from './modal';
 import MessageList from '../MessageList';
 // import { loadScripts2 } from '../../Functions/LoadScripts';

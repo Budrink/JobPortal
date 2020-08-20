@@ -8,15 +8,15 @@ export const SendComplain = async (
 ): Promise<any> => {
   let response;
   let requestBody = {
-    password: password,
-    message: message,
+    // senderId: senderId,
+    userId: userId,
     reason: reason,
-    termsconditions: termsconditions,
+    text: text,
   };
 
   try {
     response = await http({
-      path: `User/delete`,
+      path: `User/complain/${senderId}`,
       method: 'POST',
       body: requestBody,
     });
