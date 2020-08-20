@@ -363,6 +363,23 @@ namespace JobPortal.Controllers
 			}
 		}
 
+		[HttpDelete, Route("{jobId}"), Authorize(Roles = "company")]
+		public async Task<IActionResult> DeleteJob([FromRoute] string jobId)
+		{
+			try
+			{
+				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
+				_jobRepository.Remove(job);
+				await _jobRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
 
 	}
 }
