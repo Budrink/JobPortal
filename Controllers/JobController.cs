@@ -49,7 +49,6 @@ namespace JobPortal.Controllers
 			{
 				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
-				if (job.IsDeleted) return NotFound();
 
 				var contract = user.Freelancer.Contracts.First(x => x.Job.JobId == job.JobId);
 
@@ -179,7 +178,7 @@ namespace JobPortal.Controllers
 			try
 			{
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
-				if (job == null || job.IsDeleted) return NotFound($"Job not found with id {jobId}");
+				if (job == null) return NotFound($"Job not found with id {jobId}");
 
 				var contracts = job.Contracts;
 				var result = contracts.Select(x => new
@@ -228,7 +227,7 @@ namespace JobPortal.Controllers
 			try
 			{
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
-				if (job == null || job.IsDeleted) return NotFound($"Job not found with id {jobId}");
+				if (job == null) return NotFound($"Job not found with id {jobId}");
 				var proposals = job.Proposals.ToList();
 				var result = new
 				{
@@ -284,7 +283,6 @@ namespace JobPortal.Controllers
 			try
 			{
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
-				if (job.IsDeleted) return NotFound();
 
 				var result = new
 				{
@@ -333,7 +331,7 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
-				var jobList = (await _userManager.FindByIdAsync(freelancerId)).Freelancer.Contracts.Select(x => x.JobProposal.Job).Where(x => x.IsDeleted == false).ToList();
+				var jobList = (await _userManager.FindByIdAsync(freelancerId)).Freelancer.Contracts.Select(x => x.JobProposal.Job).ToList();
 				return Ok(jobList);
 			}
 			catch (Exception e)
@@ -350,7 +348,7 @@ namespace JobPortal.Controllers
 			try
 			{
 				var jobList = (await _companyRepository.FindById(Guid.Parse(companyId))).Jobs
-					.Where(x => x.JobStatus == JobStatus.Open && x.IsDeleted == false)
+					.Where(x => x.JobStatus == JobStatus.Open)
 					.Select(x => new
 					{
 						JobId = x.JobId,
@@ -366,6 +364,8 @@ namespace JobPortal.Controllers
 		}
 
 
+
+
 		[HttpPost, Route("{jobId}/repost"), Authorize(Roles = "company")]
 		public async Task<IActionResult> RepostJob([FromRoute] string jobId)
 		{
@@ -374,7 +374,26 @@ namespace JobPortal.Controllers
 				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
 				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
-				job.IsDeleted = false;
+				job.JobStatus = JobStatus.Open;
+				_jobRepository.Update(job);
+				await _jobRepository.SaveChanges();
+				return Ok(true);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+		[HttpPost, Route("{jobId}/complete"), Authorize(Roles = "company")]
+		public async Task<IActionResult> CompleteJob([FromRoute] string jobId)
+		{
+			try
+			{
+				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
+				job.JobStatus = JobStatus.Closed;
 				_jobRepository.Update(job);
 				await _jobRepository.SaveChanges();
 				return Ok(true);
@@ -393,7 +412,7 @@ namespace JobPortal.Controllers
 				var company = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
 				if (job.Company.UserId != company.Id) return Forbid($"You are not owner of this job");
-				job.IsDeleted = true;
+				job.JobStatus = JobStatus.Cancelled;
 				_jobRepository.Update(job);
 				await _jobRepository.SaveChanges();
 				return Ok(true);

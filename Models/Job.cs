@@ -27,6 +27,5 @@ namespace JobPortal.Models
 		public virtual Duration Duration { get; set; }
 		public int ProposalsCount { get; set; }
 		public virtual IEnumerable<User> HiredFreelancers { get; set; }
-		public bool IsDeleted { get; set; } = false;
 	}
 }
