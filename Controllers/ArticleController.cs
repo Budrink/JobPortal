@@ -51,7 +51,7 @@ namespace JobPortal.Controllers
 					    article.Author.LastName,
 					    article.Author.UserName,
 					    Since = article.Author.JoinDate,
-					    UserPhoto = article.Author.UserPhoto.FileLink,
+					    UserPhoto = article.Author.UserPhoto?.FileLink,
 					    Description = article.Author.Freelancer == null
 						    ? article.Author.Company.Description
 						    : article.Author.Freelancer.Description
