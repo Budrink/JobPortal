@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RepostJob, DeleteJob } from '../PostData/PostData';
+import { RepostJob, DeleteJob } from '../PostData/ChangeJobStatus';
 import { Link } from 'react-router-dom';
 import HiredFreelancersList from './HiredFreelancersList';
 import ProposalsList from './ProposalsList';

@@ -1,22 +1,28 @@
-import { wait } from '../GetData/wait';
+// import { http } from '../Data/Http';
+// export const PostFeedback = async (
+//   projectId: string, //iD of porject for feedback
+//   text: string,
+//   rating: number,
+// ): Promise<any> => {
+//   let response;
+//   let requestBody = {
+//     projectId: projectId,
+//     text: text,
+//     rating: rating,
+//   };
 
-export const PostFeedback = async (
-  projectId: string, //iD of porject for feedback
-  text: string,
-  rating: number,
-): Promise<boolean> => {
-  // export const getCategoryList = (): CategoryData[] => {
-
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-
-  return true;
-};
+//   try {
+//     response = await http({
+//       path: `User/delete`,
+//       method: 'POST',
+//       body: requestBody,
+//     });
+//     let r = response.parsedBody;
+//     //  if( r=true)
+//     // return true;
+//     return r;
+//   } catch (error) {
+//     window.alert(error);
+//     return false;
+//   }
+// };

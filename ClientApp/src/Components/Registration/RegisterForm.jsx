@@ -17,7 +17,7 @@ import '../../css/main.css';
 import '../../css/color.css';
 import '../../css/transitions.css';
 import '../../css/responsive.css';
-import { FirstRegister } from '../PostData/Register_old';
+import { FirstRegister } from './Register_Old';
 import { FormErrors } from './FormErrors';
 
 // import { timingSafeEqual } from 'crypto';

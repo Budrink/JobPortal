@@ -1,23 +1,30 @@
-import { wait } from '../GetData/wait';
+import { http } from '../Data/Http';
 
 export const HireFreelancer = async (
   senderId: string,
   freelancerId: string,
-  jobId: string,
+  // jobId: string,
   proposalId: string,
-) => {
-  // return the new list of m,essages with the new one
+): Promise<any> => {
+  let response;
+  let requestBody = {
+    freelancerId: freelancerId,
+    senderId: senderId,
+    proposalId: proposalId,
+  };
 
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-
-  return true;
+  try {
+    response = await http({
+      path: `Contract/hire`,
+      method: 'POST',
+      body: requestBody,
+    });
+    let r = response.parsedBody;
+    //  if( r=true)
+    // return true;
+    return r;
+  } catch (error) {
+    window.alert(error);
+    return false;
+  }
 };

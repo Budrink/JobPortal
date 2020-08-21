@@ -1,5 +1,5 @@
 import React from 'react';
-import { PostFiles } from '../PostDataNew/PostFiles';
+import { PostFiles } from '../PostData/PostFiles';
 export class FileUpload extends React.Component {
   constructor(props) {
     super(props);

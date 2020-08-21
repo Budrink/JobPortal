@@ -12,6 +12,6 @@ namespace JobPortal.Models
 		public virtual User User { get; set; }
 		public virtual User Sender { get; set; }
 		public string Text { get; set; }
-		public ComplainReason Reason { get; set; }
+		public virtual  ComplainReason Reason { get; set; }
 	}
 }

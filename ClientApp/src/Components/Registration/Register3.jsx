@@ -1,5 +1,4 @@
-/** @jsx jsx */ import { jsx } from '@emotion/core';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import '../../css/bootstrap.min.css';
 import '../../css/normalize.css';
 import '../../css/scrollbar.css';
@@ -20,7 +19,7 @@ import '../../css/transitions.css';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header1';
 import loadScripts1 from '../Functions/LoadScripts';
-import { ValidateCode } from '../PostData/Register_old';
+import { ValidateCode } from './Register_Old';
 
 //* <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script> */
 

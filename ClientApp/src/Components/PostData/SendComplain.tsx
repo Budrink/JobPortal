@@ -1,23 +1,31 @@
-import { wait } from '../GetData/wait';
+import { http } from '../Data/Http';
 
 export const SendComplain = async (
   senderId: string,
   userId: string,
   reason: string,
   text: string,
-) => {
-  // return the new list of m,essages with the new one
+): Promise<any> => {
+  let response;
+  let requestBody = {
+    // senderId: senderId,
+    userId: userId,
+    reason: reason,
+    text: text,
+  };
 
-  //Функция для получения списка с севрера
-  //   await fetch('http://localhost:17525/api/countries')
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       categoryList = body;
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  await wait(500);
-
-  return true;
+  try {
+    response = await http({
+      path: `User/complain/${senderId}`,
+      method: 'POST',
+      body: requestBody,
+    });
+    let r = response.parsedBody;
+    //  if( r=true)
+    // return true;
+    return r;
+  } catch (error) {
+    window.alert(error);
+    return false;
+  }
 };

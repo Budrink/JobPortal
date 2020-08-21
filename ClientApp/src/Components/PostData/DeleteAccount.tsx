@@ -1,24 +1,23 @@
 import { http } from '../Data/Http';
-
-export const SendOffer = async (
-  senderId: string,
-  freelancerId: string,
-  jobId: string,
-  description: string,
-  deadLine: string,
+export const PostDeleteAccount = async (
+  password: string,
+  password2: string,
+  message: string,
+  reason: string,
+  termsconditions: boolean,
+  termsconditions1: boolean,
 ): Promise<any> => {
   let response;
   let requestBody = {
-    senderId: senderId,
-    freelancerId: freelancerId,
-    jobId: jobId,
-    description: description,
-    deadLine: deadLine,
+    password: password,
+    message: message,
+    reason: reason,
+    termsconditions: termsconditions,
   };
 
   try {
     response = await http({
-      path: `User/sendoffer}`,
+      path: `User/delete`,
       method: 'POST',
       body: requestBody,
     });
