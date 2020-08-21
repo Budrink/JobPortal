@@ -1,5 +1,4 @@
-/** @jsx jsx */ import { jsx } from '@emotion/core';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import '../../css/bootstrap.min.css';
 import '../../css/normalize.css';
 import '../../css/scrollbar.css';

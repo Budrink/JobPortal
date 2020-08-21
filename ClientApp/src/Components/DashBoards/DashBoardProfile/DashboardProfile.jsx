@@ -31,7 +31,7 @@ import ProjectList from './ProjectList';
 import SidePanel from '../SidePanel';
 import { PhotoUpload } from './PhotoUpload';
 import { ProjectDefaultImgPath } from '../../Data/GlobalValues';
-import { PostFreelancerData } from '../../PostDataNew/PostFreelancerData';
+import { PostFreelancerData } from '../../PostData/PostFreelancerData';
 
 class DashboardProfile extends React.Component {
   constructor(props) {

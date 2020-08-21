@@ -48,8 +48,8 @@ export const SaveJob = async (
       method: 'POST',
       body: requestBody,
     });
-    // let r = response.parsedBody;
-    return true;
+    let r = response.parsedBody;
+    return r;
   } catch (error) {
     window.alert(error);
     return false;
@@ -76,8 +76,8 @@ export const SaveCompany = async (
       method: 'POST',
       body: requestBody,
     });
-    // let r = response.parsedBody;
-    return true;
+    let r = response.parsedBody;
+    return r;
   } catch (error) {
     window.alert(error);
     return false;

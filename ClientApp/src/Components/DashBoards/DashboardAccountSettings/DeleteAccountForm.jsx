@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from '../../Functions/Modal';
-import { PostDeleteAccount } from '../../PostDataNew/DeleteAccount';
+import { PostDeleteAccount } from '../../PostData/DeleteAccount';
 class DeleteAccountForm extends Component {
   constructor(props) {
     super(props);

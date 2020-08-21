@@ -19,7 +19,7 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import LoginForm from '../Auth/LoginForm';
 import SideBar from './SideBar';
-import { RefreshLoginFetch } from '../PostDataNew/Login';
+import { RefreshLoginFetch } from '../PostData/Login';
 import SeekForm from '../Forms/SeekForm';
 import loadScripts1 from '../Functions/LoadScripts';
 

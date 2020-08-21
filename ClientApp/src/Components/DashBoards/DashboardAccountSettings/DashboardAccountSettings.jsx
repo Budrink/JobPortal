@@ -22,7 +22,7 @@ import { GetFreelancerAccountSettings } from '../../GetData/GetFreelancerAccount
 import DeleteAccountForm from './DeleteAccountForm';
 import LanguageList from '../LanguageList';
 import CurrencyList from '../CurrencyList';
-import { PostAccountSettings } from '../../PostDataNew/PostAccountSettings';
+import { PostAccountSettings } from '../../PostData/PostAccountSettings';
 
 class DashboardAccountSettigns extends React.Component {
   constructor(props) {

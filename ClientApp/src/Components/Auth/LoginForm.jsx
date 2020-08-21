@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { LoginFetch, SendPassword } from '../PostDataNew/Login';
+import { LoginFetch, SendPassword } from '../PostData/Login';
 import Modal from '../Functions/Modal';
 export default class LoginForm extends PureComponent {
   constructor(props) {
