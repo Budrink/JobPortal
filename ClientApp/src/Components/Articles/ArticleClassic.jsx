@@ -113,9 +113,9 @@ class UserClassic extends PureComponent {
 
   componentDidMount() {
     const searchParams = new URLSearchParams(this.props.location.search);
-    let pageNumber = (searchParams.get('page') || '').split(',');
-    let stringFilter_ = (searchParams.get('string') || '').split(',');
-    let categoryFilter_ = (searchParams.get('category') || '').split(',');
+    let pageNumber = searchParams.get('page') || '';
+    let stringFilter_ = searchParams.get('string') || '';
+    let categoryFilter_ = searchParams.get('category') || '';
     if (pageNumber[0] === '') {
       this.setState({ pageNumber: 1 });
     } else {
@@ -197,7 +197,7 @@ class UserClassic extends PureComponent {
         </figure>
         <div className="wt-articlecontent">
           <div className="wt-title">
-            <Link to={`/ArticleSingle/:${article.articleId}`}>
+            <Link to={`/ArticleSingle/${article.articleId}`}>
               <h2>{article.title}</h2>
             </Link>
           </div>

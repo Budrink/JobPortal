@@ -9,7 +9,7 @@ namespace JobPortal.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid ReasonId { get; set; }
-		public string Text { get; set; }
+		public string ReasonName { get; set; }
 	
 	}
 }

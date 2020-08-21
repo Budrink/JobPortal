@@ -40,6 +40,7 @@ export const GetArticles = async (
     Category: category,
     StringFilter: stringFilter,
   };
+  console.log(requestBody);
   let response: HttpResponse<any>;
   try {
     response = await http({

@@ -29,7 +29,6 @@ export const GetProjectList = async (
   stringForSearching: string,
   statusFilter: string[], // ongoing, cancel, completed
 ) => {
-  console.log(pageNumber);
   let projectList: ProjectsProps;
   projectList = { totalAmountOfProjects: 0, projects: [] };
   let response: HttpResponse<any>;
@@ -73,7 +72,6 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
-  console.log(requestBody);
   try {
     response = await http({
       path: `Job/List`,
@@ -83,7 +81,6 @@ export const GetProjectList = async (
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
-      console.log(projectList);
       projectList.projects.map(
         (pr) =>
           (pr.company.country.countryFlag =
