@@ -35,11 +35,13 @@ namespace JobPortal.Controllers
 		private readonly IGenericRepository<HourRate> _rateRepository;
 		private readonly IGenericRepository<Language> _languageRepository;
 		private readonly IMapper _mapper;
+		private readonly IGenericRepository<Job> _jobRepository;
+		private readonly IGenericRepository<Feedback> _feedbackRepository;
 	
 		public FreelancerController(IGenericRepository<Freelancer> freelancerRepository, IGenericRepository<JobProposal> proposalRepository, IGenericRepository<Contract> contractRepository, UserManager<User> userManager, IGenericRepository<User> userRepository, IGenericRepository<Award> awardRepository,
 			IGenericRepository<Project> projectRepository, IGenericRepository<UserSkill> userSkillRepository, IGenericRepository<UserLanguage> userLanguageRepository,
 			IGenericRepository<UserExperience> userExperienceRepository, IGenericRepository<Education> educationRepository, IGenericRepository<HourRate> rateRepository,
-			IGenericRepository<Language> languageRepository, IMapper mapper)
+			IGenericRepository<Language> languageRepository, IMapper mapper, IGenericRepository<Job> jobRepository, IGenericRepository<Feedback> feedbackRepository)
 	    {
 		    _freelancerRepository = freelancerRepository;
 		    _proposalRepository = proposalRepository;
@@ -55,6 +57,8 @@ namespace JobPortal.Controllers
 			_rateRepository = rateRepository;
 			_languageRepository = languageRepository;
 			_mapper = mapper;
+			_jobRepository = jobRepository;
+			_feedbackRepository = feedbackRepository;
 	    }
 
 	    [HttpGet]
@@ -393,7 +397,37 @@ namespace JobPortal.Controllers
 	    }
 
 
-	    [HttpPost]
+	    [HttpPost, Route("{freelancerId}/feedback"), Authorize(Roles = "company")]
+	    public async Task<IActionResult> PostJobFeedback([FromRoute] string freelancerId, [FromBody] FreelancerFeedbackDto request)
+	    {
+		    try
+		    {
+			    var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+			    var freelancer = await _userManager.FindByIdAsync(freelancerId);
+			    var job = await _jobRepository.FindById(Guid.Parse(request.ProjectId));
+			    if (job.Company.UserId != user.Id) return BadRequest("Project is not affiliate with your company");
+
+			    var contract = user.Freelancer.Contracts.First(x => x.Job.JobId == job.JobId);
+
+			    var feedback = new Feedback
+			    {
+				    Freelancer = user.Freelancer,
+				    Contract = contract,
+				    Mark = request.Rating,
+				    Text = request.Text
+			    };
+			    await _feedbackRepository.Create(feedback);
+			    await _feedbackRepository.SaveChanges();
+			    return Ok(true);
+		    }
+		    catch (Exception e)
+		    {
+			    return BadRequest(e.Message);
+		    }
+	    }
+
+
+		[HttpPost]
 		[Route("{userId}/accountsettings")]
 		public async Task<IActionResult> AccountSettings([FromRoute] string userId, [FromBody] AccountSettingsDto request)
 		{

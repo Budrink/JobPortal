@@ -42,33 +42,6 @@ namespace JobPortal.Controllers
 		}
 
 
-		[HttpPost, Route("{jobId}/feedback"),Authorize(Roles = "freelancer")]
-		public async Task<IActionResult> PostJobFeedback([FromRoute] string jobId, [FromBody] JobFeedbackDto request)
-		{
-			try
-			{
-				var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-				var job = await _jobRepository.FindById(Guid.Parse(jobId));
-
-				var contract = user.Freelancer.Contracts.First(x => x.Job.JobId == job.JobId);
-
-				var feedback = new Feedback
-				{
-					Freelancer = user.Freelancer,
-					Contract = contract,
-					Mark = request.Rating,
-					Text = request.Text
-				};
-				await _feedbackRepository.Create(feedback);
-				await _feedbackRepository.SaveChanges();
-				return Ok(true);
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
-			}
-		}
-
 		[HttpPost]
 		[Route("sendoffer")]
 		public async Task<IActionResult> SendOffer([FromBody] OfferDto request)
