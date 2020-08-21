@@ -17,7 +17,7 @@ import '../../css/transitions.css';
 import '../../css/responsive.css';
 import { amountOfArticleItemsInList } from '../Data/GlobalValues';
 import Header1 from '../Header/Header1';
-import loadScripts1 from '../Functions/LoadScripts';
+// import loadScripts1 from '../Functions/LoadScripts';
 import { GetArticles } from '../GetData/GetArticles';
 import Footer from '../Footer/Footer';
 import Paging2 from '../Forms/Paging2';
@@ -94,7 +94,7 @@ class ArticleList extends Component {
     // console.log(JSON.stringify(data));
     this.setState({ articleList: data }, () => {
       this.setState({ loading: false }, () => {});
-      loadScripts1(this.instance, false);
+      // loadScripts1(this.instance, false);
 
       // this.fullfreelancerList = this.state.freelancerList; //this.state.freelancerList;
     });
@@ -103,9 +103,9 @@ class ArticleList extends Component {
 
   componentDidMount() {
     const searchParams = new URLSearchParams(this.props.location.search);
-    let pageNumber = (searchParams.get('page') || '').split(',');
-    let stringFilter_ = (searchParams.get('string') || '').split(',');
-    let globalCategoryFilter_ = (searchParams.get('category') || '').split(',');
+    let pageNumber = searchParams.get('page') || '';
+    let stringFilter_ = searchParams.get('string') || '';
+    let globalCategoryFilter_ = searchParams.get('category') || '';
     if (pageNumber[0] === '') {
       this.setState({ pageNumber: 1 });
     } else {
@@ -138,7 +138,7 @@ class ArticleList extends Component {
           </figure>
           <div className="wt-articlecontent">
             <div className="wt-title">
-              <Link to={`/ArticleSingle/:${article.articleId}`}>
+              <Link to={`/ArticleSingle/${article.articleId}`}>
                 <h2>{article.title}</h2>
               </Link>
             </div>

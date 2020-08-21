@@ -16,6 +16,7 @@ export const GetArticle = async (articleId: string): Promise<any> => {
   let article: ArticleData;
 
   let response: HttpResponse<any>;
+  console.log(articleId);
   try {
     response = await http({
       path: `Article/${articleId}`,

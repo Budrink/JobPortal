@@ -42,7 +42,8 @@ class ArticleSingle extends Component {
     const data = await GetArticle(this.iD);
     this.setState({ article: data }, () => {});
     this.setState({ loading: false }, () => {});
-    loadScripts1(this.instance, false);
+    console.log(data);
+    // loadScripts1(this.instance, false);
   };
 
   componentDidMount() {

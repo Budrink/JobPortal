@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { FC, memo } from 'react';
 import '../../css/bootstrap.min.css';
 import '../../css/normalize.css';
 import '../../css/scrollbar.css';
@@ -20,13 +19,14 @@ import Header1 from '../Header/Header1';
 import Footer from '../Footer/Footer';
 import ProjectList from '../Job/ProjectList';
 import FollowersForm from './FollowersForm';
-import loadScripts from '../Functions/LoadScripts';
+// import loadScripts from '../Functions/LoadScripts';
 import ComplainForm from '../Forms/ComplainForm';
 import { amountOfProjectItemsInList } from '../Data/GlobalValues';
 import GetCompany from '../GetData/GetCompany';
 import { GetProjectList } from '../GetData/GetProjectList';
 import Paging from '../Forms/Paging';
 import FavouriteButton from '../Forms/FavouriteButton';
+import { SendComplain } from '../PostData/SendComplain';
 
 class CompanySingle extends React.Component {
   constructor(props) {
@@ -77,12 +77,12 @@ class CompanySingle extends React.Component {
     );
 
     this.setState({ loading: false }, () => {});
-    loadScripts(this.instance, false);
+    // loadScripts(this.instance, false);
   };
   Logout() {
     this.props.history.push('/Home');
   }
-  submitComplain(event) {
+  async submitComplain(event) {
     event.preventDefault();
     if (this.state.complain.reason === '') {
       return;
@@ -90,12 +90,18 @@ class CompanySingle extends React.Component {
     if (this.state.complain.text === '') {
       return;
     }
-    window.alert(
-      'reason ' +
-        this.state.complain.reason +
-        'text ' +
-        this.state.complain.text,
+    if (localStorage.getItem('login') !== 'true') return;
+    const senderId = localStorage.getItem('userId');
+    if (senderId === undefined) return;
+
+    let result = await SendComplain(
+      senderId,
+      this.iD,
+      this.state.complain.reason,
+      this.state.complain.text,
     );
+    if (result !== true) window.alert(result);
+    else window.alert('Complain sent');
   }
 
   handleChangeComplainReason(reason) {
@@ -311,7 +317,11 @@ class CompanySingle extends React.Component {
                               <div className="wt-widgettitle">
                                 <h2>Report This Company</h2>
                               </div>
-                              <ComplainForm />
+                              <ComplainForm
+                                reasonChange={this.handleChangeComplainReason}
+                                textChange={this.handleTextComplainChange}
+                                onClick={this.submitComplain}
+                              />
                             </div>
                           </aside>
                         </div>

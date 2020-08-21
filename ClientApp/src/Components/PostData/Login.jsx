@@ -23,7 +23,6 @@ export const LoginFetch = async (userName, password, rememeberMe) => {
       body: requestBody,
     });
 
-    console.log(response.parsedBody);
     localStorage.setItem('accessToken', response.parsedBody.access_token);
     //Depends on rememberMe
     // localStorage.setItem('refreshToken', '2');

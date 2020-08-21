@@ -19,7 +19,7 @@ import Header1 from '../Header/Header1';
 import NumberOfEmployeesForm from '../Forms/NumberOfEmployeesForm';
 import CountryForm from '../Forms/CountryForm';
 import JobTypeForm from '../Forms/JobTypeForm';
-import loadScripts1 from '../Functions/LoadScripts';
+// import loadScripts1 from '../Functions/LoadScripts';
 import Companies from './Companies';
 import { createArrayForFilter } from '../Functions/createArrayForFilter';
 import { getCompanyList } from '../GetData/GetCompanyList';
@@ -219,7 +219,7 @@ class UserListing extends PureComponent {
       typeFilter_,
       numberFilter_,
     );
-    loadScripts1(this.instance, false);
+    // loadScripts1(this.instance, false);
   }
 
   componentDidMount() {

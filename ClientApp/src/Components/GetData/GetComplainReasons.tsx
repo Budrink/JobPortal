@@ -1,20 +1,32 @@
 import { ComplainReasons } from '../Data/Data';
-import { wait } from './wait';
+
+import { http } from '../Data/Http';
+export interface HttpResponse<RESB> extends Response {
+  parsedBody?: RESB;
+}
+export const getComplainReasons = async (): Promise<any[]> => {
+  let reasonList: ComplainReasons[] = [];
+
+  let response: HttpResponse<any>;
+  try {
+    response = await http({
+      path: `ComplainReason`,
+      method: 'Get',
+    });
+    //  console.log(response);
+    if (response.parsedBody !== null) {
+      reasonList = response.parsedBody;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  return reasonList;
+};
 
 // export const getComplainReasons = async (): Promise<ComplainReasons[]> => {
 //   // export const getCategoryList = (): CategoryData[] => {
 //   let reasonList: ComplainReasons[] = [];
-
-//   //Функция для получения списка с севрера
-//   //   await fetch('http://localhost:17525/api/countries')
-//   //     .then((res) => res.json())
-//   //     .then((body) => {
-//   //       categoryList = body;
-//   //     })
-//   //     .catch((err) => {
-//   //       console.error(err);
-//   //     });
-//   await wait(500);
 
 //   reasonList = [
 //     {
