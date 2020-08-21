@@ -33,7 +33,7 @@ import UserTags from '../Forms/User/UserTags';
 import ComplainForm from '../Forms/ComplainForm';
 import ProjectOfferForm from '../Forms/ProjectOfferForm';
 import FavouriteButton from '../Forms/FavouriteButton';
-import { SendComplain } from '../PostDataNew/SendComplain';
+import { SendComplain } from '../PostData/SendComplain';
 class UserSingle extends React.Component {
   constructor(props) {
     super(props);
