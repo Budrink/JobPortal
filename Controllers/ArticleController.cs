@@ -110,8 +110,8 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
-			    var categories = (await _articleRepository.DbSet().GroupBy(x => x.Category).ToListAsync())
-				    .ToDictionary(x => x.Key, x => x.ToList())
+			    var categories = (await _articleRepository.DbSet().ToListAsync()).GroupBy(x => x.Category)
+					.ToDictionary(x => x.Key, x => x.ToList())
 				    .OrderBy(x => x.Value.Count).Take(amount).ToList();
 			    var result = categories.Select(x => new
 			    {
