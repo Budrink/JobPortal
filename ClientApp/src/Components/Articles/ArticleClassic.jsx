@@ -159,7 +159,6 @@ class UserClassic extends PureComponent {
   }
 
   renderTags() {
-    console.log(this.state.tagList);
     return this.state.tagList.map((tag) => (
       <a href={`/ArticleClassic/?category=${tag.tagName}`} key={tag.tagId}>
         {tag.tagName}
@@ -167,6 +166,7 @@ class UserClassic extends PureComponent {
     ));
   }
   renderPopularAticles() {
+    console.log(this.state.popularArticleList);
     return this.state.popularArticleList.map((article) => (
       <div className="wt-particlehold" key={article.articleId}>
         <figure>

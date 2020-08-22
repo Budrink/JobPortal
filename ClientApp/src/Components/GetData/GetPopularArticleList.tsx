@@ -19,10 +19,10 @@ export const GetPopularArticleList = async (amount?: number): Promise<any> => {
       amount = 10;
     }
     response = await http({
-      path: `Article/popularCategoryList?amount=${amount}`,
+      path: `Article/popularArticlesList?amount=${amount}`,
       method: 'Get',
     });
-    //  console.log(response);
+
     if (response.parsedBody !== null) {
       articleList = response.parsedBody;
       if (articleList !== undefined) {

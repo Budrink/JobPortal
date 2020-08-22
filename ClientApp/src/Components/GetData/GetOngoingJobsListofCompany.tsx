@@ -18,11 +18,11 @@ export const GetOngoingJobsListofCompany = async (companyId: string) => {
     projects: [],
   };
   let response: HttpResponse<any>;
-
+  console.log(companyId);
   try {
     response = await http({
-      path: `Job/${companyId}/ongoingJobs`,
-      method: 'Post',
+      path: `Job/company/${companyId}`,
+      method: 'Get',
     });
 
     if (response.parsedBody !== null) {

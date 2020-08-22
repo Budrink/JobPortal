@@ -123,7 +123,7 @@ class ProjectOfferForm extends Component {
 
   render() {
     let projectContents =
-      this.state.loading === false ? (
+      this.state.loading === false && this.state.projectList !== undefined ? (
         <select
           style={({ width: '300px' }, { display: 'inline' })}
           onChange={this.projectChange}
