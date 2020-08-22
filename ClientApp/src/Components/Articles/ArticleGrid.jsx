@@ -119,28 +119,28 @@ class ArticleGrid extends Component {
       this.globalCategoryFilter,
       this.stringFilter,
     );
+
     let linkString =
       this.globalCategoryFilter === undefined
-        ? ''
+        ? this.state.linkString
+        : this.globalCategoryFilter === ''
+        ? this.state.linkString
         : this.state.linkString + '?category=' + this.globalCategoryFilter;
     this.setState({ linkString: linkString });
-    console.log(linkString);
   }
   renderArticle(article) {
+    console.log(article.articleGridImg);
     return (
-      <div
-        className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4"
-        key={article.articleId}
-      >
+      <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
         <div className="wt-article">
           <figure>
             <img src={article.articleGridImg} alt="img description" />
           </figure>
           <div className="wt-articlecontent">
             <div className="wt-title">
-              <Link to={`/ArticleSingle/${article.articleId}`}>
-                <h2>{article.title}</h2>
-              </Link>
+              {/* <Link to={`/ArticleSingle/${article.articleId}`}> */}
+              <h2>{article.title}</h2>
+              {/* </Link> */}
             </div>
             <ul className="wt-postarticlemeta">
               <li>
@@ -170,7 +170,7 @@ class ArticleGrid extends Component {
     let content = (
       <li>
         <a href={this.state.linkString}>
-          <i className="fa fa-th"></i>
+          <i className="lnr lnr-list"></i>
         </a>
       </li>
     );
@@ -190,7 +190,7 @@ class ArticleGrid extends Component {
   }
 
   render() {
-    let paging = this.pagingCreate();
+    let paging = this.state.loading ? null : this.pagingCreate();
 
     let content = this.state.loading ? null : (
       <div className="wt_main wt-haslayout wt-innerbgcolor">

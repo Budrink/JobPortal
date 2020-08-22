@@ -119,12 +119,14 @@ class ArticleList extends Component {
       this.globalCategoryFilter,
       this.stringFilter,
     );
+
     let linkString =
       this.globalCategoryFilter === undefined
-        ? ''
+        ? this.state.linkString
+        : this.globalCategoryFilter === ''
+        ? this.state.linkString
         : this.state.linkString + '?category=' + this.globalCategoryFilter;
     this.setState({ linkString: linkString });
-    console.log(linkString);
   }
   renderArticle(article) {
     return (

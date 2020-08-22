@@ -153,15 +153,14 @@ class Paging2 extends Component {
       );
   }
   render() {
-    // const firstSimbol = this.firstPageSimbol();
-    // const lastSimbol = this.lastPageSimbol();
-    // const firstPointsSimbol = this.firstPoints();
-    // const lastPointsSimbol = this.lastPoints();
-    // const beginPages = this.createBeginPages();
-    // const endPages = this.createEndPages();
     const prevPage = this.createPrevPage();
     const nextPage = this.createNextPage();
-    if (this.amountOfPages < 2) return null;
+    if (this.amountOfPages < 2)
+      return (
+        <nav className="wt-pagination">
+          <ul>{this.props.InternalContent}</ul>
+        </nav>
+      );
     else {
       return (
         <nav className="wt-pagination">

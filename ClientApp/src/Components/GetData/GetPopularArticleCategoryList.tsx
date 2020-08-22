@@ -14,10 +14,10 @@ export const GetPopularArticleCategoryList = async (
       amount = 10;
     }
     response = await http({
-      path: `Article/popularCategoryList?amount=${amount}`,
+      path: `Article/popularArticlesList?amount=${amount}`,
       method: 'Get',
     });
-    //  console.log(response);
+    console.log(response);
     if (response.parsedBody !== null) {
       categoryList = response.parsedBody;
       //   console.log(countryList);

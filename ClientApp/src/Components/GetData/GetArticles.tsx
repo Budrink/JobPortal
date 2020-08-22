@@ -40,7 +40,6 @@ export const GetArticles = async (
     Category: category,
     StringFilter: stringFilter,
   };
-  console.log(requestBody);
   let response: HttpResponse<any>;
   try {
     response = await http({
@@ -53,25 +52,33 @@ export const GetArticles = async (
       articleList = response.parsedBody;
       if (articleList !== undefined) {
         if (articleList.articles !== undefined) {
-          if (articleList.articles.length > 0)
-            articleList.articles.map((article) => {
-              article.articleClassicImg =
-                article.articleClassicImg === undefined
-                  ? (article.articleClassicImg =
-                      ArticlesClassicImgPath + DefaultImg)
-                  : ArticlesClassicImgPath + article.articleClassicImg;
-              article.articleGridImg =
-                article.articleGridImg === undefined
-                  ? (article.articleGridImg = ArticlesGridImgPath + DefaultImg)
-                  : (article.articleGridImg =
-                      ArticlesGridImgPath + article.articleGridImg);
+          if (articleList.articles.length > 0) {
+            articleList.articles.map(
+              (article) =>
+                (article.articleClassicImg =
+                  article.articleClassicImg === undefined
+                    ? (article.articleClassicImg =
+                        ArticlesClassicImgPath + DefaultImg)
+                    : ArticlesClassicImgPath + article.articleClassicImg),
+            );
+            articleList.articles.map(
+              (article) =>
+                (article.articleGridImg =
+                  article.articleGridImg === undefined
+                    ? (article.articleGridImg =
+                        ArticlesGridImgPath + DefaultImg)
+                    : ArticlesGridImgPath + article.articleGridImg),
+            );
 
-              article.articleListImg =
-                article.articleListImg === undefined
-                  ? (article.articleListImg =
-                      ArticlesListingImgPath + DefaultImg)
-                  : ArticlesListingImgPath + article.articleListImg;
-            });
+            articleList.articles.map(
+              (article) =>
+                (article.articleListImg =
+                  article.articleListImg === undefined
+                    ? (article.articleListImg =
+                        ArticlesListingImgPath + DefaultImg)
+                    : ArticlesListingImgPath + article.articleListImg),
+            );
+          }
         }
       }
     }
