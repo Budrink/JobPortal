@@ -21,20 +21,22 @@ export const GetOngoingJobsListofCompany = async (companyId: string) => {
   console.log(companyId);
   try {
     response = await http({
-      path: `Job/company/${companyId}`,
+      path: `Company/${companyId}/ongoingJobs`,
       method: 'Get',
     });
 
     if (response.parsedBody !== null) {
       projectList = response.parsedBody;
       console.log(projectList);
-      projectList.projects.map(
-        (pr) =>
-          (pr.company.country.countryFlag =
-            pr.company.country.countryFlag !== null
-              ? countryFlagsPath + pr.company.country.countryFlag
-              : flagDefaultPath),
-      );
+      if (projectList.projects !== undefined) {
+        projectList.projects.map(
+          (pr) =>
+            (pr.company.country.countryFlag =
+              pr.company.country.countryFlag !== null
+                ? countryFlagsPath + pr.company.country.countryFlag
+                : flagDefaultPath),
+        );
+      }
     }
   } catch (e) {
     console.log(e);
