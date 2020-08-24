@@ -96,17 +96,9 @@ namespace JobPortal.Controllers
 
 				if (!dto.TypeFilter.IsNullOrEmpty())
 				{
-					var filterList = new List<JobType>();
-					foreach (var filter in dto.TypeFilter)
-					{
-						var filterParsed = Enum.TryParse<JobType>(filter, out var type);
-						if (filterParsed)
-							filterList.Add(type);
-					}
-					
-					if (filterList.Any())
-						jobsFiltered = jobsFiltered.Where(x =>
-							filterList.Contains(x.JobType)).ToList();
+					var filterParsed = Enum.TryParse<JobType>(dto.TypeFilter, out var type);
+					if (filterParsed)
+						jobsFiltered = jobsFiltered.Where(x => x.JobType == type).ToList();
 				}
 
 				var count = jobsFiltered.Count();
