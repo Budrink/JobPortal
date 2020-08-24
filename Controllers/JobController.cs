@@ -76,7 +76,9 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
-				//var user = await _userManager.FindByEmailAsync(HttpContext.User.Identity.Name);
+				User user = null;
+				if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+					user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
 				var jobsFiltered = _jobRepository.DbSet().Where(x =>
 					(dto.StringForSearching.IsNullOrEmpty() || x.Title.Contains(dto.StringForSearching)) &&
@@ -128,7 +130,7 @@ namespace JobPortal.Controllers
 						Id = s.Skill.Id,
 						Name = s.Skill.Name
 					}).ToList(),
-					Saved = false,//savedJobsIds.Contains(x.JobId),
+					Saved = user != null && user.SavedItems.Any(s => s.SavedItemType == SavedItemType.Job && s.SavedItemId == x.JobId)
 				}).Skip((dto.PageNumber - 1) * dto.AmountOfItemsOnPage).Take(dto.AmountOfItemsOnPage).ToList();
 				var result = new
 				{
@@ -257,7 +259,14 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
+				User user = null;
+				if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+					user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
 				var job = await _jobRepository.FindById(Guid.Parse(jobId));
+				var saved = false;
+				if (user != null)
+					saved = user.SavedItems.Any(x => x.SavedItemType == SavedItemType.Job && x.SavedItemId.ToString() == jobId);
 
 				var result = new
 				{
@@ -293,7 +302,8 @@ namespace JobPortal.Controllers
 					}).ToList(),
 					Attachments = job.Attachments.ToList(),
 					ProposalsCount = job.ProposalsCount,
-					HiredFreelancers = job.HiredFreelancers.Select(x => x.Id).ToList()
+					HiredFreelancers = job.HiredFreelancers.Select(x => x.Id).ToList(),
+					saved
 				};
 
 				return Ok(result);
