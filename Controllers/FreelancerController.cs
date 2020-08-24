@@ -257,17 +257,21 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
+				User user = null;
+				if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+					user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
 				var userList = new List<Freelancer>();
 				foreach (var id in request.FreelancerIds)
 				{
-					var user = await _userManager.FindByIdAsync(id);
-					if (user!=null)
-						userList.Add(user.Freelancer);
+					var freelancerUser = await _userManager.FindByIdAsync(id);
+					if (freelancerUser!=null)
+						userList.Add(freelancerUser.Freelancer);
 				}
 
 				var result = userList.Select(x => new
 				{
-					Saved = false,
+					Saved = user != null && user.SavedItems.Any(s => s.SavedItemType == SavedItemType.Freelancer && s.SavedItemId == x.UserId),
 					UserId = x.User.Id,
 					UserPhoto = x.User.UserPhoto?.FileLink,
 					FirstName = x.User.FirstName,
@@ -306,7 +310,11 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
-			    var rateFilter = request.RateFilter.IsNullOrEmpty()? null : _rateRepository.Get(x => request.RateFilter.Contains(x.HourRateId.ToString()))
+			    User user = null;
+				if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+					user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+				var rateFilter = request.RateFilter.IsNullOrEmpty()? null : _rateRepository.Get(x => request.RateFilter.Contains(x.HourRateId.ToString()))
 				    .ToList();
 
 
@@ -328,7 +336,7 @@ namespace JobPortal.Controllers
 				var freelancers= freelancerList.Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage).Take(request.AmountOfItemsOnPage)
 					.Select(x => new
 					{
-						Saved = false,
+						Saved = user != null && user.SavedItems.Any(s=> s.SavedItemType == SavedItemType.Freelancer && s.SavedItemId == x.UserId),
 						UserId = x.User.Id,
 						UserPhoto = x.User.UserPhoto?.FileLink,
 						FirstName = x.User.FirstName,

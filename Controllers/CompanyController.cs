@@ -34,22 +34,26 @@ namespace JobPortal.Controllers
 	    {
 		    try
 		    {
-			    var user = await _userManager.FindByIdAsync(companyId);
+			    User user = null;
+			    if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+				    user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+				var companyUser = await _userManager.FindByIdAsync(companyId);
 			    return Ok(new
 			    {
-				    CompanyId = user.Id,
-				    CompanyName = user.Company.CompanyName,
-				    CompanyImgJpg = user.Company.CompanyImgJpg,
-				    CompanyImgPng = user.Company.CompanyImgPng,
+				    CompanyId = companyUser.Id,
+				    CompanyName = companyUser.Company.CompanyName,
+				    CompanyImgJpg = companyUser.Company.CompanyImgJpg,
+				    CompanyImgPng = companyUser.Company.CompanyImgPng,
 				    CompanyCountry = new
 				    {
-					    CountryId = user.Country.CountryId,
-					    CountryFlag = user.Country.CountryFlag,
-					    CountryName = user.Country.CountryName
+					    CountryId = companyUser.Country.CountryId,
+					    CountryFlag = companyUser.Country.CountryFlag,
+					    CountryName = companyUser.Country.CountryName
 				    },
 				    VerifiedCompany = true,
-				    Saved = false,
-				    Description = user.Company.Description
+				    Saved = user != null && user.SavedItems.Any(x=> x.SavedItemType == SavedItemType.Company && x.SavedItemId == companyUser.Id),
+				    Description = companyUser.Company.Description
 			    });
 		    }
 		    catch (Exception e)
@@ -120,11 +124,15 @@ namespace JobPortal.Controllers
 
 		private async Task<IActionResult> OngoingJobsListDetailed(string companyId, int pageNumber, int amountItemsOnPage, JobStatus status)
 	    {
-		    var user = await _userManager.FindByIdAsync(companyId);
-		    var jobs = user.Company.Jobs.Where(x => x.JobStatus == status).ToList();
-		    var jobsCancelledCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Cancelled);
-		    var jobsFinishedCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Closed);
-		    var jobsOngoingCount = user.Company.Jobs.Count(x => x.JobStatus == JobStatus.Open);
+			User user = null;
+			if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+				user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+			var companyUser = await _userManager.FindByIdAsync(companyId);
+		    var jobs = companyUser.Company.Jobs.Where(x => x.JobStatus == status).ToList();
+		    var jobsCancelledCount = companyUser.Company.Jobs.Count(x => x.JobStatus == JobStatus.Cancelled);
+		    var jobsFinishedCount = companyUser.Company.Jobs.Count(x => x.JobStatus == JobStatus.Closed);
+		    var jobsOngoingCount = companyUser.Company.Jobs.Count(x => x.JobStatus == JobStatus.Open);
 			var result = jobs.Select(x => new
 		    {
 			    JobDetails = x.JobDetails,
@@ -148,7 +156,7 @@ namespace JobPortal.Controllers
 				    Id = s.Skill.Id,
 				    Name = s.Skill.Name
 			    }).ToList(),
-			    Saved = false,
+			    Saved = user !=null && user.SavedItems.Any(s=> s.SavedItemType == SavedItemType.Job && s.SavedItemId == x.JobId),
 		    }).Skip((pageNumber - 1) * amountItemsOnPage).Take(amountItemsOnPage);
 		    return Ok(new
 		    {
@@ -189,10 +197,15 @@ namespace JobPortal.Controllers
 	    public async Task<IActionResult> GetCompanyList([FromBody] CompanyListRequestDto request)
 	    {
 		    try
-		    {	var companies = await _companyRepository.Get(x=> (request.CountryFilter.IsNullOrEmpty() ||
-					 request.CountryFilter.Contains(x.User.Country.CountryName))&& 
-			 (request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString))
-		&& (request.NumberOfEmployees.IsNullOrEmpty() || request.NumberOfEmployees.Contains(x.NumberOfEmployees.Text))).ToListAsync();
+		    {
+			    User user = null;
+			    if (!HttpContext.User.Identity.Name.IsNullOrEmpty())
+				    user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+				var companies = await _companyRepository.Get(x=> (request.CountryFilter.IsNullOrEmpty() ||
+						request.CountryFilter.Contains(x.User.Country.CountryName))&& 
+						(request.SearchString.IsNullOrEmpty() || x.CompanyName.Contains(request.SearchString))
+						&& (request.NumberOfEmployees.IsNullOrEmpty() || request.NumberOfEmployees.Contains(x.NumberOfEmployees.Text))).ToListAsync();
 				var count = companies.Count;
 				var result = new
 				{
@@ -212,7 +225,7 @@ namespace JobPortal.Controllers
 								CountryName = x.User.Country.CountryName
 							},
 							VerifiedCompany = x.VerifiedCompany,
-							Saved = false
+							Saved = user != null && user.SavedItems.Any(s=> s.SavedItemType == SavedItemType.Company && s.SavedItemId == x.UserId)
 						}).Skip((request.PageNumber - 1) * request.AmountOfItemsOnPage)
 						.Take(request.AmountOfItemsOnPage).ToList()
 				};
