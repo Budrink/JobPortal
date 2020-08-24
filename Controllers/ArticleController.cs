@@ -159,7 +159,7 @@ namespace JobPortal.Controllers
 		{
 			try
 			{
-				var categoryIds = _articleTagRepository.DbSet().GroupBy(x => x.TagId)
+				var categoryIds = _articleTagRepository.DbSet().ToList().GroupBy(x => x.TagId)
 					.ToDictionary(x => x.Key, x => x.ToList()).ToList().OrderBy(x => x.Value.Count).Take(amount)
 					.ToDictionary(x => x.Key, x => x.Value);
 				var categories = await _tagRepository.Get(x => categoryIds.Keys.Contains(x.TagId)).ToListAsync();
