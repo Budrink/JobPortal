@@ -294,7 +294,11 @@ namespace JobPortal.Controllers
 					Type = job.JobType,
 					Duration = job.Duration.DurationText,
 					JobDetails = job.JobDetails,
-					SkillsRequired = job.SkillsRequired.ToList(),
+					SkillsRequired = job.SkillsRequired.Select(x=> new
+					{
+						Id = x.SkillId,
+						Name = x.Skill.Name
+					}).ToList(),
 					Attachments = job.Attachments.ToList(),
 					ProposalsCount = job.ProposalsCount,
 					HiredFreelancers = job.HiredFreelancers.Select(x => x.Id).ToList()
@@ -322,32 +326,7 @@ namespace JobPortal.Controllers
 				return NotFound(e.Message);
 			}
 		}
-
-
-		[HttpGet]
-		[Route("/company/{companyId}")]
-		public async Task<IActionResult> GetCompanyOngoingJobList([FromRoute] string companyId)
-		{
-			try
-			{
-				var jobList = (await _companyRepository.FindById(Guid.Parse(companyId))).Jobs
-					.Where(x => x.JobStatus == JobStatus.Open)
-					.Select(x => new
-					{
-						JobId = x.JobId,
-						Title = x.Title,
-						Duration = x.Duration
-					});
-				return Ok(jobList);
-			}
-			catch (Exception e)
-			{
-				return NotFound(e.Message);
-			}
-		}
-
-
-
+		
 
 		[HttpPost, Route("{jobId}/repost"), Authorize(Roles = "company")]
 		public async Task<IActionResult> RepostJob([FromRoute] string jobId)
