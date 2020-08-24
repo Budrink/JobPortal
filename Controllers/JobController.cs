@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -95,8 +96,17 @@ namespace JobPortal.Controllers
 
 				if (!dto.TypeFilter.IsNullOrEmpty())
 				{
-					//jobsFiltered = jobsFiltered.Where(x =>
-					//	dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType)).ToList();
+					var filterList = new List<JobType>();
+					foreach (var filter in dto.TypeFilter)
+					{
+						var filterParsed = Enum.TryParse<JobType>(filter, out var type);
+						if (filterParsed)
+							filterList.Add(type);
+					}
+					
+					if (filterList.Any())
+						jobsFiltered = jobsFiltered.Where(x =>
+							filterList.Contains(x.JobType)).ToList();
 				}
 
 				var count = jobsFiltered.Count();
