@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -95,8 +96,17 @@ namespace JobPortal.Controllers
 
 				if (!dto.TypeFilter.IsNullOrEmpty())
 				{
-					//jobsFiltered = jobsFiltered.Where(x =>
-					//	dto.TypeFilter.Select(Enum.Parse<JobType>).Contains(x.JobType)).ToList();
+					var filterList = new List<JobType>();
+					foreach (var filter in dto.TypeFilter)
+					{
+						var filterParsed = Enum.TryParse<JobType>(filter, out var type);
+						if (filterParsed)
+							filterList.Add(type);
+					}
+					
+					if (filterList.Any())
+						jobsFiltered = jobsFiltered.Where(x =>
+							filterList.Contains(x.JobType)).ToList();
 				}
 
 				var count = jobsFiltered.Count();
@@ -284,7 +294,11 @@ namespace JobPortal.Controllers
 					Type = job.JobType,
 					Duration = job.Duration.DurationText,
 					JobDetails = job.JobDetails,
-					SkillsRequired = job.SkillsRequired.ToList(),
+					SkillsRequired = job.SkillsRequired.Select(x=> new
+					{
+						Id = x.SkillId,
+						Name = x.Skill.Name
+					}).ToList(),
 					Attachments = job.Attachments.ToList(),
 					ProposalsCount = job.ProposalsCount,
 					HiredFreelancers = job.HiredFreelancers.Select(x => x.Id).ToList()
@@ -312,32 +326,7 @@ namespace JobPortal.Controllers
 				return NotFound(e.Message);
 			}
 		}
-
-
-		[HttpGet]
-		[Route("/company/{companyId}")]
-		public async Task<IActionResult> GetCompanyOngoingJobList([FromRoute] string companyId)
-		{
-			try
-			{
-				var jobList = (await _companyRepository.FindById(Guid.Parse(companyId))).Jobs
-					.Where(x => x.JobStatus == JobStatus.Open)
-					.Select(x => new
-					{
-						JobId = x.JobId,
-						Title = x.Title,
-						Duration = x.Duration
-					});
-				return Ok(jobList);
-			}
-			catch (Exception e)
-			{
-				return NotFound(e.Message);
-			}
-		}
-
-
-
+		
 
 		[HttpPost, Route("{jobId}/repost"), Authorize(Roles = "company")]
 		public async Task<IActionResult> RepostJob([FromRoute] string jobId)
