@@ -78,6 +78,7 @@ namespace JobPortal.Controllers
 
 				if (exists == null) return Ok(false);
 				_itemsRepository.Remove(exists);
+				await _itemsRepository.SaveChanges();
 				return Ok(true);
 
 			}
