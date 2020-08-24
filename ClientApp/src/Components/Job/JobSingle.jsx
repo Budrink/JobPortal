@@ -40,12 +40,17 @@ class JobSingle extends React.Component {
     );
     this.handleTextComplainChange = this.handleTextComplainChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.binf(this);
   }
 
   iD = this.props.match.params.jobId;
   Logout() {
     this.props.history.push('/Home');
   }
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
+
   //We got the first time the first feedbacks
   populateData = async (iD) => {
     const data = await GetJob(iD, 1);
@@ -193,7 +198,7 @@ class JobSingle extends React.Component {
             {/* Content Wrapper Start */}
             <div className="wt-contentwrapper">
               {/* Header Start */}
-              <Header1 Logout={this.Logout} />
+              <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
               {/*Header End*/}
               {/*Inner Home Banner Start*/}
               <div className="wt-haslayout wt-innerbannerholder">
@@ -346,6 +351,7 @@ class JobSingle extends React.Component {
                                   <i className="far fa-heart" /> Click to save
                                 </a>  */}
                                 <FavouriteButton
+                                  itemId={this.state.job.jobId}
                                   saved={this.state.job.saved}
                                   itemType="job"
                                 />
@@ -396,6 +402,9 @@ class JobSingle extends React.Component {
                                         <span>Following</span>
                                       </a> */}
                                       <FavouriteButton
+                                        itemId={
+                                          this.state.job.company.companyId
+                                        }
                                         saved={this.state.job.company.saved}
                                         itemType="company"
                                       />

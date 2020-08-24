@@ -19,12 +19,20 @@ class FavouriteButton extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const newText = this.state.text === 'following' ? 'save' : 'following';
+    let senderId;
+    if (this.props.senderId === undefined) {
+      if (localStorage.getItem('login') !== 'true') return false;
+      else senderId = localStorage.getItem('userId');
+    } else {
+      senderId = this.props.senderId;
+    }
+
     switch (this.props.itemType) {
       case 'freelancer':
         if (
           (await SaveFreelancer(
-            this.props.senderId,
-            this.props.itemIdm,
+            senderId,
+            this.props.itemId,
             !this.state.saved,
           )) === true
         ) {
@@ -34,20 +42,18 @@ class FavouriteButton extends Component {
         break;
       case 'job':
         if (
-          (await SaveJob(
-            this.props.senderId,
-            this.props.itemId,
-            !this.state.saved,
-          )) === true
+          (await SaveJob(senderId, this.props.itemId, !this.state.saved)) ===
+          true
         ) {
           this.setState({ saved: !this.state.saved });
           this.setState({ text: newText });
         }
+
         break;
       case 'company':
         if (
           (await SaveCompany(
-            this.props.senderId,
+            senderId,
             this.props.itemId,
             !this.state.saved,
           )) === true

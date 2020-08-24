@@ -131,8 +131,9 @@ class ProjectList extends Component {
               </li>
               <li>
                 <FavouriteButton
+                  itemId={data.project.jobId}
                   saved={data.project.company.saved}
-                  itemType="company"
+                  itemType="job"
                 />
                 {/* <Link to="/" className="wt-clicklike wt-clicksave">
                   <i className="fa fa-heart"></i> Save

@@ -30,6 +30,15 @@ class ArticleSingle extends Component {
       article: '',
       loading: true,
     };
+    this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
+  }
+
+  Logout() {
+    this.props.history.push('/Home');
+  }
+  LoginSuccessfull() {
+    this.props.history.push('/');
   }
   handleEditorChange(content, editor) {
     this.setState({ content });
@@ -63,7 +72,7 @@ class ArticleSingle extends Component {
         {/* <!-- Content Wrapper Start --> */}
         <div className="wt-contentwrapper">
           {/* <!-- Header Start --> */}
-          <Header1 />
+          <Header1 login={this.LoginSuccessfull} Logout={this.Logout} />
           {/* <!--Header End-->
 			<!--Inner Home Banner Start--> */}
           <div className="wt-haslayout wt-innerbannerholder">

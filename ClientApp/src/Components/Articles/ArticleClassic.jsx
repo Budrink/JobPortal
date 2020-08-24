@@ -46,10 +46,14 @@ class UserClassic extends PureComponent {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleStringFilterChange = this.handleStringFilterChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
 
   Logout() {
     this.props.history.push('/Home');
+  }
+  LoginSuccessfull() {
+    this.props.history.push('/');
   }
 
   handleStringFilterChange(e) {
@@ -230,7 +234,7 @@ class UserClassic extends PureComponent {
         {/* <!-- Content Wrapper Start --> */}
         <div className="wt-contentwrapper">
           {/* Header Start */}
-          <Header1 Logout={this.Logout} />
+          <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
           <div className="wt-haslayout wt-innerbannerholder">
             <div className="container">
               <div className="row justify-content-md-center">

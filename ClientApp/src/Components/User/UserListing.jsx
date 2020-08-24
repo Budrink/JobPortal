@@ -58,6 +58,7 @@ class UserListing extends PureComponent {
     this.handleLevelChange = this.handleLevelChange.bind(this);
     this.handleLangChange = this.handleLangChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
 
   skillFilter;
@@ -70,6 +71,9 @@ class UserListing extends PureComponent {
   globalCategoryFilter;
   Logout() {
     this.props.history.push('/Home');
+  }
+  LoginSuccessfull() {
+    this.props.history.push('/');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -356,7 +360,7 @@ class UserListing extends PureComponent {
           {/* Content Wrapper Start */}
           <div className="wt-contentwrapper">
             {/* Header Start */}
-            <Header1 Logout={this.Logout} />
+            <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
 
             {/*Header End*/}
             {/*Inner Home Banner Start*/}
