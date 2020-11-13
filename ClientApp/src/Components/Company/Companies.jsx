@@ -92,6 +92,7 @@ class Companies extends Component {
               </li>
               <li className="wt-following">
                 <FavouriteButton
+                  itemId={data.company.companyId}
                   saved={data.company.saved}
                   itemType="company"
                 />

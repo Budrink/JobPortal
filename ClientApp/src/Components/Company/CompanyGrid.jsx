@@ -58,6 +58,7 @@ class UserListing extends PureComponent {
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleSearchStringChange = this.handleSearchStringChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
 
   categoryFilter;
@@ -70,6 +71,10 @@ class UserListing extends PureComponent {
   Logout() {
     this.props.history.push('/Home');
   }
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
+
   createFilterString() {
     let filterString = [''];
     if (this.numberFilter === undefined) {
@@ -285,7 +290,7 @@ class UserListing extends PureComponent {
           {/* Content Wrapper Start */}
           <div className="wt-contentwrapper">
             {/* Header Start */}
-            <Header1 Logout={this.Logout} />
+            <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
             {/*Main Start*/}
             <div className="wt-main wt-haslayout wt-innerbgcolor" id="wt-main">
               <div className="wt-main-section wt-haslayout">

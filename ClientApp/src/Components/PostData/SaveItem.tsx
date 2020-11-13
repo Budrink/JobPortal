@@ -69,7 +69,6 @@ export const SaveCompany = async (
     savedItemType: '1',
     save: saved,
   };
-
   try {
     response = await http({
       path: `Items`,

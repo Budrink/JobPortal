@@ -118,6 +118,7 @@ class FreelancerList extends Component {
               </li>
               <li>
                 <FavouriteButton
+                  itemId={data.freelancer.userId}
                   saved={data.freelancer.saved}
                   itemType="freelancer"
                 />

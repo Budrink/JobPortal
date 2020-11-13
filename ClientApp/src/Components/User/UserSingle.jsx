@@ -53,10 +53,15 @@ class UserSingle extends React.Component {
     this.handleTextComplainChange = this.handleTextComplainChange.bind(this);
     this.Logout = this.Logout.bind(this);
     this.ScrolltoReportUser = this.ScrolltoReportUser.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessful.bind(this);
   }
   Logout() {
     this.props.history.push('/Home');
   }
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
+
   scrollToBottom = () => {
     this.End.scrollIntoView({ behavior: 'smooth' });
   };
@@ -171,6 +176,7 @@ class UserSingle extends React.Component {
                 <Header1
                   ref={(el) => (this.instance = el)}
                   Logout={this.Logout}
+                  login={this.LoginSuccessfull}
                 />
                 {/* <!--Header End-->
 	    		<!--Inner Home Banner Start--> */}
@@ -267,6 +273,7 @@ class UserSingle extends React.Component {
                                     </li>
                                     <li>
                                       <FavouriteButton
+                                        itemId={this.state.freelancer.userId}
                                         saved={this.state.freelancer.saved}
                                         itemType="freelancer"
                                       />

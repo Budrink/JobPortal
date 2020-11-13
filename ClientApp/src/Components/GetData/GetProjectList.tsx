@@ -72,6 +72,7 @@ export const GetProjectList = async (
       stringForSearching === undefined ? '' : stringForSearching,
     statusFilter: statusFilter === undefined ? '' : statusFilter[0],
   };
+  console.log(requestBody);
   try {
     response = await http({
       path: `Job/List`,

@@ -45,12 +45,16 @@ class ArticleList extends Component {
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
 
   stringFilter;
   globalCategoryFilter;
   Logout() {
     this.props.history.push('/Home');
+  }
+  LoginSuccessfull() {
+    this.props.history.push('/');
   }
 
   async handleFilterSubmit(event) {
@@ -200,7 +204,7 @@ class ArticleList extends Component {
           {/* Content Wrapper Start */}
           <div className="wt-contentwrapper">
             {/* Header Start */}
-            <Header1 Logout={this.Logout} />
+            <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
             <div className="wt-haslayout wt-innerbannerholder">
               <div className="container">
                 <div className="row justify-content-md-center">

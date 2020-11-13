@@ -65,6 +65,7 @@ class JobListing extends Component {
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.Logout = this.Logout.bind(this);
     this.ApplyFilters = this.ApplyFilters.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.binf(this);
   }
 
   categoryFilter;
@@ -81,6 +82,10 @@ class JobListing extends Component {
   Logout() {
     this.props.history.push('/Home');
   }
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
+
   createFilterString() {
     let filterString = [''];
     if (this.categoryFilter === undefined) {
@@ -438,7 +443,7 @@ class JobListing extends Component {
           {/* <!-- Content Wrapper Start --> */}
           <div className="wt-contentwrapper" id="wt-contentwrapper">
             {/* <!-- Header Start --> */}
-            <Header1 Logout={this.Logout} />
+            <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
             {/* <!--Header End-->
 			<!--Inner Home Banner Start--> */}
             <div

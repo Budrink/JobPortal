@@ -47,9 +47,13 @@ class CompanySingle extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleTextComplainChange = this.handleTextComplainChange.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.LoginSuccessfull = this.LoginSuccessfull.bind(this);
   }
 
   iD = this.props.match.params.companyId;
+  LoginSuccessfull() {
+    this.props.history.push('/');
+  }
 
   //We got the first time the first feedbacks
   populateData = async () => {
@@ -184,7 +188,7 @@ class CompanySingle extends React.Component {
         <div id="wt-wrapper" className="wt-wrapper wt-haslayout">
           {/* <!-- Content Wrapper Start --> */}
           <div className="wt-contentwrapper">
-            <Header1 Logout={this.Logout} />
+            <Header1 Logout={this.Logout} Login={this.LoginSuccessfull} />
             {/*   <!--Header End-->
 	        		<!--Inner Home Banner Start--> */}
             <div className="wt-haslayout wt-innerbannerholder">
@@ -267,6 +271,7 @@ class CompanySingle extends React.Component {
                               <div className="wt-clicksavearea">
                                 {/* <span>Job ID: tQu5DW9F2G</span> */}
                                 <FavouriteButton
+                                  itemId={this.iD}
                                   saved={this.state.company.saved}
                                   itemType="company"
                                 />

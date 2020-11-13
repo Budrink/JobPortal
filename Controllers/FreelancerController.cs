@@ -83,7 +83,7 @@ namespace JobPortal.Controllers
 		    try
 		    {
 			    var user = await _userManager.FindByIdAsync(freelancerId);
-			    var result = new
+			     var result = new
 			    {
 				    UserId = user.Id,
 					userPhoto= user.UserPhoto?.FileLink,
